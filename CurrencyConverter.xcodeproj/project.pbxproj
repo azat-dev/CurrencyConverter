@@ -99,11 +99,11 @@
 		AAC875932A2BD16800317B74 /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
-				AAC875942A2BD16800317B74 /* AppDelegate.swift */,
-				AAC875962A2BD16800317B74 /* SceneDelegate.swift */,
-				AAC875982A2BD16800317B74 /* ViewController.swift */,
+				AAC875C72A2BD19500317B74 /* Application */,
+				AAC875C62A2BD18B00317B74 /* Presentation */,
+				AAC875C52A2BD18500317B74 /* Data */,
+				AAC875C42A2BD17D00317B74 /* Domain */,
 				AAC8759A2A2BD16800317B74 /* Main.storyboard */,
-				AAC8759D2A2BD16900317B74 /* Assets.xcassets */,
 				AAC8759F2A2BD16900317B74 /* LaunchScreen.storyboard */,
 				AAC875A22A2BD16900317B74 /* Info.plist */,
 			);
@@ -125,6 +125,46 @@
 				AAC875B72A2BD16A00317B74 /* CurrencyConverterUITestsLaunchTests.swift */,
 			);
 			path = CurrencyConverterUITests;
+			sourceTree = "<group>";
+		};
+		AAC875C42A2BD17D00317B74 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		AAC875C52A2BD18500317B74 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		AAC875C62A2BD18B00317B74 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				AAC875982A2BD16800317B74 /* ViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		AAC875C72A2BD19500317B74 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				AAC875942A2BD16800317B74 /* AppDelegate.swift */,
+				AAC875962A2BD16800317B74 /* SceneDelegate.swift */,
+				AAC875C82A2BD1AD00317B74 /* SupportFiles */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		AAC875C82A2BD1AD00317B74 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AAC8759D2A2BD16900317B74 /* Assets.xcassets */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
