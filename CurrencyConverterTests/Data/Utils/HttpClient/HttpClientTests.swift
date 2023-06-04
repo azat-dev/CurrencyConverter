@@ -31,7 +31,7 @@ final class HttpClientTests: XCTestCase {
         
         // Given
         let sut = createSUT()
-        let url = URL(string: "https://any_url.com")!
+        let url = anyURL()
         
         let expectedResponse = URLProtocolStub.Params(
             data: nil,
@@ -63,7 +63,7 @@ final class HttpClientTests: XCTestCase {
         
         // Given
         let sut = createSUT()
-        let url = URL(string: "https://any_url.com")!
+        let url = anyURL()
         
         let expectedResponse = URLProtocolStub.Params(
             data: "resultData".data(using: .utf8)!,
@@ -94,6 +94,13 @@ final class HttpClientTests: XCTestCase {
         // Then
         // Must succeed
         wait(for: [expectation], timeout: 1)
+    }
+    
+    // MARK: - Helpers
+    
+    private func anyURL() -> URL {
+        
+        return .init(string: "https://any_url.com")!
     }
 
 }
