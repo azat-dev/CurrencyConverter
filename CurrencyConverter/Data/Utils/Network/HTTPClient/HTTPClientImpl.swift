@@ -7,13 +7,7 @@
 
 import Foundation
 
-extension URLSessionDataTask: HTTPClientTask {}
-
 public final class HTTPClientImpl: HTTPClient {
-    
-    // MARK: - Types
-    
-    private struct UnexpectedValue: Error {}
     
     // MARK: - Properties
     
@@ -27,29 +21,15 @@ public final class HTTPClientImpl: HTTPClient {
     
     // MARK: - Methods
     
-    public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
+    public func get(from url: URL) -> HTTPClientTask {
         
-        let task = session.dataTask(with: url) { data, response, error in
-            
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard
-                let data = data,
-                let response = response as? HTTPURLResponse
-            else {
-                
-                let error = UnexpectedValue()
-                completion(.failure(error))
-                return
-            }
-            
-            completion(.success((data, response)))
-        }
+        let dataTask = session.dataTask(with: url)
+
+        let task = HTTPClientTaskImpl(dataTask: dataTask)
+        dataTask.delegate = task
         
-        task.resume()
+        dataTask.resume()
+        
         return task
     }
 }

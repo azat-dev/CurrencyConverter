@@ -11,7 +11,10 @@ import XCTest
 
 final class HTTPClientTaskTests: XCTestCase {
     
-    typealias SUT = HTTPClientTask
+    typealias SUT = (
+        task: HTTPClientTask,
+        dataTask: URLSessionDataTask
+    )
     
     func createSUT(url: URL) -> SUT {
         
@@ -23,7 +26,12 @@ final class HTTPClientTaskTests: XCTestCase {
         let dataTask = session.dataTask(with: url)
         let task = HTTPClientTaskImpl(dataTask: dataTask)
         
-        return task
+        dataTask.delegate = task
+        
+        return (
+            task,
+            dataTask
+        )
     }
     
     // MARK: - Methods
@@ -32,18 +40,20 @@ final class HTTPClientTaskTests: XCTestCase {
         
         // Given
         let url = anyURL()
-        let sut = createSUT(url: url)
-
+        
         let testResponse = URLProtocolStub.Params(
             data: nil,
             response: nil,
             error: URLError(.badServerResponse)
         )
-
-        await URLProtocolStub.returns(testResponse) {
         
+        await URLProtocolStub.withGivenResponse(testResponse) {
+            
+            let sut = self.createSUT(url: url)
+            sut.dataTask.resume()
+            
             // When
-            let result = await sut.result()
+            let result = await sut.task.result()
             
             // Then
             guard case .failure = result else {
@@ -52,7 +62,7 @@ final class HTTPClientTaskTests: XCTestCase {
             }
             
             // Must fail
-            XCTFail()
+            XCTAssertTrue(true)
         }
     }
     
@@ -60,7 +70,6 @@ final class HTTPClientTaskTests: XCTestCase {
         
         // Given
         let url = anyURL()
-        let sut = createSUT(url: url)
         
         let testResponse = URLProtocolStub.Params(
             data: "resultData".data(using: .utf8)!,
@@ -73,10 +82,13 @@ final class HTTPClientTaskTests: XCTestCase {
             error: nil
         )
         
-        await URLProtocolStub.returns(testResponse) {
-        
+        await URLProtocolStub.withGivenResponse(testResponse) {
+            
+            let sut = self.createSUT(url: url)
+            sut.dataTask.resume()
+            
             // When
-            let result = await sut.result()
+            let result = await sut.task.result()
             
             // Then
             guard case .success((let receivedData, let receivedResponse)) = result else {
@@ -98,5 +110,5 @@ final class HTTPClientTaskTests: XCTestCase {
         
         return .init(string: "https://any_url.com")!
     }
-
+    
 }

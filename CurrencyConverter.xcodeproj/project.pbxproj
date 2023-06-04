@@ -11,6 +11,9 @@
 		AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */; };
 		AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06852A2C5CC600E215BD /* HTTPClient.swift */; };
 		AA4A06882A2C5CED00E215BD /* HTTPClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */; };
+		AA4A06DC2A2CF92800E215BD /* HTTPClientTaskImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06DB2A2CF92800E215BD /* HTTPClientTaskImpl.swift */; };
+		AA4A06DE2A2D183A00E215BD /* HTTPClientTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06DD2A2D183A00E215BD /* HTTPClientTaskTests.swift */; };
+		AA4A06E12A2D1EFC00E215BD /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06E02A2D1EFC00E215BD /* URLProtocolStub.swift */; };
 		AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875942A2BD16800317B74 /* AppDelegate.swift */; };
 		AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875962A2BD16800317B74 /* SceneDelegate.swift */; };
 		AAC875992A2BD16800317B74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875982A2BD16800317B74 /* ViewController.swift */; };
@@ -44,6 +47,9 @@
 		AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		AA4A06852A2C5CC600E215BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientImpl.swift; sourceTree = "<group>"; };
+		AA4A06DB2A2CF92800E215BD /* HTTPClientTaskImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTaskImpl.swift; sourceTree = "<group>"; };
+		AA4A06DD2A2D183A00E215BD /* HTTPClientTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTaskTests.swift; sourceTree = "<group>"; };
+		AA4A06E02A2D1EFC00E215BD /* URLProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolStub.swift; sourceTree = "<group>"; };
 		AAC875912A2BD16800317B74 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC875942A2BD16800317B74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAC875962A2BD16800317B74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +101,9 @@
 		AA4A067D2A2C54C300E215BD /* HttpClient */ = {
 			isa = PBXGroup;
 			children = (
+				AA4A06DF2A2D1EF400E215BD /* Helpers */,
 				AA4A067E2A2C54D700E215BD /* HttpClientTests.swift */,
+				AA4A06DD2A2D183A00E215BD /* HTTPClientTaskTests.swift */,
 			);
 			path = HttpClient;
 			sourceTree = "<group>";
@@ -119,19 +127,35 @@
 		AA4A06822A2C5CAA00E215BD /* HTTPClient */ = {
 			isa = PBXGroup;
 			children = (
-				AA4A06D92A2CEF2300E215BD /* Task */,
+				AA4A06D92A2CEF2300E215BD /* HTTPClientTask */,
 				AA4A06852A2C5CC600E215BD /* HTTPClient.swift */,
 				AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */,
 			);
 			path = HTTPClient;
 			sourceTree = "<group>";
 		};
-		AA4A06D92A2CEF2300E215BD /* Task */ = {
+		AA4A06D92A2CEF2300E215BD /* HTTPClientTask */ = {
 			isa = PBXGroup;
 			children = (
 				AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */,
+				AA4A06DB2A2CF92800E215BD /* HTTPClientTaskImpl.swift */,
 			);
-			path = Task;
+			path = HTTPClientTask;
+			sourceTree = "<group>";
+		};
+		AA4A06DA2A2CF5B100E215BD /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		AA4A06DF2A2D1EF400E215BD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AA4A06E02A2D1EFC00E215BD /* URLProtocolStub.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		AAC875882A2BD16800317B74 = {
@@ -200,6 +224,7 @@
 		AAC875C52A2BD18500317B74 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AA4A06DA2A2CF5B100E215BD /* API */,
 				AA4A06802A2C5C8700E215BD /* Utils */,
 			);
 			path = Data;
@@ -398,6 +423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4A06DC2A2CF92800E215BD /* HTTPClientTaskImpl.swift in Sources */,
 				AAC875992A2BD16800317B74 /* ViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */,
@@ -411,8 +437,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4A06DE2A2D183A00E215BD /* HTTPClientTaskTests.swift in Sources */,
 				AA4A067F2A2C54D700E215BD /* HttpClientTests.swift in Sources */,
 				AAC875AC2A2BD16A00317B74 /* CurrencyConverterTests.swift in Sources */,
+				AA4A06E12A2D1EFC00E215BD /* URLProtocolStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
