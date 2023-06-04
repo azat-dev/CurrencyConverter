@@ -9,5 +9,13 @@ import Foundation
 
 public protocol HTTPClientTask {
     
+    // MARK: - Types
+    
+    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
+    
+    // MARK: - Methods
+    
     func cancel()
+    
+    func result() async -> Result
 }
