@@ -119,11 +119,19 @@
 		AA4A06822A2C5CAA00E215BD /* HTTPClient */ = {
 			isa = PBXGroup;
 			children = (
-				AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */,
+				AA4A06D92A2CEF2300E215BD /* Task */,
 				AA4A06852A2C5CC600E215BD /* HTTPClient.swift */,
 				AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */,
 			);
 			path = HTTPClient;
+			sourceTree = "<group>";
+		};
+		AA4A06D92A2CEF2300E215BD /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 		AAC875882A2BD16800317B74 = {

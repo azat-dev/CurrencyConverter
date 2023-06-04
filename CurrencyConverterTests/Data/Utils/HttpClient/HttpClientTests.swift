@@ -25,6 +25,7 @@ final class HttpClientTests: XCTestCase {
         return client
     }
     
+    // MARK: - Methods
     
     func test_get__fail() throws {
         
@@ -57,6 +58,44 @@ final class HttpClientTests: XCTestCase {
         // Must fail
         wait(for: [expectationToFailRequest], timeout: 1)
     }
+    
+    func test_get__success() throws {
+        
+        // Given
+        let sut = createSUT()
+        let url = URL(string: "https://any_url.com")!
+        
+        let expectedResponse = URLProtocolStub.Params(
+            data: "resultData".data(using: .utf8)!,
+            response: HTTPURLResponse(
+                url: url,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+            ),
+            error: nil
+        )
+        
+        let expectation = expectation(description: "The request must succeed")
+        
+        // When
+        URLProtocolStub.withParams(expectedResponse) {
+            
+            sut.get(from: url) { result in
+                
+                guard case .success = result else {
+                    return
+                }
+                
+                expectation.fulfill()
+            }
+        }
+        
+        // Then
+        // Must succeed
+        wait(for: [expectation], timeout: 1)
+    }
+
 }
 
 // MARK: - Helpers
