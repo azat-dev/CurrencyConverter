@@ -7,6 +7,7 @@
 
 import Foundation
 import XCTest
+
 import CurrencyConverter
 
 final class CurrenciesEndpointTests: XCTestCase {

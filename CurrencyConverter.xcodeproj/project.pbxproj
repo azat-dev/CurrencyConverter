@@ -16,6 +16,9 @@
 		AA4A06E12A2D1EFC00E215BD /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06E02A2D1EFC00E215BD /* URLProtocolStub.swift */; };
 		AA4A06E52A2D269700E215BD /* CurrenciesEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06E42A2D269700E215BD /* CurrenciesEndpointTests.swift */; };
 		AA4A06E82A2D285D00E215BD /* CurrenciesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06E72A2D285D00E215BD /* CurrenciesEndpoint.swift */; };
+		AA4A06EC2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06EB2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift */; };
+		AA4A06F02A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */; };
+		AA4A06F32A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06F22A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift */; };
 		AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875942A2BD16800317B74 /* AppDelegate.swift */; };
 		AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875962A2BD16800317B74 /* SceneDelegate.swift */; };
 		AAC875992A2BD16800317B74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875982A2BD16800317B74 /* ViewController.swift */; };
@@ -54,6 +57,9 @@
 		AA4A06E02A2D1EFC00E215BD /* URLProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolStub.swift; sourceTree = "<group>"; };
 		AA4A06E42A2D269700E215BD /* CurrenciesEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointTests.swift; sourceTree = "<group>"; };
 		AA4A06E72A2D285D00E215BD /* CurrenciesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpoint.swift; sourceTree = "<group>"; };
+		AA4A06EB2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapper.swift; sourceTree = "<group>"; };
+		AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapperTests.swift; sourceTree = "<group>"; };
+		AA4A06F22A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapperImpl.swift; sourceTree = "<group>"; };
 		AAC875912A2BD16800317B74 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC875942A2BD16800317B74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAC875962A2BD16800317B74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,7 +180,7 @@
 		AA4A06E32A2D248C00E215BD /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
-				AA4A06E42A2D269700E215BD /* CurrenciesEndpointTests.swift */,
+				AA4A06ED2A2D2BDE00E215BD /* Currencies */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -182,9 +188,43 @@
 		AA4A06E62A2D284E00E215BD /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
-				AA4A06E72A2D285D00E215BD /* CurrenciesEndpoint.swift */,
+				AA4A06EE2A2D2BE900E215BD /* Currencies */,
 			);
 			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		AA4A06E92A2D29BC00E215BD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA4A06ED2A2D2BDE00E215BD /* Currencies */ = {
+			isa = PBXGroup;
+			children = (
+				AA4A06E42A2D269700E215BD /* CurrenciesEndpointTests.swift */,
+				AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */,
+			);
+			path = Currencies;
+			sourceTree = "<group>";
+		};
+		AA4A06EE2A2D2BE900E215BD /* Currencies */ = {
+			isa = PBXGroup;
+			children = (
+				AA4A06E72A2D285D00E215BD /* CurrenciesEndpoint.swift */,
+				AA4A06F12A2D2D2200E215BD /* CurrenciesEndpointDataMapper */,
+			);
+			path = Currencies;
+			sourceTree = "<group>";
+		};
+		AA4A06F12A2D2D2200E215BD /* CurrenciesEndpointDataMapper */ = {
+			isa = PBXGroup;
+			children = (
+				AA4A06EB2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift */,
+				AA4A06F22A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift */,
+			);
+			path = CurrenciesEndpointDataMapper;
 			sourceTree = "<group>";
 		};
 		AAC875882A2BD16800317B74 = {
@@ -253,6 +293,7 @@
 		AAC875C52A2BD18500317B74 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AA4A06E92A2D29BC00E215BD /* Models */,
 				AA4A06DA2A2CF5B100E215BD /* API */,
 				AA4A06802A2C5C8700E215BD /* Utils */,
 			);
@@ -457,6 +498,8 @@
 				AAC875992A2BD16800317B74 /* ViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */,
+				AA4A06F32A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift in Sources */,
+				AA4A06EC2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift in Sources */,
 				AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */,
 				AA4A06882A2C5CED00E215BD /* HTTPClientImpl.swift in Sources */,
 				AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */,
@@ -469,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA4A06DE2A2D183A00E215BD /* HTTPClientTaskTests.swift in Sources */,
+				AA4A06F02A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift in Sources */,
 				AA4A067F2A2C54D700E215BD /* HttpClientTests.swift in Sources */,
 				AA4A06E52A2D269700E215BD /* CurrenciesEndpointTests.swift in Sources */,
 				AAC875AC2A2BD16A00317B74 /* CurrencyConverterTests.swift in Sources */,
