@@ -27,45 +27,44 @@ final class HttpClientTests: XCTestCase {
     
     // MARK: - Methods
     
-    func test_get__fail() throws {
+    func test_get__fail() async throws {
         
         // Given
         let sut = createSUT()
         let url = anyURL()
-        
-        let expectedResponse = URLProtocolStub.Params(
+
+        let testResponse = URLProtocolStub.Params(
             data: nil,
             response: nil,
             error: URLError(.badServerResponse)
         )
+
+        await URLProtocolStub.returns(testResponse) {
         
-        let expectationToFailRequest = expectation(description: "The request must fail")
-        
-        // When
-        URLProtocolStub.withParams(expectedResponse) {
+            // When
+            let task = sut.get(from: url)
             
-            sut.get(from: url) { result in
+            let result = await task.result()
+            
+            // Then
+            
+            guard case .failure = result else {
                 
-                guard case .failure = result else {
-                    return
-                }
-                
-                expectationToFailRequest.fulfill()
+                XCTFail("Error")
+                return
             }
+            
+            // Must fail
         }
-        
-        // Then
-        // Must fail
-        wait(for: [expectationToFailRequest], timeout: 1)
     }
     
-    func test_get__success() throws {
+    func test_get__success() async throws {
         
         // Given
         let sut = createSUT()
         let url = anyURL()
         
-        let expectedResponse = URLProtocolStub.Params(
+        let testResponse = URLProtocolStub.Params(
             data: "resultData".data(using: .utf8)!,
             response: HTTPURLResponse(
                 url: url,
@@ -76,24 +75,26 @@ final class HttpClientTests: XCTestCase {
             error: nil
         )
         
-        let expectation = expectation(description: "The request must succeed")
+        await URLProtocolStub.returns(testResponse) {
         
-        // When
-        URLProtocolStub.withParams(expectedResponse) {
+            // When
+            let task = sut.get(from: url)
             
-            sut.get(from: url) { result in
+            let result = await task.result()
+            
+            // Then
+            
+            guard case .success((let receivedData, let receivedResponse)) = result else {
                 
-                guard case .success = result else {
-                    return
-                }
-                
-                expectation.fulfill()
+                XCTFail("Error")
+                return
             }
+            
+            // Must succeed
+            XCTAssertEqual(receivedData, testResponse.data)
+            XCTAssertEqual(receivedResponse.url, testResponse.response?.url)
+            XCTAssertEqual(receivedResponse.statusCode, testResponse.response?.statusCode)
         }
-        
-        // Then
-        // Must succeed
-        wait(for: [expectation], timeout: 1)
     }
     
     // MARK: - Helpers
@@ -112,28 +113,42 @@ public final class URLProtocolStub: URLProtocol {
     // MARK: - Types
     
     public struct Params {
-        
+
         let data: Data?
-        let response: URLResponse?
+        let response: HTTPURLResponse?
         let error: Error?
+    }
+    
+    public actor Lock {
+        
+        // MARK: - Initializers
+        
+        init() {}
+        
+        // MARK: - Methods
+        
+        func execute( _ action: @escaping() async -> Void) async {
+            
+            await action()
+        }
     }
     
     // MARK: - Properties
     
-    private static let semaphore = DispatchSemaphore(value: 1)
+    private static let lock = Lock()
     
     private static var params: Params?
     
     // MARK: - Methods
     
-    public static func withParams(_ newParams: Params, action: @escaping () -> Void ) {
+    public static func returns(_ params: Params, action: @escaping () async -> Void ) async {
         
-        defer { semaphore.signal() }
-        semaphore.wait()
-        
-        params = newParams
-        
-        action()
+        await lock.execute {
+            
+            Self.params = params
+            
+            await action()
+        }
     }
     
     public override class func canInit(with request: URLRequest) -> Bool {
@@ -146,26 +161,30 @@ public final class URLProtocolStub: URLProtocol {
     
     public override func startLoading() {
         
-        defer { Self.semaphore.signal() }
-        Self.semaphore.wait()
-        
-        guard let params = Self.params else {
-            return
+        Task {
+         
+            await Self.lock.execute {
+                
+                guard let params = Self.params else {
+                    return
+                }
+                
+                if let data = params.data {
+                    self.client?.urlProtocol(self, didLoad: data)
+                }
+                
+                if let response = params.response {
+                    self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                }
+                
+                if let error = params.error {
+                    self.client?.urlProtocol(self, didFailWithError: error)
+                } else {
+                    self.client?.urlProtocolDidFinishLoading(self)
+                }
+            }
         }
         
-        if let data = params.data {
-            client?.urlProtocol(self, didLoad: data)
-        }
-        
-        if let response = params.response {
-            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        }
-        
-        if let error = params.error {
-            client?.urlProtocol(self, didFailWithError: error)
-        } else {
-            client?.urlProtocolDidFinishLoading(self)
-        }
     }
     
     override public func stopLoading() {
