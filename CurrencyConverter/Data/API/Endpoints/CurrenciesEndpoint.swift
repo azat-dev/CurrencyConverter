@@ -19,7 +19,13 @@ public enum CurrenciesEndpoint {
             
         case .get:
             
-            return baseURL
+            var components = URLComponents()
+            
+            components.scheme = baseURL.scheme
+            components.host = baseURL.host
+            components.path = "\(baseURL.path)/api/currencies.json"
+            
+            return components.url!
         }
     }
 }
