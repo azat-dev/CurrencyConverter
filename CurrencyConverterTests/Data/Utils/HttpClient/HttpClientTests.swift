@@ -39,7 +39,7 @@ final class HttpClientTests: XCTestCase {
             error: URLError(.badServerResponse)
         )
 
-        await URLProtocolStub.returns(testResponse) {
+        await URLProtocolStub.withGivenResponse(testResponse) {
         
             // When
             let task = sut.get(from: url)
@@ -75,7 +75,7 @@ final class HttpClientTests: XCTestCase {
             error: nil
         )
         
-        await URLProtocolStub.returns(testResponse) {
+        await URLProtocolStub.withGivenResponse(testResponse) {
         
             // When
             let task = sut.get(from: url)
