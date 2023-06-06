@@ -23,10 +23,17 @@ final class HTTPClientTaskTests: XCTestCase {
         configuration.protocolClasses = [URLProtocolStub.self]
         let session = URLSession(configuration: configuration)
         
-        let dataTask = session.dataTask(with: url)
-        let task = HTTPClientTaskImpl(dataTask: dataTask)
+        let task = HTTPClientTaskImpl()
+        let dataTask = session.dataTask(with: url) { data, response, error in
+            
+            task.didComplete(
+                data: data,
+                response: response,
+                error: error
+            )
+        }
         
-        dataTask.delegate = task
+        task.dataTask = dataTask
         
         return (
             task,

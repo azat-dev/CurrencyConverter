@@ -23,11 +23,13 @@ public final class HTTPClientImpl: HTTPClient {
     
     public func get(from url: URL) -> HTTPClientTask {
         
-        let dataTask = session.dataTask(with: url)
-
-        let task = HTTPClientTaskImpl(dataTask: dataTask)
-        dataTask.delegate = task
+        let task = HTTPClientTaskImpl()
         
+        let dataTask = session.dataTask(with: url) { data, response, error in
+            task.didComplete(data: data, response: response, error: error)
+        }
+        
+        task.dataTask = dataTask
         dataTask.resume()
         
         return task

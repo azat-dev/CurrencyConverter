@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class HTTPClientTaskImpl: NSObject, HTTPClientTask, URLSessionDataDelegate {
+final class HTTPClientTaskImpl: HTTPClientTask {
     
     // MARK: - Types
     
@@ -17,7 +17,7 @@ final class HTTPClientTaskImpl: NSObject, HTTPClientTask, URLSessionDataDelegate
     
     // MARK: - Properties
     
-    private let dataTask: URLSessionDataTask
+    var dataTask: URLSessionDataTask!
     
     private var isCompleted = false
     
@@ -27,14 +27,19 @@ final class HTTPClientTaskImpl: NSObject, HTTPClientTask, URLSessionDataDelegate
 
     // MARK: - Initializers
     
-    init(dataTask: URLSessionDataTask) {
-        self.dataTask = dataTask
-    }
+    init() {}
     
     // MARK: - Methods
     
-    public func cancel() {
+    func didComplete(data: Data?, response: URLResponse?, error: Error?) {
         
+        receivedData = data
+        isCompleted = true
+        completionPromise?.resume()
+        completionPromise = nil
+    }
+    
+    public func cancel() {
         dataTask.cancel()
     }
     
@@ -45,7 +50,7 @@ final class HTTPClientTaskImpl: NSObject, HTTPClientTask, URLSessionDataDelegate
         }
     }
     
-    public func result() async -> HTTPClientTask.Result {
+    public func result() async -> TaskResult {
         
         guard self.completionPromise == nil else {
             return .failure(AlreadyWaitsForResult())
@@ -67,21 +72,5 @@ final class HTTPClientTaskImpl: NSObject, HTTPClientTask, URLSessionDataDelegate
         }
         
         return .success((data, response))
-    }
-
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        
-        if receivedData == nil {
-            receivedData = Data()
-        }
-        
-        self.receivedData?.append(data)
-    }
-
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        
-        isCompleted = true
-        completionPromise?.resume()
-        completionPromise = nil
     }
 }

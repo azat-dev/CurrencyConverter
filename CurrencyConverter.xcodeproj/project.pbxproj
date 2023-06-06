@@ -19,6 +19,9 @@
 		AA4A06EC2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06EB2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift */; };
 		AA4A06F02A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */; };
 		AA4A06F32A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06F22A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift */; };
+		AA4A06F52A2D315600E215BD /* CurrenciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06F42A2D315600E215BD /* CurrenciesService.swift */; };
+		AA4A06F72A2D31F100E215BD /* CurrenciesServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06F62A2D31F100E215BD /* CurrenciesServiceImpl.swift */; };
+		AA4A06F92A2D321E00E215BD /* CurrenciesServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06F82A2D321E00E215BD /* CurrenciesServiceTests.swift */; };
 		AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875942A2BD16800317B74 /* AppDelegate.swift */; };
 		AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875962A2BD16800317B74 /* SceneDelegate.swift */; };
 		AAC875992A2BD16800317B74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875982A2BD16800317B74 /* ViewController.swift */; };
@@ -60,6 +63,9 @@
 		AA4A06EB2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapper.swift; sourceTree = "<group>"; };
 		AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapperTests.swift; sourceTree = "<group>"; };
 		AA4A06F22A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesEndpointDataMapperImpl.swift; sourceTree = "<group>"; };
+		AA4A06F42A2D315600E215BD /* CurrenciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesService.swift; sourceTree = "<group>"; };
+		AA4A06F62A2D31F100E215BD /* CurrenciesServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesServiceImpl.swift; sourceTree = "<group>"; };
+		AA4A06F82A2D321E00E215BD /* CurrenciesServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesServiceTests.swift; sourceTree = "<group>"; };
 		AAC875912A2BD16800317B74 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC875942A2BD16800317B74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAC875962A2BD16800317B74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +211,7 @@
 			children = (
 				AA4A06E42A2D269700E215BD /* CurrenciesEndpointTests.swift */,
 				AA4A06EF2A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift */,
+				AA4A06F82A2D321E00E215BD /* CurrenciesServiceTests.swift */,
 			);
 			path = Currencies;
 			sourceTree = "<group>";
@@ -214,6 +221,8 @@
 			children = (
 				AA4A06E72A2D285D00E215BD /* CurrenciesEndpoint.swift */,
 				AA4A06F12A2D2D2200E215BD /* CurrenciesEndpointDataMapper */,
+				AA4A06F42A2D315600E215BD /* CurrenciesService.swift */,
+				AA4A06F62A2D31F100E215BD /* CurrenciesServiceImpl.swift */,
 			);
 			path = Currencies;
 			sourceTree = "<group>";
@@ -397,6 +406,8 @@
 				AAC875A92A2BD16A00317B74 /* PBXTargetDependency */,
 			);
 			name = CurrencyConverterTests;
+			packageProductDependencies = (
+			);
 			productName = CurrencyConverterTests;
 			productReference = AAC875A72A2BD16A00317B74 /* CurrencyConverterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -451,6 +462,8 @@
 				Base,
 			);
 			mainGroup = AAC875882A2BD16800317B74;
+			packageReferences = (
+			);
 			productRefGroup = AAC875922A2BD16800317B74 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -498,8 +511,10 @@
 				AAC875992A2BD16800317B74 /* ViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */,
+				AA4A06F72A2D31F100E215BD /* CurrenciesServiceImpl.swift in Sources */,
 				AA4A06F32A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift in Sources */,
 				AA4A06EC2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift in Sources */,
+				AA4A06F52A2D315600E215BD /* CurrenciesService.swift in Sources */,
 				AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */,
 				AA4A06882A2C5CED00E215BD /* HTTPClientImpl.swift in Sources */,
 				AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */,
@@ -516,6 +531,7 @@
 				AA4A067F2A2C54D700E215BD /* HttpClientTests.swift in Sources */,
 				AA4A06E52A2D269700E215BD /* CurrenciesEndpointTests.swift in Sources */,
 				AAC875AC2A2BD16A00317B74 /* CurrencyConverterTests.swift in Sources */,
+				AA4A06F92A2D321E00E215BD /* CurrenciesServiceTests.swift in Sources */,
 				AA4A06E12A2D1EFC00E215BD /* URLProtocolStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,7 +630,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -668,7 +684,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -693,6 +709,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -700,9 +717,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -721,6 +741,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,9 +749,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -743,13 +767,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CurrencyConverter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CurrencyConverter";
 			};
 			name = Debug;
@@ -763,13 +790,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CurrencyConverter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CurrencyConverter";
 			};
 			name = Release;
@@ -785,9 +815,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = CurrencyConverter;
 			};
 			name = Debug;
@@ -803,9 +836,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = come.azatkaiumov.CurrencyConverterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = CurrencyConverter;
 			};
 			name = Release;
