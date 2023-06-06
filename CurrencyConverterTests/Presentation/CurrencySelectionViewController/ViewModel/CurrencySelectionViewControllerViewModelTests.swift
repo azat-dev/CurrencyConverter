@@ -122,11 +122,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         
         // Given
         
-        let currencies: [Currency] = [
-        
-            .init(code: "USD", title: "Dollar"),
-            .init(code: "GBP", title: "Pounds"),
-        ]
+        let currencies = anyCurrencies()
         
         let initialSelectedCurrency = "USD"
         let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
@@ -153,13 +149,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
     func test_initial_active_item() async throws {
         
         // Given
-        
-        let currencies: [Currency] = [
-        
-            .init(code: "USD", title: "Dollar"),
-            .init(code: "GBP", title: "Pounds"),
-            .init(code: "YEN", title: "Japan Yen"),
-        ]
+        let currencies = anyCurrencies()
         
         let initialSelecteItemIndex = 1
         
@@ -173,22 +163,17 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         // Init
         
         // Then
-        
-        let expectedIsActiveFlags = currencies.indices.map { index in initialSelecteItemIndex == index}
-        let receivedActiveFlags = currencies.indices.map { index in sut.viewModel.getItem(at: index)?.isActive.value }
-        
-        XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags)
+        verifyActiveFlags(
+            in: sut.viewModel,
+            currencies: currencies,
+            expectedSelectedItemIndex: initialSelecteItemIndex
+        )        
     }
     
     func test_toggle_selection__has_initial_item() async throws {
         
         // Given
-        let currencies: [Currency] = [
-        
-            .init(code: "USD", title: "Dollar"),
-            .init(code: "GBP", title: "Pounds"),
-            .init(code: "YEN", title: "Japan Yen"),
-        ]
+        let currencies = anyCurrencies()
         
         let initialSelecteItemIndex = 1
         let newSelectedItemIndex = 2
@@ -203,38 +188,59 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         sut.viewModel.toggleSelection(at: newSelectedItemIndex)
         
         // Then
-        
-        let expectedIsActiveFlags = currencies.indices.map { index in newSelectedItemIndex == index}
-        let receivedActiveFlags = sut.viewModel.itemsIds.value.indices.map { index in sut.viewModel.getItem(at: index)?.isActive.value }
-        
-        XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags)
+        verifyActiveFlags(
+            in: sut.viewModel,
+            currencies: currencies,
+            expectedSelectedItemIndex: newSelectedItemIndex
+        )
     }
     
     func test_toggle_selection__doesnt_have_initial_item() async throws {
         
         // Given
-        let currencies: [Currency] = [
-        
-            .init(code: "USD", title: "Dollar"),
-            .init(code: "GBP", title: "Pounds"),
-            .init(code: "YEN", title: "Japan Yen"),
-        ]
-        
+        let currencies = anyCurrencies()
         let newSelectedItemIndex = 2
         
         let sut = createSUT(initialSelectedCurrency: nil)
-        
         sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
         await sut.viewModel.load()
         
         // When
         sut.viewModel.toggleSelection(at: newSelectedItemIndex)
         
         // Then
-        let expectedIsActiveFlags = currencies.indices.map { index in newSelectedItemIndex == index}
-        let receivedActiveFlags = sut.viewModel.itemsIds.value.indices.map { index in sut.viewModel.getItem(at: index)?.isActive.value }
         
-        XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags)
+        verifyActiveFlags(
+            in: sut.viewModel,
+            currencies: currencies,
+            expectedSelectedItemIndex: newSelectedItemIndex
+        )
+    }
+    
+    // MARK: - Helpers
+    
+    func verifyActiveFlags(
+        in viewModel:
+        CurrencySelectionViewControllerViewModel,
+        currencies: [Currency],
+        expectedSelectedItemIndex: Int,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let expectedIsActiveFlags = currencies.indices.map { $0 == expectedSelectedItemIndex}
+        let receivedActiveFlags = viewModel.itemsIds.value.indices.map { index in viewModel.getItem(at: index)?.isActive.value }
+        
+        XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags, file: file, line: line)
+    }
+    
+    func anyCurrencies() -> [Currency] {
+        
+        return [
+            .init(code: "USD", title: "Dollar"),
+            .init(code: "GBP", title: "Pounds"),
+            .init(code: "YEN", title: "Japan Yen"),
+        ]
     }
 }
 
