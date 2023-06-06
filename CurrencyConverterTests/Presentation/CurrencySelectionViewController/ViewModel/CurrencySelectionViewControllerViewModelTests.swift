@@ -105,7 +105,9 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let initialSelectedCurrency = "USD"
         let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
         
-        sut.listSortedCurrenciesUseCase.listWillReturn = .failure(.internalError)
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .failure(.internalError)
+        }
         
         // When
         await sut.viewModel.load()
@@ -127,7 +129,15 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let initialSelectedCurrency = "USD"
         let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
         
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let _ = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTFail()
+            return .failure(.internalError)
+        }
         
         // When
         await sut.viewModel.load()
@@ -156,7 +166,15 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let initialSelectedCurrency = currencies[initialSelecteItemIndex].code
         let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
         
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let _ = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTFail()
+            return .failure(.internalError)
+        }
         await sut.viewModel.load()
         
         // When
@@ -181,7 +199,15 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let initialSelectedCurrency = currencies[initialSelecteItemIndex].code
         let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
         
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let _ = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTFail()
+            return .failure(.internalError)
+        }
         await sut.viewModel.load()
         
         // When
@@ -202,7 +228,15 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let newSelectedItemIndex = 2
         
         let sut = createSUT(initialSelectedCurrency: nil)
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let searchText = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTFail()
+            return .failure(.internalError)
+        }
         
         await sut.viewModel.load()
         
@@ -224,7 +258,16 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let currencies = anyCurrencies()
         
         let sut = createSUT(initialSelectedCurrency: nil)
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let _ = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTFail()
+            return .failure(.internalError)
+        }
         
         await sut.viewModel.load()
         
@@ -243,20 +286,32 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
     }
     
-    func test_filterItems__not_empty_text__by_title() async throws {
+    func test_filterItems__not_empty_text() async throws {
         
         // Given
         let currencies = anyCurrencies()
         
+        let filteredItem = currencies.first!
+        let filteredItems = [filteredItem]
+        
+        let testSearchText = filteredItem.title.lowercased()
+        
         let sut = createSUT(initialSelectedCurrency: nil)
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let searchText = searchText else {
+                return .success(currencies)
+            }
+            
+            XCTAssertEqual(searchText, testSearchText)
+            return .success(filteredItems)
+        }
         
         await sut.viewModel.load()
         
-        let filteredItem = currencies.first!
-        
         // When
-        await sut.viewModel.filterItems(by: filteredItem.title.lowercased())
+        await sut.viewModel.filterItems(by: testSearchText)
         
         // Then
         let allItems = currencies.map { $0.code }
@@ -264,36 +319,10 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let expectedItemsSequence = [
             [],
             allItems,
-            [filteredItem.code]
+            filteredItems.map { $0.code }
         ]
         
-        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
-    }
-    
-    func test_filterItems__not_empty_text__by_code() async throws {
-        
-        // Given
-        let currencies = anyCurrencies()
-        
-        let sut = createSUT(initialSelectedCurrency: nil)
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
-        
-        await sut.viewModel.load()
-        
-        let filteredItem = currencies.first!
-        
-        // When
-        await sut.viewModel.filterItems(by: filteredItem.code.lowercased())
-        
-        // Then
-        let allItems = currencies.map { $0.code }
-        
-        let expectedItemsSequence = [
-            [],
-            allItems,
-            [filteredItem.code]
-        ]
-        
+        XCTAssertEqual(sut.listSortedCurrenciesUseCase.capturedSearches, [nil, testSearchText])
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
     }
     
@@ -303,15 +332,24 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let currencies = anyCurrencies()
         
         let filteredItem = currencies.first!
+        let filteredItems = [filteredItem]
         
         let sut = createSUT(initialSelectedCurrency: nil)
-        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
+            
+            guard let _ = searchText else {
+                return .success(currencies)
+            }
+            
+            return .success(filteredItems)
+        }
         
         await sut.viewModel.load()
         await sut.viewModel.filterItems(by: filteredItem.code.lowercased())
         
         // When
-        sut.viewModel.removeFilter()
+        await sut.viewModel.removeFilter()
         
         // Then
         let allItems = currencies.map { $0.code }
@@ -371,7 +409,9 @@ class ListSortedCurrenciesUseCaseMock: ListSortedCurrenciesUseCase {
     
     // MARK: - Properties
     
-    var listWillReturn: (Result<[Currency], ListSortedCurrenciesUseCaseError>)!
+    var listWillReturn: ((_ searchText: String?) -> Result<[Currency], ListSortedCurrenciesUseCaseError>)!
+    
+    var capturedSearches = [String?]()
     
     // MARK: - Initializers
     
@@ -379,8 +419,9 @@ class ListSortedCurrenciesUseCaseMock: ListSortedCurrenciesUseCase {
     
     // MARK: - Methods
     
-    func list() async -> Result<[Currency], ListSortedCurrenciesUseCaseError> {
+    func list(searchText: String?) async -> Result<[Currency], ListSortedCurrenciesUseCaseError> {
         
-        return listWillReturn
+        capturedSearches.append(searchText)
+        return listWillReturn(searchText)
     }
 }

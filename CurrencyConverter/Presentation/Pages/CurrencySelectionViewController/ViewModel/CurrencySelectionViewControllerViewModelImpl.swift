@@ -28,6 +28,8 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     private let onFailLoad: () -> Void
     
+    private var currentSearchText: String?
+    
     // MARK: - Initializers
     
     public init(
@@ -76,13 +78,13 @@ extension CurrencySelectionViewControllerViewModelImpl {
         activeItemId = newActiveItem?.id
     }
     
-    public func load() async {
+    private func load(with searchText: String?, isSilent: Bool) async {
         
-        if !isLoading.value {
+        if !isLoading.value && !isSilent {
             isLoading.value = true
         }
         
-        let listResult = await listSortedCurrenciesUseCase.list()
+        let listResult = await listSortedCurrenciesUseCase.list(searchText: searchText)
         
         guard case .success(let currencies) = listResult else {
             
@@ -106,11 +108,23 @@ extension CurrencySelectionViewControllerViewModelImpl {
         isLoading.value = false
     }
     
-    public func filterItems(by text: String) {
-        fatalError()
+    public func load() async {
+        
+        await load(with: nil, isSilent: false)
     }
     
-    public func removeFilter() {
-        fatalError()
+    public func filterItems(by text: String) async {
+        
+        let cleanedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        await load(
+            with: cleanedText.isEmpty ? nil : cleanedText,
+            isSilent: true
+        )
+    }
+    
+    public func removeFilter() async {
+        
+        await load(with: nil, isSilent: false)
     }
 }

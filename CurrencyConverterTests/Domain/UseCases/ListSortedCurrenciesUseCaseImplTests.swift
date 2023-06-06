@@ -38,8 +38,12 @@ final class ListSortedCurrenciesUseCaseImplTests: XCTestCase {
             return .failure(.internalError)
         }
 
+        sut.getCurrenciesUseCase.getWithSearchTextWillReturn = { _ in
+            return .failure(.internalError)
+        }
+        
         // When
-        let result = await sut.useCase.list()
+        let result = await sut.useCase.list(searchText: nil)
         
         // Then
         guard case .failure(let error) = result else {
@@ -68,9 +72,13 @@ final class ListSortedCurrenciesUseCaseImplTests: XCTestCase {
         sut.getCurrenciesUseCase.getWillReturn = {
             return .success(currencies)
         }
+        
+        sut.getCurrenciesUseCase.getWithSearchTextWillReturn = { _ in
+            return .success(currencies)
+        }
 
         // When
-        let result = await sut.useCase.list()
+        let result = await sut.useCase.list(searchText: nil)
         
         // Then
         guard case .success(let receivedCurrencies) = result else {
@@ -94,6 +102,7 @@ class GetCurrenciesUseCaseMock: GetCurrenciesUseCase {
     
     var getCount = 0
     var getWillReturn: (() -> Result<[CurrencyCode : Currency], GetCurrenciesUseCaseError>)!
+    var getWithSearchTextWillReturn: ((_ searchText: String?) -> Result<[CurrencyCode : Currency], GetCurrenciesUseCaseError>)!
     
     // MARK: - Initializers
     
@@ -105,5 +114,11 @@ class GetCurrenciesUseCaseMock: GetCurrenciesUseCase {
         
         getCount += 1
         return getWillReturn()
+    }
+    
+    func get(searchText: String?) async -> Result<[CurrencyCode : Currency], GetCurrenciesUseCaseError> {
+        
+        getCount += 1
+        return getWithSearchTextWillReturn(searchText)
     }
 }

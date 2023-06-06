@@ -16,5 +16,5 @@ public enum ListSortedCurrenciesUseCaseError: Error {
 
 public protocol ListSortedCurrenciesUseCase {
     
-    func list() async -> Result<[Currency], ListSortedCurrenciesUseCaseError>
+    func list(searchText: String?) async -> Result<[Currency], ListSortedCurrenciesUseCaseError>
 }

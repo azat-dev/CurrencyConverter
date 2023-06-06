@@ -23,6 +23,11 @@ public final class GetCurrenciesUseCaseImpl: GetCurrenciesUseCase {
     // MARK: - Methods
     
     public func get() async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError> {
+        
+        return await get(searchText: nil)
+    }
+    
+    public func get(searchText: String?) async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError> {
 
         let serviceResult = await currenciesService.fetch()
         

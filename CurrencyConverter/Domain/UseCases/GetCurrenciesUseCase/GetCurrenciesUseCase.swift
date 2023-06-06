@@ -15,4 +15,6 @@ public enum GetCurrenciesUseCaseError: Error {
 public protocol GetCurrenciesUseCase {
  
     func get() async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>
+    
+    func get(searchText: String?) async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>
 }
