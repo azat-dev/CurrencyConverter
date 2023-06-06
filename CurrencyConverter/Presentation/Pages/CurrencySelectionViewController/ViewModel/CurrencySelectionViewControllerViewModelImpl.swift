@@ -18,7 +18,9 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     
-    private var items: [Currency]?
+    private var items: [CurrencySelectionItemViewModel]?
+    
+    private var activeItemId: CurrencyCode?
     
     private let onSelect: (CurrencyCode) -> Void
     
@@ -35,7 +37,8 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         onFailLoad: @escaping () -> Void,
         listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     ) {
-        
+       
+        self.activeItemId = initialSelectedCurrency
         self.onSelect = onSelect
         self.onCancel = onCancel
         self.onFailLoad = onFailLoad
@@ -46,7 +49,7 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     public func getItem(at index: Int) -> CurrencySelectionItemViewModel? {
         
-        fatalError()
+        return items?[index]
     }
     
     public func toggleSelection(at index: Int) {
@@ -68,7 +71,14 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
             return
         }
         
-        items = currencies
+        items = currencies.map { currency in
+            return .init(
+                isActive: currency.code == activeItemId,
+                code: currency.code,
+                title: currency.title
+            )
+        }
+        
         itemsIds.value = currencies.map { $0.code }
         isLoading.value = false
     }
