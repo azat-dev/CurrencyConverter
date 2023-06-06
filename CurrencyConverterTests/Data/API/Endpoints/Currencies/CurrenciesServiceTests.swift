@@ -49,7 +49,7 @@ final class CurrenciesServiceTests: XCTestCase {
     func test_fetch__fail() async throws {
         
         // Given
-        let url = URL(string: "https://base-url.org")!
+        let url = anyBaseURL()
         let sut = createSUT(baseURL: url)
         
         sut.httpTask.resultWillReturn = {
@@ -71,7 +71,7 @@ final class CurrenciesServiceTests: XCTestCase {
     func test_fetch__success() async throws {
         
         // Given
-        let url = URL(string: "https://base-url.org")!
+        let url = anyBaseURL()
         let sut = createSUT(baseURL: url)
         
         let testData = "data".data(using: .utf8)!
@@ -98,65 +98,10 @@ final class CurrenciesServiceTests: XCTestCase {
         
         XCTAssertEqual(receivedCurrencies, expectedCurrencies)
     }
-}
-
-// MARK: - Helpers
-
-class HTTPClientTaskMock: HTTPClientTask {
     
-    // MARK: - Properties
+    // MARK: - Helpers
     
-    var isCanceled = false
-    
-    var resultWillReturn: (() async -> TaskResult)!
-    
-    // MARK: - Initializers
-    
-    init() {}
-    
-    // MARK: - Methods
-    
-    func cancel() {
-        isCanceled = true
-    }
-    
-    func result() async -> TaskResult {
-        
-        await resultWillReturn()
-    }
-}
-
-class HTTPClientMock: HTTPClient {
-    
-    // MARK: - Properties
-    
-    var getWillReturn: ((_ url: URL) -> HTTPClientTask)!
-    
-    // MARK: - Initializers
-    
-    init() {}
-    
-    // MARK: - Methods
-    
-    func get(from url: URL) -> HTTPClientTask {
-        return getWillReturn(url)
-    }
-}
-
-class CurrenciesEndpointDataMapperMock: CurrenciesEndpointDataMapper {
-    
-    // MARK: - Properties
-    
-    var willReturn: ((_ data: Data) -> Result<[CurrencyCode : CurrencyTitle], CurrenciesEndpointDataMapperError>)!
-    
-    // MARK: - Initializers
-    
-    init() {}
-    
-    // MARK: - Methods
-    
-    func map(_ data: Data) -> Result<[CurrencyCode : CurrencyTitle], CurrenciesEndpointDataMapperError> {
-        
-        return willReturn(data)
+    func anyBaseURL() -> URL {
+        return URL(string: "https://base-url.org")!
     }
 }
