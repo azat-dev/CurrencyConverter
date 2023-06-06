@@ -68,7 +68,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
             listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
         )
         
-        viewModel.isLoading.sink { [weak self] isLoading in
+        viewModel.isLoading.sink { isLoading in
             
             var newValues = capturedIsLoadingSequence.value
             newValues.append(isLoading)
@@ -77,7 +77,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
             
         }.store(in: &observers)
         
-        viewModel.itemsIds.sink { [weak self] itemsIds in
+        viewModel.itemsIds.sink { itemsIds in
             
             var newValues = capturedItemsIdsSequence.value
             newValues.append(itemsIds)
@@ -115,7 +115,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.didFailLoadTimes.value, 1)
         XCTAssertEqual(sut.didSelectedCurrencies.value, [])
         XCTAssertEqual(sut.didCancelTimes.value, 0)
-        XCTAssertEqual(sut.capturedItemsIdsSequence.value, [])
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[]])
     }
     
     func test_load__success() async throws {

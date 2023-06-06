@@ -18,6 +18,14 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     
+    private var items: [Currency]?
+    
+    private let onSelect: (CurrencyCode) -> Void
+    
+    private let onCancel: () -> Void
+    
+    private let onFailLoad: () -> Void
+    
     // MARK: - Initializers
     
     public init(
@@ -27,6 +35,10 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         onFailLoad: @escaping () -> Void,
         listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     ) {
+        
+        self.onSelect = onSelect
+        self.onCancel = onCancel
+        self.onFailLoad = onFailLoad
         self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
     }
     
@@ -42,8 +54,22 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         fatalError()
     }
     
-    public func load() {
+    public func load() async {
         
-        fatalError()
+        if !isLoading.value {
+            isLoading.value = true
+        }
+        
+        let listResult = await listSortedCurrenciesUseCase.list()
+        
+        guard case .success(let currencies) = listResult else {
+            
+            onFailLoad()
+            return
+        }
+        
+        items = currencies
+        itemsIds.value = currencies.map { $0.code }
+        isLoading.value = false
     }
 }
