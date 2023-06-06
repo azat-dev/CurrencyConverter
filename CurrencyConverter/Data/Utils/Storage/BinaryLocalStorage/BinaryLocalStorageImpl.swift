@@ -29,32 +29,68 @@ public final class BinaryLocalStorageImpl: BinaryLocalStorage {
     }
     
     public func put(key: String, value data: Data) async -> Result<Void, Error> {
-        fatalError()
+        
+        do {
+            
+            let fileURL = try getFileName(forKey: key)
+            let directoryUrl = fileURL.deletingLastPathComponent()
+            
+            if !fileManager.fileExists(atPath: directoryUrl.path) {
+                
+                try fileManager.createDirectory(
+                    at: directoryUrl,
+                    withIntermediateDirectories: true
+                )
+            }
+            
+            if !fileManager.fileExists(atPath: fileURL.path) {
+                fileManager.createFile(atPath: fileURL.path, contents: data)
+            } else {
+                try data.write(to: fileURL, options: .atomic)
+            }
+            
+            return .success(())
+            
+        } catch {
+            return.failure(error)
+        }
     }
     
     public func get(key: String) async -> Result<Data?, Error> {
         
-        fatalError()
+        do {
+            
+            let fileURL = try getFileName(forKey: key)
+            
+            guard fileManager.fileExists(atPath: fileURL.path) else {
+                return .success(nil)
+            }
+            
+            let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+            return .success(data)
+            
+        } catch {
+            return .failure(error)
+        }
     }
     
     public func delete(key: String) async -> Result<Void, Error> {
         
-        fatalError()
-    }
-    
-    public func listKeys() async -> Result<[String], Error> {
+        do {
+            
+            let fileURL = try getFileName(forKey: key)
+            
+            guard fileManager.fileExists(atPath: fileURL.path) else {
+                return .success(())
+            }
+            
+            try fileManager.removeItem(at: fileURL)
+            
+        } catch {
+            return .failure(error)
+        }
         
-        fatalError()
-    }
-    
-    public func deleteAll() async -> Result<Void, Error> {
-        
-        fatalError()
-    }
-    
-    public func deleteAll(where predicate: (String) -> Bool) async -> Result<Void, Error> {
-        
-        fatalError()
+        return .success(())
     }
     
     private func getFileName(forKey key: String) throws -> URL {
