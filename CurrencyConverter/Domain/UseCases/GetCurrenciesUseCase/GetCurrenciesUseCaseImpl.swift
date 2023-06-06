@@ -24,6 +24,19 @@ public final class GetCurrenciesUseCaseImpl: GetCurrenciesUseCase {
     
     public func get() async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError> {
 
-        fatalError()
+        let serviceResult = await currenciesService.fetch()
+        
+        guard case .success(let currencies) = serviceResult else {
+            return .failure(.internalError)
+        }
+
+        var resultCurrencies = [CurrencyCode: Currency]()
+        
+        for (code, title) in currencies {
+            
+            resultCurrencies[code] = .init(code: code, title: title)
+        }
+        
+        return .success(resultCurrencies)
     }
 }
