@@ -31,6 +31,22 @@ public final class CurrenciesServiceImpl: CurrenciesService {
     // MARK: - Methods
     
     public func fetch() async -> Result<[CurrencyCode : CurrencyTitle], CurrenciesServiceError> {
-        fatalError()
+        
+        
+        let endpointURL = CurrenciesEndpoint.get.url(baseURL: baseURL)
+        
+        let httpResult = await httpClient.get(from: endpointURL).result()
+        
+        guard case .success((let data, _)) = httpResult else {
+            return .failure(.internalError)
+        }
+        
+        let mappingResult = dataMapper.map(data)
+        
+        guard case .success(let currencies) = mappingResult else {
+            return .failure(.internalError)
+        }
+
+        return .success(currencies)
     }
 }
