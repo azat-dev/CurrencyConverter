@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */; };
+		AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */; };
+		AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */; };
+		AA14398F2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14398E2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift */; };
 		AA40341F2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */; };
 		AA4034222A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */; };
 		AA4034262A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */; };
@@ -73,6 +76,9 @@
 
 /* Begin PBXFileReference section */
 		AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesEmojies.swift; sourceTree = "<group>"; };
+		AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorage.swift; sourceTree = "<group>"; };
+		AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorageImpl.swift; sourceTree = "<group>"; };
+		AA14398E2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorageImplTests.swift; sourceTree = "<group>"; };
 		AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModel.swift; sourceTree = "<group>"; };
 		AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModel.swift; sourceTree = "<group>"; };
 		AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModelTests.swift; sourceTree = "<group>"; };
@@ -148,6 +154,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA1439862A2FCCB300D8F604 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				AA1439892A2FCCC300D8F604 /* BinaryLocalStorage */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		AA1439892A2FCCC300D8F604 /* BinaryLocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */,
+				AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */,
+			);
+			path = BinaryLocalStorage;
+			sourceTree = "<group>";
+		};
+		AA14398C2A2FCD5500D8F604 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				AA14398D2A2FCD5F00D8F604 /* BinaryLocalStorage */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		AA14398D2A2FCD5F00D8F604 /* BinaryLocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				AA14398E2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift */,
+			);
+			path = BinaryLocalStorage;
+			sourceTree = "<group>";
+		};
 		AA40341B2A2F30AF00F4E5DD /* Pages */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +244,7 @@
 		AA4A067C2A2C54B400E215BD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				AA14398C2A2FCD5500D8F604 /* Storage */,
 				AA4A067D2A2C54C300E215BD /* HttpClient */,
 			);
 			path = Utils;
@@ -223,6 +263,7 @@
 		AA4A06802A2C5C8700E215BD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				AA1439862A2FCCB300D8F604 /* Storage */,
 				AA4A06812A2C5C8D00E215BD /* Network */,
 			);
 			path = Utils;
@@ -662,6 +703,7 @@
 				AA5D83A52A2EFD72002EB67B /* GetCurrenciesUseCaseImpl.swift in Sources */,
 				AA4034302A2F626000F4E5DD /* CurrencySelectionItemCell.swift in Sources */,
 				AA4A06DC2A2CF92800E215BD /* HTTPClientTaskImpl.swift in Sources */,
+				AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */,
 				AAC875992A2BD16800317B74 /* CurrencySelectionViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */,
@@ -675,6 +717,7 @@
 				AA4A06882A2C5CED00E215BD /* HTTPClientImpl.swift in Sources */,
 				AA40342C2A2F3F9100F4E5DD /* CurrencySelectionViewControllerViewModelImpl.swift in Sources */,
 				AA40341F2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift in Sources */,
+				AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */,
 				AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */,
 				AA5D83A02A2EFCBA002EB67B /* GetCurrenciesUseCase.swift in Sources */,
 				AA5D83A32A2EFCDB002EB67B /* Currency.swift in Sources */,
@@ -705,6 +748,7 @@
 				AA4034262A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift in Sources */,
 				AA5D83972A2EFB02002EB67B /* HTTPClientTaskMock.swift in Sources */,
 				AA5D83992A2EFB0D002EB67B /* HTTPClientMock.swift in Sources */,
+				AA14398F2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
