@@ -37,7 +37,21 @@ public final class GetCurrenciesUseCaseImpl: GetCurrenciesUseCase {
 
         var resultCurrencies = [CurrencyCode: Currency]()
         
+        let cleanedSearchText = searchText?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
         for (code, title) in currencies {
+            
+            if
+                let cleanedSearchText = cleanedSearchText,
+                !cleanedSearchText.isEmpty
+            {
+                let containsSearchText = code.lowercased().contains(cleanedSearchText) ||
+                    title.lowercased().contains(cleanedSearchText)
+                
+                guard containsSearchText else {
+                    continue
+                }
+            }
             
             resultCurrencies[code] = .init(code: code, title: title)
         }
