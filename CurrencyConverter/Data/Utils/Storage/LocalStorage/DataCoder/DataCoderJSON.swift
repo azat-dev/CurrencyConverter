@@ -13,17 +13,21 @@ public final class DataCoderJSON: DataCoder {
     
     // MARK: - Initializers
     
-    public init() {}
+    public init() {
+        
+    }
     
     // MARK: - Methods
     
     public func encode<T: Codable>(_ value: T) throws -> Data {
         
-        fatalError()
+        let encoder = JSONEncoder()
+        return try encoder.encode(value)
     }
     
     public func decode<T: Codable>(_ encodedData: Data, as: T.Type) throws -> T where T : Decodable, T : Encodable {
         
-        fatalError()
+        let encoder = JSONDecoder()
+        return try encoder.decode(T.self, from: encodedData)
     }
 }
