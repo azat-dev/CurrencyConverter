@@ -24,6 +24,16 @@ public final class ListSortedCurrenciesCaseImpl: ListSortedCurrenciesUseCase {
     
     public func list() async -> Result<[Currency], ListSortedCurrenciesUseCaseError> {
         
-        fatalError()
+        let currenciesResult = await getCurrenciesUseCase.get()
+        
+        guard case .success(let currenciesDict) = currenciesResult else {
+            return .failure(.internalError)
+        }
+
+        let sortedCurrencies = currenciesDict.keys.sorted().compactMap { code in
+            return currenciesDict[code]
+        }
+        
+        return .success(sortedCurrencies)
     }
 }
