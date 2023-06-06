@@ -40,7 +40,7 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
         }
 
         // When
-        let result = await sut.useCase.get()
+        let result = await sut.useCase.get(searchText: nil)
         
         // Then
         guard case .failure(let error) = result else {
@@ -69,7 +69,7 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
         }
 
         // When
-        let result = await sut.useCase.get()
+        let result = await sut.useCase.get(searchText: nil)
         
         // Then
         guard case .success(let receivedCurrencies) = result else {
@@ -84,6 +84,81 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
             expectedCurrencies[code] = .init(code: code, title: title)
         }
         
+        XCTAssertEqual(receivedCurrencies, expectedCurrencies)
+    }
+    
+    func test_get__success__with_search_text__by_code() async throws {
+        
+        // Given
+        let sut = createSUT()
+        
+        let serviceCurrencies = [
+            "USD": "Dollar",
+            "GBP": "Pounds"
+        ]
+        
+        let filteredItemCode = serviceCurrencies.keys.first!
+        let searchText = filteredItemCode.lowercased()
+        
+        sut.currenciesService.fetchWillReturn = {
+            return .success(serviceCurrencies)
+        }
+
+        // When
+        let result = await sut.useCase.get(searchText: searchText)
+        
+        // Then
+        guard case .success(let receivedCurrencies) = result else {
+            XCTFail("Must succeed")
+            return
+        }
+        
+        let expectedCurrencies = [
+            filteredItemCode: Currency(
+                code: filteredItemCode,
+                title: serviceCurrencies[filteredItemCode]!
+            )
+        ]
+        
+        XCTAssertEqual(receivedCurrencies.count, 1)
+        XCTAssertEqual(receivedCurrencies, expectedCurrencies)
+    }
+    
+    func test_get__success__with_search_text__by_title() async throws {
+        
+        // Given
+        let sut = createSUT()
+        
+        let serviceCurrencies = [
+            "USD": "Dollar",
+            "GBP": "Pounds"
+        ]
+        
+        let filteredItemCode = serviceCurrencies.keys.first!
+        let filteredItemTitle = serviceCurrencies[filteredItemCode]!
+        let searchText = filteredItemTitle.lowercased()
+        
+        sut.currenciesService.fetchWillReturn = {
+            return .success(serviceCurrencies)
+        }
+
+        // When
+        let result = await sut.useCase.get(searchText: searchText)
+        
+        // Then
+        guard case .success(let receivedCurrencies) = result else {
+            XCTFail("Must succeed")
+            return
+        }
+        
+        let expectedCurrencies = [
+            filteredItemCode: Currency(
+                code: filteredItemCode,
+                title: serviceCurrencies[filteredItemCode]!
+            )
+        ]
+        
+        XCTAssertEqual(receivedCurrencies.count, 1)
         XCTAssertEqual(receivedCurrencies, expectedCurrencies)
     }
     
