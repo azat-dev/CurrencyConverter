@@ -68,12 +68,4 @@ final class CurrencySelectionItemViewModelTests: XCTestCase {
         // Then
         XCTAssertFalse(sut.isActive.value)
     }
-    
-    // MARK: - Helpers
-    
-    private func anyURL() -> URL {
-        
-        return .init(string: "https://any_url.com")!
-    }
-
 }
