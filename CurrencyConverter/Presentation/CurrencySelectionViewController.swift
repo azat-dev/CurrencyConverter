@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class CurrencySelectionViewController: UIViewController {
+final class CurrencySelectionViewController: UIViewController {
     
     // MARK: - Types
     
@@ -24,6 +24,8 @@ class CurrencySelectionViewController: UIViewController {
     
     private var activityIndicatorView = UIActivityIndicatorView()
     
+    private var searchBar = UISearchBar()
+    
     private var tableView: UITableView!
     
     private var tableDataSource: UITableViewDiffableDataSource<SectionId, ItemId>!
@@ -38,7 +40,7 @@ class CurrencySelectionViewController: UIViewController {
     }
     
     // MARK: - Methods
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -73,7 +75,7 @@ class CurrencySelectionViewController: UIViewController {
             await viewModel?.load()
         }
     }
-
+    
     
     // MARK: - Methods
     
@@ -129,10 +131,16 @@ extension CurrencySelectionViewController {
         view.addSubview(activityIndicatorView)
     }
     
+    func setupSearchBar() {
+        
+        searchBar.delegate = self
+        view.addSubview(searchBar)
+    }
+    
     func setupTableView() {
         
-        tableView = UITableView(frame: view.frame, style: .insetGrouped)
-
+        tableView = UITableView(frame: view.frame, style: .plain)
+        
         self.tableView.register(
             CurrencySelectionItemCell.self,
             forCellReuseIdentifier: CurrencySelectionItemCell.reuseIdentifier
@@ -169,7 +177,14 @@ extension CurrencySelectionViewController {
     
     func setupViews() {
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.sizeToFit()
+        
+        navigationItem.title = "Choose a currency"
+        navigationItem.largeTitleDisplayMode = .always
+        
         setupActivityIndicator()
+        setupSearchBar()
         setupTableView()
     }
 }
@@ -182,7 +197,32 @@ extension CurrencySelectionViewController {
         
         Layout.apply(
             view: view,
+            searchBar: searchBar,
             tableView: tableView
         )
+    }
+}
+
+// MARK: - Methods
+
+extension CurrencySelectionViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            fatalError()
+        }
+        
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        fatalError()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        fatalError()
     }
 }
