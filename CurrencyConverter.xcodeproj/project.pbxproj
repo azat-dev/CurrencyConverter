@@ -15,6 +15,8 @@
 		AA1439952A2FD41600D8F604 /* DataCoderJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439942A2FD41600D8F604 /* DataCoderJSONTests.swift */; };
 		AA1439982A2FD48900D8F604 /* DataCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439972A2FD48900D8F604 /* DataCoder.swift */; };
 		AA14399A2A2FD48E00D8F604 /* DataCoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439992A2FD48E00D8F604 /* DataCoderJSON.swift */; };
+		AA14399C2A2FD5D700D8F604 /* LocalStorageFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14399B2A2FD5D700D8F604 /* LocalStorageFilesTests.swift */; };
+		AA14399E2A2FD61000D8F604 /* LocalStorageFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14399D2A2FD61000D8F604 /* LocalStorageFiles.swift */; };
 		AA40341F2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */; };
 		AA4034222A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */; };
 		AA4034262A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */; };
@@ -87,6 +89,8 @@
 		AA1439942A2FD41600D8F604 /* DataCoderJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoderJSONTests.swift; sourceTree = "<group>"; };
 		AA1439972A2FD48900D8F604 /* DataCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoder.swift; sourceTree = "<group>"; };
 		AA1439992A2FD48E00D8F604 /* DataCoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoderJSON.swift; sourceTree = "<group>"; };
+		AA14399B2A2FD5D700D8F604 /* LocalStorageFilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageFilesTests.swift; sourceTree = "<group>"; };
+		AA14399D2A2FD61000D8F604 /* LocalStorageFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageFiles.swift; sourceTree = "<group>"; };
 		AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModel.swift; sourceTree = "<group>"; };
 		AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModel.swift; sourceTree = "<group>"; };
 		AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModelTests.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 			children = (
 				AA1439962A2FD48100D8F604 /* DataCoder */,
 				AA1439912A2FD3BD00D8F604 /* LocalStorage.swift */,
+				AA14399D2A2FD61000D8F604 /* LocalStorageFiles.swift */,
 			);
 			path = LocalStorage;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				AA1439942A2FD41600D8F604 /* DataCoderJSONTests.swift */,
+				AA14399B2A2FD5D700D8F604 /* LocalStorageFilesTests.swift */,
 			);
 			path = LocalStorage;
 			sourceTree = "<group>";
@@ -740,6 +746,7 @@
 				AA4034302A2F626000F4E5DD /* CurrencySelectionItemCell.swift in Sources */,
 				AA4A06DC2A2CF92800E215BD /* HTTPClientTaskImpl.swift in Sources */,
 				AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */,
+				AA14399E2A2FD61000D8F604 /* LocalStorageFiles.swift in Sources */,
 				AAC875992A2BD16800317B74 /* CurrencySelectionViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA1439982A2FD48900D8F604 /* DataCoder.swift in Sources */,
@@ -787,6 +794,7 @@
 				AA4034262A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift in Sources */,
 				AA5D83972A2EFB02002EB67B /* HTTPClientTaskMock.swift in Sources */,
 				AA5D83992A2EFB0D002EB67B /* HTTPClientMock.swift in Sources */,
+				AA14399C2A2FD5D700D8F604 /* LocalStorageFilesTests.swift in Sources */,
 				AA14398F2A2FCD6600D8F604 /* BinaryLocalStorageImplTests.swift in Sources */,
 				AA1439952A2FD41600D8F604 /* DataCoderJSONTests.swift in Sources */,
 			);
