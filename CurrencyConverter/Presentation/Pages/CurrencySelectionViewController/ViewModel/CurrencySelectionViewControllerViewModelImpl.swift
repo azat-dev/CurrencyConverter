@@ -44,14 +44,22 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         self.onFailLoad = onFailLoad
         self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
     }
-    
-    // MARK: - Methods
+}
+
+// MARK: - Output Methods
+
+extension CurrencySelectionViewControllerViewModelImpl {
     
     public func getItem(at index: Int) -> CurrencySelectionItemViewModel? {
         
         let itemId = itemsIds.value[index]
         return itemsById?[itemId]
     }
+}
+
+// MARK: - Input Methods
+
+extension CurrencySelectionViewControllerViewModelImpl {
     
     public func toggleSelection(at index: Int) {
 
@@ -96,5 +104,13 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         
         itemsIds.value = currencies.map { $0.code }
         isLoading.value = false
+    }
+    
+    public func filterItems(by text: String) {
+        fatalError()
+    }
+    
+    public func removeFilter() {
+        fatalError()
     }
 }

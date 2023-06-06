@@ -218,6 +218,114 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         )
     }
     
+    func test_filterItems__empty_text() async throws {
+        
+        // Given
+        let currencies = anyCurrencies()
+        
+        let sut = createSUT(initialSelectedCurrency: nil)
+        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        await sut.viewModel.load()
+        
+        // When
+        await sut.viewModel.filterItems(by: "")
+        
+        // Then
+        let allItems = currencies.map { $0.code }
+        
+        let expectedItemsSequence = [
+            [],
+            allItems,
+            allItems
+        ]
+        
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
+    }
+    
+    func test_filterItems__not_empty_text__by_title() async throws {
+        
+        // Given
+        let currencies = anyCurrencies()
+        
+        let sut = createSUT(initialSelectedCurrency: nil)
+        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        await sut.viewModel.load()
+        
+        let filteredItem = currencies.first!
+        
+        // When
+        await sut.viewModel.filterItems(by: filteredItem.title.lowercased())
+        
+        // Then
+        let allItems = currencies.map { $0.code }
+        
+        let expectedItemsSequence = [
+            [],
+            allItems,
+            [filteredItem.code]
+        ]
+        
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
+    }
+    
+    func test_filterItems__not_empty_text__by_code() async throws {
+        
+        // Given
+        let currencies = anyCurrencies()
+        
+        let sut = createSUT(initialSelectedCurrency: nil)
+        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        await sut.viewModel.load()
+        
+        let filteredItem = currencies.first!
+        
+        // When
+        await sut.viewModel.filterItems(by: filteredItem.code.lowercased())
+        
+        // Then
+        let allItems = currencies.map { $0.code }
+        
+        let expectedItemsSequence = [
+            [],
+            allItems,
+            [filteredItem.code]
+        ]
+        
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
+    }
+    
+    func test_removeFilter() async throws {
+        
+        // Given
+        let currencies = anyCurrencies()
+        
+        let filteredItem = currencies.first!
+        
+        let sut = createSUT(initialSelectedCurrency: nil)
+        sut.listSortedCurrenciesUseCase.listWillReturn = .success(currencies)
+        
+        await sut.viewModel.load()
+        await sut.viewModel.filterItems(by: filteredItem.code.lowercased())
+        
+        // When
+        sut.viewModel.removeFilter()
+        
+        // Then
+        let allItems = currencies.map { $0.code }
+        
+        let expectedItemsSequence = [
+            [],
+            allItems,
+            [filteredItem.code],
+            allItems
+        ]
+        
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
+    }
+    
     // MARK: - Helpers
     
     func verifyActiveFlags(

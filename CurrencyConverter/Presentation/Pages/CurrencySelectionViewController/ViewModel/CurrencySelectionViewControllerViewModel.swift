@@ -26,6 +26,10 @@ public protocol CurrencySelectionViewControllerViewModelInput {
     func load() async
     
     func toggleSelection(at index: Int)
+    
+    func filterItems(by text: String) async
+    
+    func removeFilter()
 }
 
 public protocol CurrencySelectionViewControllerViewModel:
