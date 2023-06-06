@@ -21,7 +21,7 @@ public final class CurrencySelectionItemCell: UITableViewCell {
     private let textGroup = UIStackView()
     private let titleLabel = UILabel()
     private let descritionLabel = UILabel()
-    private let iconImageView = UIImageView()
+    private let flagLabel = UILabel()
     private let bottomBorder = UIView()
     
     // MARK: - Initializers
@@ -55,6 +55,7 @@ extension CurrencySelectionItemCell {
         
         titleLabel.text = viewModel.title
         descritionLabel.text = viewModel.description
+        flagLabel.text = viewModel.emoji
 //        coverImageView.image = viewModel.image
     }
 }
@@ -71,7 +72,7 @@ extension CurrencySelectionItemCell {
         textGroup.addArrangedSubview(descritionLabel)
         
         contentView.addSubview(textGroup)
-        contentView.addSubview(iconImageView)
+        contentView.addSubview(flagLabel)
         contentView.addSubview(bottomBorder)
     }
 }
@@ -86,7 +87,7 @@ extension CurrencySelectionItemCell {
         backgroundColor = .clear
         
         Styles.apply(contentView: contentView)
-        Styles.apply(iconImageView: iconImageView)
+        Styles.apply(flagLabel: flagLabel)
         Styles.apply(titleLabel: titleLabel)
         Styles.apply(descriptionLabel: descritionLabel)
         Styles.apply(bottomBorder: bottomBorder)
@@ -101,7 +102,7 @@ extension CurrencySelectionItemCell {
         
         Layout.apply(
             contentView: contentView,
-            iconImageView: iconImageView,
+            flagLabel: flagLabel,
             textGroup: textGroup,
             titleLabel: titleLabel,
             descriptionLabel: descritionLabel,

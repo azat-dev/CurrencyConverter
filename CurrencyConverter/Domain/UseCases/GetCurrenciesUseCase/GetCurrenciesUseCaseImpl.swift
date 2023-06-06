@@ -38,7 +38,7 @@ public final class GetCurrenciesUseCaseImpl: GetCurrenciesUseCase {
         var resultCurrencies = [CurrencyCode: Currency]()
         
         let cleanedSearchText = searchText?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        
+
         for (code, title) in currencies {
             
             if
@@ -53,7 +53,13 @@ public final class GetCurrenciesUseCaseImpl: GetCurrenciesUseCase {
                 }
             }
             
-            resultCurrencies[code] = .init(code: code, title: title)
+            let code = code.uppercased()
+            
+            resultCurrencies[code] = .init(
+                code: code,
+                title: title,
+                emoji: currenciesEmojies[code] ?? "🏳️"
+            )
         }
         
         return .success(resultCurrencies)

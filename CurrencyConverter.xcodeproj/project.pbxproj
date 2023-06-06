@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */; };
 		AA40341F2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */; };
 		AA4034222A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */; };
 		AA4034262A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesEmojies.swift; sourceTree = "<group>"; };
 		AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModel.swift; sourceTree = "<group>"; };
 		AA4034212A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModel.swift; sourceTree = "<group>"; };
 		AA4034252A2F361500F4E5DD /* CurrencySelectionItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionItemViewModelTests.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 		AA5D839E2A2EFC80002EB67B /* GetCurrenciesUseCase */ = {
 			isa = PBXGroup;
 			children = (
+				AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */,
 				AA5D839F2A2EFCBA002EB67B /* GetCurrenciesUseCase.swift */,
 				AA5D83A42A2EFD72002EB67B /* GetCurrenciesUseCaseImpl.swift */,
 			);
@@ -680,6 +683,7 @@
 				AA4034222A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift in Sources */,
 				AA4034322A2F65FD00F4E5DD /* CurrencySelectionItemCell+Styles.swift in Sources */,
 				AA5D83AB2A2F0560002EB67B /* ListSortedCurrenciesUseCase.swift in Sources */,
+				AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

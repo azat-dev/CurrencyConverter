@@ -16,6 +16,7 @@ public struct CurrencySelectionItemViewModel {
     public let id: CurrencyCode
     public let title: String
     public let description: String
+    public let emoji: String
     
     // MARK: - Initializers
     
@@ -23,12 +24,14 @@ public struct CurrencySelectionItemViewModel {
         id: CurrencyCode,
         isActive: Bool,
         title: String,
-        description: String
+        description: String,
+        emoji: String
     ) {
         self.id = id
         self.isActive = .init(isActive)
         self.title = title
         self.description = description
+        self.emoji = emoji
     }
     
     // MARK: - Methods

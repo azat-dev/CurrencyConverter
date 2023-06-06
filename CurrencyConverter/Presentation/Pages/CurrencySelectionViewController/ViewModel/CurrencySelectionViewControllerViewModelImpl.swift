@@ -100,7 +100,8 @@ extension CurrencySelectionViewControllerViewModelImpl {
                 id: id,
                 isActive: id == activeItemId,
                 title: currency.code,
-                description: currency.title
+                description: currency.title,
+                emoji: currency.emoji
             )
         }
         

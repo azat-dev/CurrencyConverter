@@ -13,14 +13,17 @@ public struct Currency: Equatable {
     
     public let code: String
     public let title: String
+    public let emoji: String
     
     // MARK: - Initializers
     
     public init(
         code: String,
-        title: String
+        title: String,
+        emoji: String
     ) {
         self.code = code
         self.title = title
+        self.emoji = emoji
     }
 }

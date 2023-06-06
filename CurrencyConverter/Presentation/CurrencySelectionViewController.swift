@@ -134,6 +134,7 @@ extension CurrencySelectionViewController {
     func setupSearchBar() {
         
         searchBar.delegate = self
+        searchBar.placeholder = "Search for a currency"
         view.addSubview(searchBar)
     }
     
@@ -208,8 +209,12 @@ extension CurrencySelectionViewController {
 extension CurrencySelectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         if let searchText = searchBar.text {
-            fatalError()
+            
+            Task(priority: .userInitiated) {
+                await viewModel?.filterItems(by: searchText)
+            }
         }
         
         searchBar.resignFirstResponder()
@@ -217,12 +222,18 @@ extension CurrencySelectionViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        fatalError()
+        
+        Task(priority: .userInitiated) {
+            await viewModel?.removeFilter()
+        }
+        
         searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        fatalError()
+        Task(priority: .userInitiated) {
+            await viewModel?.filterItems(by: searchText)
+        }
     }
 }

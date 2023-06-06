@@ -24,14 +24,14 @@ extension CurrencySelectionItemCell {
         
         static func apply(
             contentView: UIView,
-            iconImageView: UIImageView,
+            flagLabel: UILabel,
             textGroup: UIStackView,
             titleLabel: UILabel,
             descriptionLabel: UILabel,
             bottomBorder: UIView
         ) {
             
-            iconImageView.translatesAutoresizingMaskIntoConstraints = false
+            flagLabel.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             textGroup.translatesAutoresizingMaskIntoConstraints = false
@@ -39,16 +39,16 @@ extension CurrencySelectionItemCell {
             
             NSLayoutConstraint.activate([
                 
-                iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
-                iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
+                flagLabel.heightAnchor.constraint(equalToConstant: imageSize),
+                flagLabel.widthAnchor.constraint(equalToConstant: imageSize),
                 
-                iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
-                iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                iconImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
-                iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
+                flagLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+                flagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                flagLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
+                flagLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
 
-                textGroup.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
-                textGroup.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 10),
+                textGroup.centerYAnchor.constraint(equalTo: flagLabel.centerYAnchor),
+                textGroup.leftAnchor.constraint(equalTo: flagLabel.rightAnchor, constant: 10),
                 textGroup.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
                 textGroup.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
                 textGroup.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),

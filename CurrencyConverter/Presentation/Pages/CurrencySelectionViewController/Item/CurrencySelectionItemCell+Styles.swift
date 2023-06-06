@@ -25,13 +25,14 @@ extension CurrencySelectionItemCell {
         
         static func apply(contentView: UIView) {
             
-            contentView.backgroundColor = .clear
+            contentView.backgroundColor = .white
         }
         
-        static func apply(iconImageView: UIImageView) {
-        
-            iconImageView.layer.cornerRadius = 5
-            iconImageView.clipsToBounds = true
+        static func apply(flagLabel: UILabel) {
+
+            flagLabel.sizeToFit()
+            flagLabel.textAlignment = .center
+            flagLabel.font = .preferredFont(forTextStyle: .largeTitle)
         }
 
         static func apply(titleLabel: UILabel) {
