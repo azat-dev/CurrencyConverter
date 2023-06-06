@@ -27,16 +27,47 @@ public final class LocalStorageFiles: LocalStorage {
     
     public func put<T>(key: String, value: T) async -> Result<Void, Error> where T: Codable {
         
-        fatalError()
+        do {
+            
+            let encodedData = try coder.encode(value)
+            return await binaryLocalStorage.put(key: key, value: encodedData)
+            
+        } catch {
+            return.failure(error)
+        }
     }
     
     public func get<T>(key: String, as type: T.Type) async -> Result<T?, Error> where T: Codable {
         
-        fatalError()
+        let result = await binaryLocalStorage.get(key: key)
+        
+        switch result {
+        case .failure(let error):
+            return .failure(error)
+            
+        case .success(let encodedData):
+            
+            return autoreleasepool {
+                
+                guard let encodedData = encodedData else {
+                    return .success(nil)
+                }
+                
+                do {
+                    
+                    let result = try coder.decode(encodedData, as: T.self)
+                    
+                    return .success(result)
+                    
+                } catch {
+                    return .failure(error)
+                }
+            }
+        }
     }
     
     public func delete(key: String) async -> Result<Void, Error> {
         
-        fatalError()
+        return await binaryLocalStorage.delete(key: key)
     }
 }
