@@ -10,8 +10,9 @@ import Combine
 
 public protocol CurrencySelectionViewControllerViewModelOutput {
     
-    
     // MARK: - Properties
+    
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
     
     var itemsIds: CurrentValueSubject<[CurrencyCode], Never> { get }
     
@@ -19,4 +20,15 @@ public protocol CurrencySelectionViewControllerViewModelOutput {
     
     func getItem(at index: Int) -> CurrencySelectionItemViewModel?
 }
+
+public protocol CurrencySelectionViewControllerViewModelInput {
+    
+    func load() async
+    
+    func toggleSelection(at index: Int)
+}
+
+public protocol CurrencySelectionViewControllerViewModel:
+    CurrencySelectionViewControllerViewModelOutput,
+    CurrencySelectionViewControllerViewModelInput {}
 
