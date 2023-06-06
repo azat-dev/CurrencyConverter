@@ -230,7 +230,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         let sut = createSUT(initialSelectedCurrency: nil)
         sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
             
-            guard let searchText = searchText else {
+            guard let _ = searchText else {
                 return .success(currencies)
             }
             
