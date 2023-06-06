@@ -16,9 +16,10 @@ final class CurrencySelectionItemViewModelTests: XCTestCase {
     func createSUT(isActive: Bool) -> SUT {
 
         return CurrencySelectionItemViewModel(
+            id: "USD",
             isActive: isActive,
-            code: "USD",
-            title: "Dollar"
+            title: "USD",
+            description: "Dollar"
         )
     }
     

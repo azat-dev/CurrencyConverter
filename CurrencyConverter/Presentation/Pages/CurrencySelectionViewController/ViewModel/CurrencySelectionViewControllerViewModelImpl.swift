@@ -65,7 +65,7 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         let newActiveItem = getItem(at: index)
         newActiveItem?.activate()
         
-        activeItemId = newActiveItem?.code
+        activeItemId = newActiveItem?.id
     }
     
     public func load() async {
@@ -84,12 +84,13 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         
         itemsById = currencies.reduce(into: [CurrencyCode: CurrencySelectionItemViewModel]()) { partialResult, currency in
             
-            let code = currency.code
+            let id = currency.code
             
-            partialResult[code] = .init(
-                isActive: code == activeItemId,
-                code: code,
-                title: currency.title
+            partialResult[id] = .init(
+                id: id,
+                isActive: id == activeItemId,
+                title: currency.code,
+                description: currency.title
             )
         }
         

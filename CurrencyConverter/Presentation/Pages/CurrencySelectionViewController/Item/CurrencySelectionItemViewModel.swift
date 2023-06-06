@@ -13,19 +13,22 @@ public struct CurrencySelectionItemViewModel {
     // MARK: - Properties
     
     public let isActive: CurrentValueSubject<Bool, Never>
-    public let code: String
+    public let id: CurrencyCode
     public let title: String
+    public let description: String
     
     // MARK: - Initializers
     
     public init(
+        id: CurrencyCode,
         isActive: Bool,
-        code: String,
-        title: String
+        title: String,
+        description: String
     ) {
+        self.id = id
         self.isActive = .init(isActive)
-        self.code = code
         self.title = title
+        self.description = description
     }
     
     // MARK: - Methods
