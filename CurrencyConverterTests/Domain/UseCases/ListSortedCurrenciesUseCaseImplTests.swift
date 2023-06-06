@@ -63,10 +63,10 @@ final class ListSortedCurrenciesUseCaseImplTests: XCTestCase {
         let sut = createSUT()
         
         let currencies: [CurrencyCode: Currency] = [
-            "USD": .init(code: "USD", title: "Dollar"),
-            "GBP": .init(code: "GBP", title: "Pounds"),
-            "YEN": .init(code: "YEN", title: "JAPA"),
-            "AUD": .init(code: "AUD", title: "Australlian Dollar"),
+            "USD": .init(code: "USD", title: "Dollar", emoji: ""),
+            "GBP": .init(code: "GBP", title: "Pounds", emoji: ""),
+            "YEN": .init(code: "YEN", title: "JAPA", emoji: ""),
+            "AUD": .init(code: "AUD", title: "Australlian Dollar", emoji: ""),
         ]
         
         sut.getCurrenciesUseCase.getWillReturn = {

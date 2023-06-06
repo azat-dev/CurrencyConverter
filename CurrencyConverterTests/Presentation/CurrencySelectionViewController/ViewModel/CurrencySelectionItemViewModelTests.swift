@@ -19,7 +19,8 @@ final class CurrencySelectionItemViewModelTests: XCTestCase {
             id: "USD",
             isActive: isActive,
             title: "USD",
-            description: "Dollar"
+            description: "Dollar",
+            emoji: ""
         )
     }
     

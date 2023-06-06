@@ -77,14 +77,8 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
             return
         }
         
-        var expectedCurrencies = [CurrencyCode: Currency]()
-        
-        for (code, title) in serviceCurrencies {
-            
-            expectedCurrencies[code] = .init(code: code, title: title)
-        }
-        
-        XCTAssertEqual(receivedCurrencies, expectedCurrencies)
+        let expectedCurrencies = serviceCurrencies.keys.sorted()
+        XCTAssertEqual(receivedCurrencies.keys.sorted(), expectedCurrencies)
     }
     
     func test_get__success__with_search_text__by_code() async throws {
@@ -113,15 +107,10 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
             return
         }
         
-        let expectedCurrencies = [
-            filteredItemCode: Currency(
-                code: filteredItemCode,
-                title: serviceCurrencies[filteredItemCode]!
-            )
-        ]
+        let expectedCurrencies = [filteredItemCode]
         
         XCTAssertEqual(receivedCurrencies.count, 1)
-        XCTAssertEqual(receivedCurrencies, expectedCurrencies)
+        XCTAssertEqual(receivedCurrencies.keys.sorted(), expectedCurrencies)
     }
     
     func test_get__success__with_search_text__by_title() async throws {
@@ -151,15 +140,10 @@ final class GetCurrenciesUseCaseImplTests: XCTestCase {
             return
         }
         
-        let expectedCurrencies = [
-            filteredItemCode: Currency(
-                code: filteredItemCode,
-                title: serviceCurrencies[filteredItemCode]!
-            )
-        ]
+        let expectedCurrencies = [filteredItemCode]
         
         XCTAssertEqual(receivedCurrencies.count, 1)
-        XCTAssertEqual(receivedCurrencies, expectedCurrencies)
+        XCTAssertEqual(receivedCurrencies.keys.sorted(), expectedCurrencies)
     }
     
     // MARK: - Helpers

@@ -28,7 +28,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
     func createSUT(initialSelectedCurrency: CurrencyCode?) -> SUT {
         
         let listSortedCurrenciesUseCase = ListSortedCurrenciesUseCaseMock()
-
+        
         let capturedIsLoadingSequence = ValueStore<[Bool]>([])
         let capturedItemsIdsSequence = ValueStore<[[CurrencyCode]]>([])
         
@@ -72,7 +72,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
             
             var newValues = capturedIsLoadingSequence.value
             newValues.append(isLoading)
-
+            
             capturedIsLoadingSequence.value = newValues
             
         }.store(in: &observers)
@@ -81,7 +81,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
             
             var newValues = capturedItemsIdsSequence.value
             newValues.append(itemsIds)
-
+            
             capturedItemsIdsSequence.value = newValues
             
         }.store(in: &observers)
@@ -383,9 +383,21 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
     func anyCurrencies() -> [Currency] {
         
         return [
-            .init(code: "USD", title: "Dollar"),
-            .init(code: "GBP", title: "Pounds"),
-            .init(code: "YEN", title: "Japan Yen"),
+            .init(
+                code: "USD",
+                title: "Dollar",
+                emoji: ""
+            ),
+            .init(
+                code: "GBP",
+                title: "Pounds",
+                emoji: ""
+            ),
+            .init(
+                code: "YEN",
+                title: "Japan Yen",
+                emoji: ""
+            ),
         ]
     }
 }
