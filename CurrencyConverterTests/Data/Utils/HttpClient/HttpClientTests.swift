@@ -9,7 +9,7 @@ import Foundation
 import XCTest
 import CurrencyConverter
 
-final class HttpClientTests: XCTestCase {
+final class HTTPClientTests: XCTestCase {
     
     typealias SUT = HTTPClient
     

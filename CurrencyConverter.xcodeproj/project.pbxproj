@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA4A067F2A2C54D700E215BD /* HttpClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A067E2A2C54D700E215BD /* HttpClientTests.swift */; };
+		AA4A067F2A2C54D700E215BD /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A067E2A2C54D700E215BD /* HTTPClientTests.swift */; };
 		AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */; };
 		AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06852A2C5CC600E215BD /* HTTPClient.swift */; };
 		AA4A06882A2C5CED00E215BD /* HTTPClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */; };
@@ -51,7 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AA4A067E2A2C54D700E215BD /* HttpClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientTests.swift; sourceTree = "<group>"; };
+		AA4A067E2A2C54D700E215BD /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		AA4A06832A2C5CB300E215BD /* HTTPClientTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTask.swift; sourceTree = "<group>"; };
 		AA4A06852A2C5CC600E215BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		AA4A06872A2C5CED00E215BD /* HTTPClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientImpl.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				AA4A06DF2A2D1EF400E215BD /* Helpers */,
-				AA4A067E2A2C54D700E215BD /* HttpClientTests.swift */,
+				AA4A067E2A2C54D700E215BD /* HTTPClientTests.swift */,
 				AA4A06DD2A2D183A00E215BD /* HTTPClientTaskTests.swift */,
 			);
 			path = HttpClient;
@@ -528,7 +528,7 @@
 			files = (
 				AA4A06DE2A2D183A00E215BD /* HTTPClientTaskTests.swift in Sources */,
 				AA4A06F02A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift in Sources */,
-				AA4A067F2A2C54D700E215BD /* HttpClientTests.swift in Sources */,
+				AA4A067F2A2C54D700E215BD /* HTTPClientTests.swift in Sources */,
 				AA4A06E52A2D269700E215BD /* CurrenciesEndpointTests.swift in Sources */,
 				AAC875AC2A2BD16A00317B74 /* CurrencyConverterTests.swift in Sources */,
 				AA4A06F92A2D321E00E215BD /* CurrenciesServiceTests.swift in Sources */,
