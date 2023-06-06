@@ -18,7 +18,7 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     
-    private var items: [CurrencySelectionItemViewModel]?
+    private var itemsById: [CurrencyCode: CurrencySelectionItemViewModel]?
     
     private var activeItemId: CurrencyCode?
     
@@ -49,12 +49,23 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     public func getItem(at index: Int) -> CurrencySelectionItemViewModel? {
         
-        return items?[index]
+        let itemId = itemsIds.value[index]
+        return itemsById?[itemId]
     }
     
     public func toggleSelection(at index: Int) {
 
-        fatalError()
+        if
+            let activeItemId = activeItemId,
+            let prevSelectedItem = itemsById?[activeItemId]
+        {
+            prevSelectedItem.deactivate()
+        }
+        
+        let newActiveItem = getItem(at: index)
+        newActiveItem?.activate()
+        
+        activeItemId = newActiveItem?.code
     }
     
     public func load() async {
@@ -71,10 +82,13 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
             return
         }
         
-        items = currencies.map { currency in
-            return .init(
-                isActive: currency.code == activeItemId,
-                code: currency.code,
+        itemsById = currencies.reduce(into: [CurrencyCode: CurrencySelectionItemViewModel]()) { partialResult, currency in
+            
+            let code = currency.code
+            
+            partialResult[code] = .init(
+                isActive: code == activeItemId,
+                code: code,
                 title: currency.title
             )
         }
