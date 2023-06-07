@@ -32,7 +32,6 @@ public final class CurrenciesServiceImpl: CurrenciesService {
     
     public func fetch() async -> Result<[CurrencyCode : CurrencyTitle], CurrenciesServiceError> {
         
-        
         let endpointURL = CurrenciesEndpoint.get.url(baseURL: baseURL)
         
         let httpResult = await httpClient.get(from: endpointURL).result()

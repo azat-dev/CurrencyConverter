@@ -19,7 +19,7 @@ final class LatestRatesServiceImplTests: XCTestCase {
         dataMapper: LatestRatesEndpointDataMapperMock
     )
     
-    func createSUT(baseURL: URL) -> SUT {
+    func createSUT(baseURL: URL, appId: String) -> SUT {
         
         let httpTask = HTTPClientTaskMock()
         let httpClient = HTTPClientMock()
@@ -32,6 +32,7 @@ final class LatestRatesServiceImplTests: XCTestCase {
         
         let service = LatestRatesServiceImpl(
             baseURL: baseURL,
+            appId: appId,
             httpClient: httpClient,
             dataMapper: dataMapper
         )
@@ -50,7 +51,8 @@ final class LatestRatesServiceImplTests: XCTestCase {
         
         // Given
         let url = anyBaseURL()
-        let sut = createSUT(baseURL: url)
+        let appId = "APP_ID"
+        let sut = createSUT(baseURL: url, appId: appId)
         
         sut.httpTask.resultWillReturn = {
             .failure(NSError(domain: "Some Error", code: 0))
@@ -72,7 +74,8 @@ final class LatestRatesServiceImplTests: XCTestCase {
         
         // Given
         let url = anyBaseURL()
-        let sut = createSUT(baseURL: url)
+        let appId = "APP_ID"
+        let sut = createSUT(baseURL: url, appId: appId)
         
         let testData = "data".data(using: .utf8)!
         let expectedRates = [
