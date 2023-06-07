@@ -9,7 +9,12 @@ import Foundation
 
 public final class LatestRatesEndpointDataMapperImpl: LatestRatesEndpointDataMapper {
     
-    // MARK: - Properties
+    // MARK: - Types
+    
+    private struct RatesData: Codable {
+        
+        let rates: [CurrencyCode: Double]
+    }
     
     // MARK: - Initializers
     
@@ -20,6 +25,16 @@ public final class LatestRatesEndpointDataMapperImpl: LatestRatesEndpointDataMap
     // MARK: - Methods
     
     public func map(_ data: Data) -> Result<[CurrencyCode : Double], LatestRatesEndpointDataMapperError> {
-        fatalError()
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            
+            let result = try decoder.decode(RatesData.self, from: data)
+            return .success(result.rates)
+            
+        } catch {
+            return .failure(.invalidData)
+        }
     }
 }

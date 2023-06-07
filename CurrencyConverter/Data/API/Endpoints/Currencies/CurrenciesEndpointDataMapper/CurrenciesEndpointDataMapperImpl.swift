@@ -21,7 +21,6 @@ public final class CurrenciesEndpointDataMapperImpl: CurrenciesEndpointDataMappe
     
     public func map(_ data: Data) -> Result<[CurrencyCode : CurrencyTitle], CurrenciesEndpointDataMapperError> {
         
-        
         let decoder = JSONDecoder()
         
         do {
