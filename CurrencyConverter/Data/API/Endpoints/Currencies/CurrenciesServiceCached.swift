@@ -9,12 +9,31 @@ import Foundation
 
 public final class CurrenciesServiceCached: CurrenciesService {
     
+    // MARK: - Types
+    
+    public struct CachedValue: Codable {
+        
+        // MARK: - Properties
+        
+        public let date: Date
+        public let value: [CurrencyCode: CurrencyTitle]
+        
+        // MARK: - Initializers
+        
+        public init(date: Date, value: [CurrencyCode : CurrencyTitle]) {
+            self.date = date
+            self.value = value
+        }
+    }
+    
     // MARK: - Properties
     
     private let currenciesService: CurrenciesService
     private let timeout: TimeInterval
     private let localStorage: LocalStorage
     private let dateProvider: DateProvider
+    
+    private static let cachedValueKey = "currencies"
     
     // MARK: - Initializers
     
@@ -35,6 +54,47 @@ public final class CurrenciesServiceCached: CurrenciesService {
     
     public func fetch() async -> Result<[CurrencyCode : CurrencyTitle], CurrenciesServiceError> {
         
-        fatalError()
+        let currentDate = dateProvider.getCurrentDate()
+        
+        let cachedDataResult = await localStorage.get(
+            key: Self.cachedValueKey,
+            as: CachedValue.self
+        )
+        
+        
+        if
+            case .success(let cachedData) = cachedDataResult,
+            let cachedData = cachedData
+        {
+            let deadline = cachedData.date.addingTimeInterval(timeout)
+            
+            if currentDate < deadline {
+                return .success(cachedData.value)
+            }
+        }
+        
+        let fetchResult = await currenciesService.fetch()
+        
+        guard case .success(let currencies) = fetchResult else {
+            
+            if
+                case .success(let cachedData) = cachedDataResult,
+                let cachedData = cachedData
+            {
+                return .success(cachedData.value)
+            }
+            
+            return .failure(.internalError)
+        }
+
+        await localStorage.put(
+            key: Self.cachedValueKey,
+            value: CachedValue(
+                date: currentDate,
+                value: currencies
+            )
+        )
+        
+        return .success(currencies)
     }
 }

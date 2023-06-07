@@ -48,7 +48,12 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         // Given
         let sut = createSUT(timeout: 1)
         
+        sut.dateProvider.getCurrentDateWillReturn = Date()
         sut.currenciesService.fetchWillReturn = { .failure(.internalError) }
+        
+        sut.localStorage.getWillReturn = { _ in
+            Result<CurrenciesServiceCached.CachedValue?, Error>.failure(NSError()) as Any
+        }
         
         // When
         let result = await sut.service.fetch()
@@ -71,12 +76,20 @@ final class CurrenciesServiceCachedTests: XCTestCase {
             "USD": "Dollar"
         ]
         
+        let currentDate = Date()
+        
+        sut.dateProvider.getCurrentDateWillReturn = currentDate
+        
+        sut.localStorage.getWillReturn = { _ in
+            Result<CurrenciesServiceCached.CachedValue?, Error>.failure(NSError()) as Any
+        }
+        
         sut.currenciesService.fetchWillReturn = {
             return .success(expectedCurrencies)
         }
         
         sut.localStorage.putWillReturn = { _, _ in .success(())}
-
+        
         // When
         let result = await sut.service.fetch()
         
@@ -92,14 +105,15 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         // Must put data in cache
         XCTAssertEqual(sut.currenciesService.fetchCount, 1)
         XCTAssertEqual(sut.localStorage.capturedPut.count, 1)
-        XCTAssertEqual(
-            sut.localStorage.capturedPut.map { $0.value as! [CurrencyCode: CurrencyTitle] },
-            [expectedCurrencies]
-        )
         
         // Given
         sut.localStorage.getWillReturn = { _ in
-            Result<[CurrencyCode: CurrencyTitle], Error>.success(expectedCurrencies) as Any
+            Result<CurrenciesServiceCached.CachedValue?, Error>.success(
+                .init(
+                    date: currentDate,
+                    value: expectedCurrencies
+                )
+            ) as Any
         }
         
         // When
@@ -116,7 +130,7 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         // Verify getting the data from the cache
         XCTAssertEqual(sut.currenciesService.fetchCount, 1)
         XCTAssertEqual(sut.localStorage.capturedPut.count, 1)
-        XCTAssertEqual(sut.localStorage.capturedGet.count, 1)
+        XCTAssertEqual(sut.localStorage.capturedGet.count, 2)
     }
     
     func test_fetch__invalidate_cache_by_time() async throws {
@@ -129,53 +143,63 @@ final class CurrenciesServiceCachedTests: XCTestCase {
             "USD": "Dollar"
         ]
         
-        sut.dateProvider.getCurrentDateWillReturn = Date()
+        let currentDate = Date()
+        
         sut.currenciesService.fetchWillReturn = {
             return .success(expectedCurrencies)
         }
         
-        // Trigger caching
-        let _ = await sut.service.fetch()
-        
         // Invalidate cache
         sut.dateProvider.getCurrentDateWillReturn = Date(timeIntervalSinceNow: timeout + 1)
+        sut.localStorage.putWillReturn = { _, _ in .success(())}
+        
+        sut.localStorage.getWillReturn = { _ in
+            Result<CurrenciesServiceCached.CachedValue?, Error>.success(
+                .init(
+                    date: currentDate,
+                    value: expectedCurrencies
+                )
+            ) as Any
+        }
         
         // When
-        let _ = await sut.currenciesService.fetch()
+        let _ = await sut.service.fetch()
         
         // Then
         // Must put new data in cache
-        XCTAssertEqual(sut.currenciesService.fetchCount, 2)
-        XCTAssertEqual(sut.localStorage.capturedPut.count, 2)
+        XCTAssertEqual(sut.currenciesService.fetchCount, 1)
+        XCTAssertEqual(sut.localStorage.capturedPut.count, 1)
     }
     
     func test_fetch__invalidate_cache_by_time__fail_fetch_during_update() async throws {
         
         // Given
         let timeout: TimeInterval = 1
+        let currentDate = Date()
         let sut = createSUT(timeout: timeout)
         
         let expectedCurrencies = [
             "USD": "Dollar"
         ]
         
-        sut.dateProvider.getCurrentDateWillReturn = Date()
-        sut.currenciesService.fetchWillReturn = {
-            return .success(expectedCurrencies)
-        }
-        
-        // Trigger caching
-        let _ = await sut.service.fetch()
-        
         sut.currenciesService.fetchWillReturn = {
             return .failure(.internalError)
+        }
+        
+        sut.localStorage.getWillReturn = { _ in
+            Result<CurrenciesServiceCached.CachedValue?, Error>.success(
+                .init(
+                    date: currentDate,
+                    value: expectedCurrencies
+                )
+            ) as Any
         }
         
         // Invalidate cache
         sut.dateProvider.getCurrentDateWillReturn = Date(timeIntervalSinceNow: timeout + 1)
         
         // When
-        let result = await sut.currenciesService.fetch()
+        let result = await sut.service.fetch()
         
         // Then
         guard case .success(let receivedCurrencies) = result else {
@@ -185,8 +209,8 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         
         // Must put data in cache
         XCTAssertEqual(receivedCurrencies, expectedCurrencies)
-        XCTAssertEqual(sut.currenciesService.fetchCount, 2)
-        XCTAssertEqual(sut.localStorage.capturedPut.count, 2)
+        XCTAssertEqual(sut.currenciesService.fetchCount, 1)
+        XCTAssertEqual(sut.localStorage.capturedPut.count, 0)
     }
 }
 
