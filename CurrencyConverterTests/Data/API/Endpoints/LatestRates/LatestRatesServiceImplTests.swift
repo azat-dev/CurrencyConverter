@@ -57,7 +57,7 @@ final class LatestRatesServiceImplTests: XCTestCase {
         sut.httpTask.resultWillReturn = {
             .failure(NSError(domain: "Some Error", code: 0))
         }
-
+        
         // When
         let result = await sut.service.fetch()
         
@@ -88,7 +88,7 @@ final class LatestRatesServiceImplTests: XCTestCase {
         }
         
         sut.dataMapper.willReturn = { _ in .success(expectedRates) }
-
+        
         // When
         let result = await sut.service.fetch()
         

@@ -64,6 +64,9 @@
 		AAA5F9752A313E0D0062AD3F /* LatestRatesServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F9742A313E0D0062AD3F /* LatestRatesServiceImpl.swift */; };
 		AAA5F9772A313E610062AD3F /* LatestRatesServiceImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F9762A313E610062AD3F /* LatestRatesServiceImplTests.swift */; };
 		AAA5F9792A313EC80062AD3F /* LatestRatesEndpointDataMapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F9782A313EC80062AD3F /* LatestRatesEndpointDataMapperMock.swift */; };
+		AAA5F9802A3140A60062AD3F /* CurrencyConverterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F97F2A3140A60062AD3F /* CurrencyConverterService.swift */; };
+		AAA5F9822A3141120062AD3F /* CurrencyConverterServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F9812A3141120062AD3F /* CurrencyConverterServiceImpl.swift */; };
+		AAA5F9842A3141770062AD3F /* CurrencyConverterServiceImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA5F9832A3141770062AD3F /* CurrencyConverterServiceImplTests.swift */; };
 		AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875942A2BD16800317B74 /* AppDelegate.swift */; };
 		AAC875972A2BD16800317B74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875962A2BD16800317B74 /* SceneDelegate.swift */; };
 		AAC875992A2BD16800317B74 /* CurrencySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC875982A2BD16800317B74 /* CurrencySelectionViewController.swift */; };
@@ -150,6 +153,9 @@
 		AAA5F9742A313E0D0062AD3F /* LatestRatesServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRatesServiceImpl.swift; sourceTree = "<group>"; };
 		AAA5F9762A313E610062AD3F /* LatestRatesServiceImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRatesServiceImplTests.swift; sourceTree = "<group>"; };
 		AAA5F9782A313EC80062AD3F /* LatestRatesEndpointDataMapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRatesEndpointDataMapperMock.swift; sourceTree = "<group>"; };
+		AAA5F97F2A3140A60062AD3F /* CurrencyConverterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterService.swift; sourceTree = "<group>"; };
+		AAA5F9812A3141120062AD3F /* CurrencyConverterServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterServiceImpl.swift; sourceTree = "<group>"; };
+		AAA5F9832A3141770062AD3F /* CurrencyConverterServiceImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterServiceImplTests.swift; sourceTree = "<group>"; };
 		AAC875912A2BD16800317B74 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC875942A2BD16800317B74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAC875962A2BD16800317B74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -538,6 +544,23 @@
 			path = LatestRatesService;
 			sourceTree = "<group>";
 		};
+		AAA5F97A2A31404E0062AD3F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AAA5F9832A3141770062AD3F /* CurrencyConverterServiceImplTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AAA5F97E2A31409D0062AD3F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AAA5F97F2A3140A60062AD3F /* CurrencyConverterService.swift */,
+				AAA5F9812A3141120062AD3F /* CurrencyConverterServiceImpl.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AAC875882A2BD16800317B74 = {
 			isa = PBXGroup;
 			children = (
@@ -605,6 +628,7 @@
 		AAC875C52A2BD18500317B74 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AAA5F97E2A31409D0062AD3F /* Services */,
 				AA4A06E92A2D29BC00E215BD /* Models */,
 				AA4A06DA2A2CF5B100E215BD /* API */,
 				AA4A06802A2C5C8700E215BD /* Utils */,
@@ -668,6 +692,7 @@
 		AAC875CC2A2BD23600317B74 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AAA5F97A2A31404E0062AD3F /* Services */,
 				AA4A06E22A2D247E00E215BD /* API */,
 				AA4A067C2A2C54B400E215BD /* Utils */,
 			);
@@ -832,6 +857,7 @@
 				AA4A06F72A2D31F100E215BD /* CurrenciesServiceImpl.swift in Sources */,
 				AA4A06F32A2D2D2B00E215BD /* CurrenciesEndpointDataMapperImpl.swift in Sources */,
 				AA4A06EC2A2D2A4800E215BD /* CurrenciesEndpointDataMapper.swift in Sources */,
+				AAA5F9822A3141120062AD3F /* CurrencyConverterServiceImpl.swift in Sources */,
 				AA4034342A2F660600F4E5DD /* CurrencySelectionItemCell+Layout.swift in Sources */,
 				AA4A06F52A2D315600E215BD /* CurrenciesService.swift in Sources */,
 				AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */,
@@ -854,6 +880,7 @@
 				AA4034322A2F65FD00F4E5DD /* CurrencySelectionItemCell+Styles.swift in Sources */,
 				AAA5F9662A313A330062AD3F /* LatestRatesEndpoint.swift in Sources */,
 				AA5D83AB2A2F0560002EB67B /* ListSortedCurrenciesUseCase.swift in Sources */,
+				AAA5F9802A3140A60062AD3F /* CurrencyConverterService.swift in Sources */,
 				AAA5F9732A313DDF0062AD3F /* LatestRatesService.swift in Sources */,
 				AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */,
 			);
@@ -871,6 +898,7 @@
 				AAA5F9772A313E610062AD3F /* LatestRatesServiceImplTests.swift in Sources */,
 				AA4A06E52A2D269700E215BD /* CurrenciesEndpointTests.swift in Sources */,
 				AAC875AC2A2BD16A00317B74 /* CurrencyConverterTests.swift in Sources */,
+				AAA5F9842A3141770062AD3F /* CurrencyConverterServiceImplTests.swift in Sources */,
 				AA4034282A2F389400F4E5DD /* CurrencySelectionViewControllerViewModelTests.swift in Sources */,
 				AA4A06F92A2D321E00E215BD /* CurrenciesServiceTests.swift in Sources */,
 				AA4A06E12A2D1EFC00E215BD /* URLProtocolStub.swift in Sources */,
