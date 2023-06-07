@@ -144,15 +144,7 @@ final class CurrencyConverterServiceImplTests: XCTestCase {
         ]
         
         XCTAssertEqual(convertedValues, expectedResult)
-    }
-    
-    // MARK: - Helpers
-    
-    private func anyURL() -> URL {
-        
-        return .init(string: "https://any_url.com")!
-    }
-
+    }    
 }
 
 // MARK: - Helpers

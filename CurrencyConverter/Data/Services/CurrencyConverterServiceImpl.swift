@@ -29,9 +29,36 @@ public final class CurrencyConverterServiceImpl: CurrencyConverterService {
     
     public func convert(
         amount: Double,
-        from targetCurrency: CurrencyCode
+        from sourceCurrency: CurrencyCode
     ) async -> Result<[CurrencyCode : Double], CurrencyConverterServiceError> {
         
-        fatalError()
+        let ratesResult = await latestRatesService.fetch()
+        
+        guard case .success(let rates) = ratesResult else {
+            return .failure(.internalError)
+        }
+
+        if sourceCurrency == baseCurrency {
+            return .success(rates)
+        }
+        
+        guard let sourceCurrencyRate = rates[sourceCurrency] else {
+            return .failure(.internalError)
+        }
+        
+        var resultValues = [CurrencyCode: Double]()
+        
+        for (currency, rate) in rates {
+            
+            if currency == sourceCurrency {
+                continue
+            }
+            
+            resultValues[currency] = amount * rate / sourceCurrencyRate
+        }
+        
+        resultValues[baseCurrency] = amount / sourceCurrencyRate
+        
+        return .success(resultValues)
     }
 }
