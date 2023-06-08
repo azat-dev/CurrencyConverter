@@ -107,7 +107,8 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
                 id: currency.code,
                 title: currency.code,
                 description: currency.title,
-                amount: String(format: "%.2f", convertedAmount)
+                amount: String(format: "%.2f", convertedAmount),
+                emoji: currency.emoji
             )
         }
         

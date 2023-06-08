@@ -15,6 +15,7 @@ public struct CurrencyConverterViewControllerItemViewModel: Equatable {
     public let title: String
     public let description: String
     public let amount: String
+    public let emoji: String
     
     // MARK: - Initializers
     
@@ -22,11 +23,13 @@ public struct CurrencyConverterViewControllerItemViewModel: Equatable {
         id: CurrencyCode,
         title: String,
         description: String,
-        amount: String
+        amount: String,
+        emoji: String
     ) {
         self.id = id
         self.title = title
         self.description = description
         self.amount = amount
+        self.emoji = emoji
     }
 }
