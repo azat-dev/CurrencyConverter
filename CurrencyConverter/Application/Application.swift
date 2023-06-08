@@ -6,42 +6,20 @@
 //
 
 import Foundation
-
-public struct ApplicationSettings {
-    
-    // MARK: - Properties
-    
-    public let baseURL: URL
-    public let appId: String
-    public let cacheDirectoryName: String
-    public let cacheRefreshTimeout: TimeInterval
-    public let baseCurrency: String
-    
-    // MARK: - Initializers
-
-    public init(
-        baseURL: URL,
-        appId: String,
-        cacheDirectoryName: String,
-        cacheRefreshTimeout: TimeInterval,
-        baseCurrency: String
-    ) {
-        self.baseURL = baseURL
-        self.appId = appId
-        self.cacheDirectoryName = cacheDirectoryName
-        self.cacheRefreshTimeout = cacheRefreshTimeout
-        self.baseCurrency = baseCurrency
-    }
-}
+import UIKit
 
 public final class Application {
     
     // MARK: - Properties
     
+    private let presenter: MainFlowPresenter
+    
     // MARK: - Initializers
     
-    public init() {
+    public init(settings: ApplicationSettings) {
         
+        let flowModel = Self.makeFlowModel(settings: settings)
+        presenter = Self.makePresenter(for: flowModel)
     }
     
     // MARK: - Methods
@@ -127,6 +105,23 @@ public final class Application {
             )
         )
     }
+    
+    private static func makePresenter(for flowModel: MainFlowModel) -> MainFlowPresenter {
+        
+        let selectCurrencyFlowPresenterFactory = SelectCurrencyFlowPresenterImplFactory()
+        
+        return MainFlowPresenterImpl(
+            flowModel: flowModel,
+            selectCurrencyFlowPresenterFactory: selectCurrencyFlowPresenterFactory
+        )
+    }
+    
+    public func present(at window: UIWindow) {
+        
+        presenter.present(at: window)
+    }
+    
+    // MARK: - Helpers
     
     private static func getApplicationDirectory() throws -> URL {
         

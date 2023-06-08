@@ -65,7 +65,10 @@ public final class MainFlowPresenterImpl: MainFlowPresenter {
         let vc = CurrencyConverterViewController()
         vc.viewModel = flowModel.currencyConverterViewControllerViewModel
         
+        rootNavigationController.pushViewController(vc, animated: false)
         window.rootViewController = rootNavigationController
+        
+        window.makeKeyAndVisible()
         
         flowModel.selectCurrencyFlowModel
             .receive(on: DispatchQueue.main)

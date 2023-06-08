@@ -47,29 +47,7 @@ final class CurrencySelectionViewController: UIViewController {
         
         setupViews()
         layout()
-        
-        let currenciesService = CurrenciesServiceImpl(
-            baseURL: URL(string: "https://openexchangerates.org")!,
-            httpClient: HTTPClientImpl(session: .shared),
-            dataMapper: CurrenciesEndpointDataMapperImpl()
-        )
-        
-        let getCurrenciesUseCase = GetCurrenciesUseCaseImpl(currenciesService: currenciesService)
-        
-        let listSortedCurrenciesUseCase = ListSortedCurrenciesCaseImpl(getCurrenciesUseCase: getCurrenciesUseCase)
-        
-        viewModel = CurrencySelectionViewControllerViewModelImpl(
-            initialSelectedCurrency: nil,
-            onSelect: { newCurrency in
-            },
-            onCancel: {
-                
-            },
-            onFailLoad: {
-                
-            },
-            listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
-        )
+        style()
         
         Task(priority: .userInitiated) {
             await viewModel?.load()
@@ -88,14 +66,14 @@ final class CurrencySelectionViewController: UIViewController {
         }
     }
     
-    private func update(itemsIds: [CurrencyCode]) {
+    private func update(itemsIds: [CurrencyCode], isFirstLoad: Bool) {
         
         var snapshot = NSDiffableDataSourceSnapshot<SectionId, ItemId>()
         
         snapshot.appendSections([Self.mainSectionId])
         snapshot.appendItems(itemsIds)
         
-        tableDataSource.apply(snapshot, animatingDifferences: true)
+        tableDataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func bind(to viewModel: ViewModel?) {
@@ -104,6 +82,8 @@ final class CurrencySelectionViewController: UIViewController {
             observers.removeAll()
             return
         }
+        
+        var isFirstLoad = true
         
         viewModel.isLoading
             .receive(on: DispatchQueue.main)
@@ -114,9 +94,15 @@ final class CurrencySelectionViewController: UIViewController {
         
         viewModel.itemsIds
             .receive(on: DispatchQueue.main)
+            .removeDuplicates()
             .sink { [weak self] itemsIds in
                 
-                self?.update(itemsIds: itemsIds)
+                self?.update(
+                    itemsIds: itemsIds,
+                    isFirstLoad: isFirstLoad
+                )
+                
+                isFirstLoad = false
             }.store(in: &observers)
     }
 }
@@ -201,6 +187,16 @@ extension CurrencySelectionViewController {
             searchBar: searchBar,
             tableView: tableView
         )
+    }
+}
+
+// MARK: - Style
+
+extension CurrencySelectionViewController {
+    
+    private func style() {
+        
+        Styles.apply(view: view)
     }
 }
 

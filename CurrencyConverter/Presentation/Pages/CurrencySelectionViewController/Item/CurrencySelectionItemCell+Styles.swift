@@ -21,13 +21,15 @@ extension CurrencySelectionItemCell {
         private static let titleFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
         private static let descriptionFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
         
-        private static let separatorColor = UIColor.yellow
+        private static let separatorColor = UIColor(named: "Color.Separator")!
+        
+        private static let backgroundColor = UIColor(named: "Color.Background")!
         
         // MARK: - Methods
         
         static func apply(contentView: UIView) {
             
-            contentView.backgroundColor = .white
+            contentView.backgroundColor = backgroundColor
         }
         
         static func apply(flagLabel: UILabel) {

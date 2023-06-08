@@ -51,21 +51,6 @@ final class CurrencyConverterViewController: UIViewController {
     
     // MARK: - Methods
     
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    private static func getApplicationDirectory() throws -> URL {
-        
-        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        
-        guard let url = urls.first else {
-            throw NSError(domain: "Can't find application directory", code: 0)
-        }
-        
-        return url
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -74,80 +59,14 @@ final class CurrencyConverterViewController: UIViewController {
         layout()
         style()
         
-        let httpClient = HTTPClientImpl(session: .shared)
-        
-        let latestRatesService = LatestRatesServiceImpl(
-            baseURL: URL(string: "https://openexchangerates.org")!,
-            appId: "e35c68874ce748278683128f76d62a74",
-            httpClient: httpClient,
-            dataMapper: LatestRatesEndpointDataMapperImpl()
-        )
-        
-        let applicationDirectory = try! Self.getApplicationDirectory()
-        
-        let dateProvider = DateProviderImpl()
-        
-        let jsonDataCoder = DataCoderJSON()
-        
-        let cacheDirectoryName = "cached"
-        
-        let cacheDirectory = applicationDirectory.appendingPathComponent(cacheDirectoryName)
-        
-        let cacheBinaryLocalStorage = BinaryLocalStorageImpl(directory: cacheDirectory)
-        
-        let cacheLocalStorage = LocalStorageFiles(
-            binaryLocalStorage: cacheBinaryLocalStorage,
-            coder: jsonDataCoder
-        )
-        
-        let latestRatesServiceCached = LatestRatesServiceCached(
-            latestRatesService: latestRatesService,
-            timeout: 100000,
-            localStorage: cacheLocalStorage,
-            dateProvider: dateProvider
-        )
-        
-        let baseCurrency = "USD"
-        
-        let currencyConverterService = CurrencyConverterServiceImpl(
-            baseCurrency: baseCurrency,
-            latestRatesService: latestRatesServiceCached
-        )
-        
-        let convertCurrencyUseCase = ConvertCurrencyUseCaseImpl(
-            baseCurrency: baseCurrency,
-            currencyConverterService: currencyConverterService
-        )
-        
-        let currenciesService = CurrenciesServiceImpl(
-            baseURL: URL(string: "https://openexchangerates.org")!,
-            httpClient: HTTPClientImpl(session: .shared),
-            dataMapper: CurrenciesEndpointDataMapperImpl()
-        )
-        
-        let getCurrenciesUseCase = GetCurrenciesUseCaseImpl(currenciesService: currenciesService)
-        
-        let listSortedCurrenciesUseCase = ListSortedCurrenciesCaseImpl(getCurrenciesUseCase: getCurrenciesUseCase)
-        
-        
-        viewModel = CurrencyConverterViewControllerViewModelImpl(
-            baseCurrency: baseCurrency,
-            didOpenCurrencySelector: { selectedCurrency in
-            },
-            didFailToLoad: {
-                
-            },
-            convertCurrencyUseCase: convertCurrencyUseCase,
-            listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
-        )
-        
         Task(priority: .userInitiated) {
             await viewModel?.load()
         }
     }
     
-    
-    // MARK: - Methods
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
     
     @objc
     func textFieldDidChange(_ textField: UITextField) {
@@ -176,7 +95,7 @@ final class CurrencyConverterViewController: UIViewController {
     }
     
     private func update(changedItems: [CurrencyCode]) {
-
+        
         var snapshot = tableDataSource.snapshot()
         
         if #available(iOS 15.0, *) {
