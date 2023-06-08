@@ -12,11 +12,22 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     
     // MARK: - Properties
     
+    private let baseCurrency: CurrencyCode
+    
+    private let didOpenCurrencySelector: (CurrencyCode) -> Void
+    
+    private let didFailToLoad: () -> Void
+    
+    private let convertCurrencyUseCase: ConvertCurrencyUseCase
+    
+    private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
+    
+    
     public var isLoading = CurrentValueSubject<Bool, Never>(true)
     
     public var amount = CurrentValueSubject<Double, Never>(1)
     
-    public var sourceCurrency: CurrentValueSubject<CurrencyCode, Never>
+    public var sourceCurrency: CurrentValueSubject<Currency?, Never>
     
     public var itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
     
@@ -25,9 +36,21 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     
     // MARK: - Initializers
     
-    public init(baseCurrency: CurrencyCode) {
+    public init(
+        baseCurrency: CurrencyCode,
+        didOpenCurrencySelector: @escaping (CurrencyCode) -> Void,
+        didFailToLoad: @escaping () -> Void,
+        convertCurrencyUseCase: ConvertCurrencyUseCase,
+        listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
+    ) {
         
-        sourceCurrency = .init(baseCurrency)
+        self.baseCurrency = baseCurrency
+        self.didOpenCurrencySelector = didOpenCurrencySelector
+        self.didFailToLoad = didFailToLoad
+        self.convertCurrencyUseCase = convertCurrencyUseCase
+        self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
+        
+        sourceCurrency = .init(nil)
     }
     
     // MARK: - Methods
@@ -41,6 +64,10 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     }
     
     public func changeSourceCurrency() {
+        fatalError()
+    }
+    
+    public func update(selectedCurrency: CurrencyCode) {
         fatalError()
     }
 }

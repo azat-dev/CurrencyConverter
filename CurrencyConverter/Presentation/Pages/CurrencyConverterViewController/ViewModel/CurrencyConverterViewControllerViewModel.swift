@@ -16,7 +16,7 @@ public protocol CurrencyConverterViewControllerViewModelOutput {
     
     var amount: CurrentValueSubject<Double, Never> { get }
     
-    var sourceCurrency: CurrentValueSubject<CurrencyCode, Never> { get }
+    var sourceCurrency: CurrentValueSubject<Currency?, Never> { get }
     
     var itemsIds: CurrentValueSubject<[CurrencyCode], Never> { get }
 }
@@ -30,6 +30,12 @@ public protocol CurrencyConverterViewControllerViewModelInput {
     func load() async
 }
 
+public protocol CurrencyConverterViewControllerViewModelUpdateProperties {
+    
+    func update(selectedCurrency: CurrencyCode)
+}
+
 public protocol CurrencyConverterViewControllerViewModel:
     CurrencyConverterViewControllerViewModelOutput,
-    CurrencyConverterViewControllerViewModelInput {}
+    CurrencyConverterViewControllerViewModelInput,
+    CurrencyConverterViewControllerViewModelUpdateProperties{}

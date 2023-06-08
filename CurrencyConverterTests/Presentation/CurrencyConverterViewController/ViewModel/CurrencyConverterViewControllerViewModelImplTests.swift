@@ -1,429 +1,340 @@
-////
-////  CurrencyConverterViewControllerViewModelImplTests.swift
-////  CurrencyConverterTests
-////
-////  Created by Azat Kaiumov on 08.06.23.
-////
 //
-//import Foundation
-//import Combine
-//import XCTest
+//  CurrencyConverterViewControllerViewModelImplTests.swift
+//  CurrencyConverterTests
 //
-//import CurrencyConverter
+//  Created by Azat Kaiumov on 08.06.23.
 //
-//final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
-//    
-//    typealias SUT = (
-//        viewModel: CurrencyConverterViewControllerViewModel,
-//        didSelectedCurrencies: ValueStore<[CurrencyCode]>,
-//        didOpenCurrencySelectorTimes: ValueStore<Int>,
-//        didFailLoadTimes: ValueStore<Int>,
-//        capturedIsLoadingSequence: ValueStore<[Bool]>,
-//        capturedItemsIdsSequence: ValueStore<[[CurrencyCode]]>,
-//        listSortedCurrenciesUseCase: ListSortedCurrenciesUseCaseMock
-//    )
-//    
-//    private var observers = Set<AnyCancellable>()
-//    
-//    func createSUT(initialSelectedCurrency: CurrencyCode?) -> SUT {
-//        
-//        let listSortedCurrenciesUseCase = ListSortedCurrenciesUseCaseMock()
-//        
-//        let capturedIsLoadingSequence = ValueStore<[Bool]>([])
-//        let capturedItemsIdsSequence = ValueStore<[[CurrencyCode]]>([])
-//        
-//        let didOpenCurrencySelectorTimes = ValueStore<Int>(0)
-//        
-//        let viewModel = CurrencyConverterViewControllerViewModelImpl(
-//            baseCurrency: initialSelectedCurrency,
-//            didOpenCurrencySelector: { [weak didOpenCurrencySelectorTimes] in
-//                
-//                guard let didOpenCurrencySelectorTimes = didOpenCurrencySelectorTimes else {
-//                    return
-//                }
-//                
-//                var newValues = didOpenCurrencySelectorTimes.value
-//                newValues.append(currency)
-//                
-//                didOpenCurrencySelectorTimes.value = newValues
-//            },
-//            onFailLoad: { [weak didFailLoadTimes] in
-//                
-//                guard let didFailLoadTimes = didFailLoadTimes else {
-//                    return
-//                }
-//                
-//                didFailLoadTimes.value += 1
-//            },
-//            listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
-//        )
-//        
-//        viewModel.isLoading.sink { isLoading in
-//            
-//            var newValues = capturedIsLoadingSequence.value
-//            newValues.append(isLoading)
-//            
-//            capturedIsLoadingSequence.value = newValues
-//            
-//        }.store(in: &observers)
-//        
-//        viewModel.itemsIds.sink { itemsIds in
-//            
-//            var newValues = capturedItemsIdsSequence.value
-//            newValues.append(itemsIds)
-//            
-//            capturedItemsIdsSequence.value = newValues
-//            
-//        }.store(in: &observers)
-//        
-//        return (
-//            viewModel,
-//            didSelectedCurrencies,
-//            didCancelTimes,
-//            didFailLoadTimes,
-//            capturedIsLoadingSequence,
-//            capturedItemsIdsSequence,
-//            listSortedCurrenciesUseCase
-//        )
-//    }
-//    
-//    // MARK: - Methods
-//    
-//    func test_load__fail() async throws {
+
+import Foundation
+import Combine
+import XCTest
+
+import CurrencyConverter
+
+final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
+    
+    typealias SUT = (
+        viewModel: CurrencyConverterViewControllerViewModel,
+        
+        convertCurrencyUseCase: ConvertCurrencyUseCaseMock,
+        listSortedCurrenciesUseCase: ListSortedCurrenciesUseCaseMock,
+        
+        didOpenCurrencySelector: ValueStore<[CurrencyCode]>,
+        
+        didFailToLoadTimes: ValueStore<Int>,
+        
+        capturedIsLoadingSequence: ValueStore<[Bool]>,
+        capturedItemsIdsSequence: ValueStore<[[CurrencyCode]]>,
+        capturedSourceCurrencySequence: ValueStore<[CurrencyCode?]>
+    )
+    
+    private var observers = Set<AnyCancellable>()
+    
+    func createSUT(baseCurrency: CurrencyCode) -> SUT {
+        
+        let convertCurrencyUseCase = ConvertCurrencyUseCaseMock()
+        let listSortedCurrenciesUseCase = ListSortedCurrenciesUseCaseMock()
+        
+        let didOpenCurrencySelector = ValueStore<[CurrencyCode]>([])
+        
+        let handleOpenCurrencySelector = { [weak didOpenCurrencySelector] currency in
+            
+            guard let didOpenCurrencySelector = didOpenCurrencySelector else {
+                return
+            }
+            
+            var newValues = didOpenCurrencySelector.value
+            newValues.append(currency)
+            
+            didOpenCurrencySelector.value = newValues
+        }
+        
+        let didFailToLoadTimes = ValueStore<Int>(0)
+        
+        let handleFailToLoad = { [weak didFailToLoadTimes] in
+            
+            guard let didFailToLoadTimes = didFailToLoadTimes else {
+                return
+            }
+            
+            didFailToLoadTimes.value += 1
+        }
+        
+        let viewModel = CurrencyConverterViewControllerViewModelImpl(
+            baseCurrency: baseCurrency,
+            didOpenCurrencySelector: handleOpenCurrencySelector,
+            didFailToLoad: handleFailToLoad,
+            convertCurrencyUseCase: convertCurrencyUseCase,
+            listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
+        )
+        
+        
+        let capturedIsLoadingSequence = ValueStore<[Bool]>([])
+        
+        viewModel.isLoading.sink { isLoading in
+            
+            var newValues = capturedIsLoadingSequence.value
+            newValues.append(isLoading)
+            
+            capturedIsLoadingSequence.value = newValues
+            
+        }.store(in: &observers)
+        
+        
+        let capturedItemsIdsSequence = ValueStore<[[CurrencyCode]]>([])
+        
+        viewModel.itemsIds.sink { itemsIds in
+            
+            var newValues = capturedItemsIdsSequence.value
+            newValues.append(itemsIds)
+            
+            capturedItemsIdsSequence.value = newValues
+            
+        }.store(in: &observers)
+        
+        let capturedSourceCurrencySequence = ValueStore<[CurrencyCode?]>([])
+        
+        viewModel.sourceCurrency.sink { currency in
+            
+            var newValues = capturedSourceCurrencySequence.value
+            newValues.append(currency?.code)
+            
+            capturedSourceCurrencySequence.value = newValues
+            
+        }.store(in: &observers)
+        
+        return (
+            viewModel,
+
+            convertCurrencyUseCase,
+            listSortedCurrenciesUseCase,
+            
+            didOpenCurrencySelector,
+            didFailToLoadTimes,
+            
+            capturedIsLoadingSequence,
+            capturedItemsIdsSequence,
+            capturedSourceCurrencySequence
+        )
+    }
+    
+    // MARK: - Methods
+    
+    func test_load__fail() async throws {
+        
+        // Given
+        let baseCurrency = "USD"
+        let sut = createSUT(baseCurrency: baseCurrency)
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .failure(.internalError)
+        }
+        
+        sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
+            return .failure(.internalError)
+        }
+        
+        // When
+        await sut.viewModel.load()
+        
+        // Then
+        XCTAssertEqual(sut.didFailToLoadTimes.value, 1)
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
+        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true])
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[]])
+        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil])
+    }
+    
+    func test_load__success() async throws {
+        
+        // Given
+        let baseCurrency = "USD"
+        let sut = createSUT(baseCurrency: baseCurrency)
+        
+        let currencies: [Currency] = [
+        
+            .init(code: "USD", title: "", emoji: ""),
+            .init(code: "EUR", title: "", emoji: ""),
+            .init(code: "GBP", title: "", emoji: ""),
+        ]
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .success(currencies)
+        }
+        
+        sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
+            
+            return .success([
+                "EUR": 1,
+                "GBP": 2
+            ])
+        }
+        
+        // When
+        await sut.viewModel.load()
+        
+        // Then
+        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
+        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
+        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+        
+        let expectedIdsSequence = [
+            [],
+            currencies.map { $0.code }
+        ]
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+    }
+    
+    func test_changeSourceCurrency() async throws {
+        
+        // Given
+        let baseCurrency = "USD"
+        let sut = createSUT(baseCurrency: baseCurrency)
+        
+        let currencies: [Currency] = [
+        
+            .init(code: "USD", title: "", emoji: ""),
+            .init(code: "EUR", title: "", emoji: ""),
+            .init(code: "GBP", title: "", emoji: ""),
+        ]
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .success(currencies)
+        }
+        
+        sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
+            
+            return .success([
+                "EUR": 1,
+                "GBP": 2
+            ])
+        }
+        
+        // When
+        sut.viewModel.changeSourceCurrency()
+        
+        // Then
+        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
+        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
+        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+    }
+    
+    func test_updateSelectedCurrency() async throws {
+        
+        // Given
+        let baseCurrency = "USD"
+        let sut = createSUT(baseCurrency: baseCurrency)
+        
+        let newSelectedCurrency = "EUR"
+        
+        let currencies: [Currency] = [
+        
+            .init(code: "USD", title: "", emoji: ""),
+            .init(code: "EUR", title: "", emoji: ""),
+            .init(code: "GBP", title: "", emoji: ""),
+        ]
+        
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .success(currencies)
+        }
+        
+        sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
+            
+            return .success([
+                "EUR": 1,
+                "GBP": 2
+            ])
+        }
+        
+        // When
+        sut.viewModel.update(selectedCurrency: newSelectedCurrency)
+        
+        // Then
+        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
+        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
+        
+        
+        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+        
+        let expectedIdsSequence = [
+            [],
+            currencies.map { $0.code },
+            ["USD", "GBP"]
+        ]
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+    }
+    
+//    func test_changeAmount() async throws {
 //        
 //        // Given
-//        let initialSelectedCurrency = "USD"
-//        let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
+//        let baseCurrency = "USD"
+//        let sut = createSUT(baseCurrency: baseCurrency)
+//        
+//        let newAmount = 555
+//        
+//        let newRates = [
+//            "EUR": 1,
+//            "GBP": 2
+//        ]
+//        
+//        let currencies: [Currency] = [
+//        
+//            .init(code: "USD", title: "", emoji: ""),
+//            .init(code: "EUR", title: "", emoji: ""),
+//            .init(code: "GBP", title: "", emoji: ""),
+//        ]
 //        
 //        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
-//            return .failure(.internalError)
+//            return .success(currencies)
+//        }
+//        
+//        sut.convertCurrencyUseCase.convertWillReturn = { amount, fromCurrency in
+//            
+//            return .success([
+//                "EUR": 1,
+//                "GBP": 2
+//            ])
 //        }
 //        
 //        // When
-//        await sut.viewModel.load()
+//        sut.viewModel.update(selectedCurrency: newSelectedCurrency)
 //        
 //        // Then
-//        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true])
-//        XCTAssertEqual(sut.didFailLoadTimes.value, 1)
-//        XCTAssertEqual(sut.didSelectedCurrencies.value, [])
-//        XCTAssertEqual(sut.didCancelTimes.value, 0)
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[]])
-//    }
-//    
-//    func test_load__success() async throws {
-//        
-//        // Given
-//        
-//        let currencies = anyCurrencies()
-//        
-//        let initialSelectedCurrency = "USD"
-//        let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTFail()
-//            return .failure(.internalError)
-//        }
-//        
-//        // When
-//        await sut.viewModel.load()
-//        
-//        // Then
+//        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
+//        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
 //        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
-//        XCTAssertEqual(sut.didFailLoadTimes.value, 0)
-//        XCTAssertEqual(sut.didSelectedCurrencies.value, [])
-//        XCTAssertEqual(sut.didCancelTimes.value, 0)
 //        
-//        let expecteItemsIdsSequence = [
+//        
+//        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+//        
+//        let expectedIdsSequence = [
 //            [],
-//            currencies.map { $0.code }
+//            currencies.map { $0.code },
+//            ["USD", "GBP"]
 //        ]
-//        
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expecteItemsIdsSequence)
+//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
 //    }
-//    
-//    func test_initial_active_item() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        
-//        let initialSelecteItemIndex = 1
-//        
-//        let initialSelectedCurrency = currencies[initialSelecteItemIndex].code
-//        let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTFail()
-//            return .failure(.internalError)
-//        }
-//        await sut.viewModel.load()
-//        
-//        // When
-//        // Init
-//        
-//        // Then
-//        verifyActiveFlags(
-//            in: sut.viewModel,
-//            currencies: currencies,
-//            expectedSelectedItemIndex: initialSelecteItemIndex
-//        )
-//    }
-//    
-//    func test_toggle_selection__has_initial_item() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        
-//        let initialSelecteItemIndex = 1
-//        let newSelectedItemIndex = 2
-//        
-//        let initialSelectedCurrency = currencies[initialSelecteItemIndex].code
-//        let sut = createSUT(initialSelectedCurrency: initialSelectedCurrency)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTFail()
-//            return .failure(.internalError)
-//        }
-//        await sut.viewModel.load()
-//        
-//        // When
-//        sut.viewModel.toggleSelection(at: newSelectedItemIndex)
-//        
-//        // Then
-//        verifyActiveFlags(
-//            in: sut.viewModel,
-//            currencies: currencies,
-//            expectedSelectedItemIndex: newSelectedItemIndex
-//        )
-//    }
-//    
-//    func test_toggle_selection__doesnt_have_initial_item() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        let newSelectedItemIndex = 2
-//        
-//        let sut = createSUT(initialSelectedCurrency: nil)
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTFail()
-//            return .failure(.internalError)
-//        }
-//        
-//        await sut.viewModel.load()
-//        
-//        // When
-//        sut.viewModel.toggleSelection(at: newSelectedItemIndex)
-//        
-//        // Then
-//        
-//        verifyActiveFlags(
-//            in: sut.viewModel,
-//            currencies: currencies,
-//            expectedSelectedItemIndex: newSelectedItemIndex
-//        )
-//    }
-//    
-//    func test_filterItems__empty_text() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        
-//        let sut = createSUT(initialSelectedCurrency: nil)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTFail()
-//            return .failure(.internalError)
-//        }
-//        
-//        await sut.viewModel.load()
-//        
-//        // When
-//        await sut.viewModel.filterItems(by: "")
-//        
-//        // Then
-//        let allItems = currencies.map { $0.code }
-//        
-//        let expectedItemsSequence = [
-//            [],
-//            allItems,
-//            allItems
-//        ]
-//        
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
-//    }
-//    
-//    func test_filterItems__not_empty_text() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        
-//        let filteredItem = currencies.first!
-//        let filteredItems = [filteredItem]
-//        
-//        let testSearchText = filteredItem.title.lowercased()
-//        
-//        let sut = createSUT(initialSelectedCurrency: nil)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let searchText = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            XCTAssertEqual(searchText, testSearchText)
-//            return .success(filteredItems)
-//        }
-//        
-//        await sut.viewModel.load()
-//        
-//        // When
-//        await sut.viewModel.filterItems(by: testSearchText)
-//        
-//        // Then
-//        let allItems = currencies.map { $0.code }
-//        
-//        let expectedItemsSequence = [
-//            [],
-//            allItems,
-//            filteredItems.map { $0.code }
-//        ]
-//        
-//        XCTAssertEqual(sut.listSortedCurrenciesUseCase.capturedSearches, [nil, testSearchText])
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
-//    }
-//    
-//    func test_removeFilter() async throws {
-//        
-//        // Given
-//        let currencies = anyCurrencies()
-//        
-//        let filteredItem = currencies.first!
-//        let filteredItems = [filteredItem]
-//        
-//        let sut = createSUT(initialSelectedCurrency: nil)
-//        
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { searchText in
-//            
-//            guard let _ = searchText else {
-//                return .success(currencies)
-//            }
-//            
-//            return .success(filteredItems)
-//        }
-//        
-//        await sut.viewModel.load()
-//        await sut.viewModel.filterItems(by: filteredItem.code.lowercased())
-//        
-//        // When
-//        await sut.viewModel.removeFilter()
-//        
-//        // Then
-//        let allItems = currencies.map { $0.code }
-//        
-//        let expectedItemsSequence = [
-//            [],
-//            allItems,
-//            [filteredItem.code],
-//            allItems
-//        ]
-//        
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedItemsSequence)
-//    }
-//    
-//    // MARK: - Helpers
-//    
-//    func verifyActiveFlags(
-//        in viewModel:
-//        CurrencySelectionViewControllerViewModel,
-//        currencies: [Currency],
-//        expectedSelectedItemIndex: Int,
-//        file: StaticString = #filePath,
-//        line: UInt = #line
-//    ) {
-//        let expectedIsActiveFlags = currencies.indices.map { $0 == expectedSelectedItemIndex}
-//        let receivedActiveFlags = viewModel.itemsIds.value.indices.map { index in viewModel.getItem(at: index)?.isActive.value }
-//        
-//        XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags, file: file, line: line)
-//    }
-//    
-//    func anyCurrencies() -> [Currency] {
-//        
-//        return [
-//            .init(
-//                code: "USD",
-//                title: "Dollar",
-//                emoji: ""
-//            ),
-//            .init(
-//                code: "GBP",
-//                title: "Pounds",
-//                emoji: ""
-//            ),
-//            .init(
-//                code: "YEN",
-//                title: "Japan Yen",
-//                emoji: ""
-//            ),
-//        ]
-//    }
-//}
-//
-//// MARK: - Helpers
-//
-//class ValueStore<T> {
-//    
-//    // MARK: - Properties
-//    
-//    var value: T
-//    
-//    // MARK: - Initializers
-//    
-//    init(_ value: T) {
-//        self.value = value
-//    }
-//}
-//
-//class ListSortedCurrenciesUseCaseMock: ListSortedCurrenciesUseCase {
-//    
-//    // MARK: - Properties
-//    
-//    var listWillReturn: ((_ searchText: String?) -> Result<[Currency], ListSortedCurrenciesUseCaseError>)!
-//    
-//    var capturedSearches = [String?]()
-//    
-//    // MARK: - Initializers
-//    
-//    init() {}
-//    
-//    // MARK: - Methods
-//    
-//    func list(searchText: String?) async -> Result<[Currency], ListSortedCurrenciesUseCaseError> {
-//        
-//        capturedSearches.append(searchText)
-//        return listWillReturn(searchText)
-//    }
-//}
+}
+
+// MARK: - Helpers
+
+class ConvertCurrencyUseCaseMock: ConvertCurrencyUseCase {
+    
+    // MARK: - Properties
+    
+    var convertWillReturn: ((_ amount: Double, _ sourceCurrency: CurrencyCode) -> Result<[CurrencyCode : Double], ConvertCurrencyUseCaseError>)!
+    
+    // MARK: - Initializers
+    
+    init() {}
+    
+    // MARK: - Methods
+    
+    func convert(amount: Double, from sourceCurrency: CurrencyCode) async -> Result<[CurrencyCode : Double], ConvertCurrencyUseCaseError> {
+        
+        return convertWillReturn(amount, sourceCurrency)
+    }
+}
