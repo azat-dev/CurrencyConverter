@@ -24,6 +24,7 @@ extension CurrencyConverterViewController {
             
             textField.font = .preferredFont(forTextStyle: .title1)
             textField.textColor = textColor
+            textField.placeholder = "0"
         }
         
         static func apply(view: UIView) {
@@ -36,6 +37,11 @@ extension CurrencyConverterViewController {
             textFieldGroup.layer.cornerRadius = 10.0
             textFieldGroup.layer.borderWidth = 2
             textFieldGroup.layer.borderColor = accentColor.cgColor
+        }
+
+        static func apply(tableView: UITableView) {
+            
+            tableView.backgroundColor = backgroundColor
         }
         
         static func apply(currentCurrencyFlag: UILabel) {

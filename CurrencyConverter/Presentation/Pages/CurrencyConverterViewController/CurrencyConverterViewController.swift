@@ -230,6 +230,18 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         replacementString: String
     ) -> Bool {
         
+        let currentText = textField.text ?? ""
+        
+        guard let stringRange = Range(range, in: currentText) else {
+            return false
+        }
+        
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: replacementString)
+        
+        guard updatedText.count < 10 else {
+            return false
+        }
+        
         let allowedCharacters = CharacterSet(charactersIn:".0123456789")
         let characterSet = CharacterSet(charactersIn: replacementString)
         
@@ -335,6 +347,7 @@ extension CurrencyConverterViewController {
         Styles.apply(view: view)
         Styles.apply(textField: textField)
         Styles.apply(textFieldGroup: textFieldGroup)
+        Styles.apply(tableView: tableView)
         
         Styles.apply(currentCurrencyArrow: currentCurrencyArrow)
         Styles.apply(currentCurrencyFlag: currentCurrencyFlag)
