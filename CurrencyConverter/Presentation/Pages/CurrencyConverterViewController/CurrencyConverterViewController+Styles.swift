@@ -14,19 +14,28 @@ extension CurrencyConverterViewController {
         
         // MARK: - Properties
         
+        static let accentColor = UIColor(named: "Color.Accent")!
+        static let backgroundColor = UIColor(named: "Color.Background")!
+        static let textColor = UIColor(named: "Color.Text")!
         
         // MARK: - Methods
         
         static func apply(textField: TextFieldWithInsets) {
             
             textField.font = .preferredFont(forTextStyle: .title1)
+            textField.textColor = textColor
+        }
+        
+        static func apply(view: UIView) {
+            
+            view.backgroundColor = backgroundColor
         }
         
         static func apply(textFieldGroup: UIView) {
             
             textFieldGroup.layer.cornerRadius = 10.0
             textFieldGroup.layer.borderWidth = 2
-            textFieldGroup.layer.borderColor = UIColor.red.cgColor
+            textFieldGroup.layer.borderColor = accentColor.cgColor
         }
     }
 }

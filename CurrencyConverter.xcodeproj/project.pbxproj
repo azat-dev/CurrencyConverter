@@ -231,10 +231,10 @@
 		AA0E596A2A31B0F000C5D082 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				AA0E596B2A31B0F600C5D082 /* ViewModel */,
 				AA0E59742A31C11900C5D082 /* CurrencyConverterViewControllerItemCell.swift */,
-				AA0E59762A31C14400C5D082 /* CurrencyConverterViewControllerItemCell+Styles.swift */,
 				AA0E59782A31C14C00C5D082 /* CurrencyConverterViewControllerItemCell+Layout.swift */,
+				AA0E59762A31C14400C5D082 /* CurrencyConverterViewControllerItemCell+Styles.swift */,
+				AA0E596B2A31B0F600C5D082 /* ViewModel */,
 			);
 			path = Item;
 			sourceTree = "<group>";

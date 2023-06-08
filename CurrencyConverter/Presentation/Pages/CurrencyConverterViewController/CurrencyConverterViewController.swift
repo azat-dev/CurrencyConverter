@@ -353,6 +353,7 @@ extension CurrencyConverterViewController {
     
     private func style() {
         
+        Styles.apply(view: view)
         Styles.apply(textField: textField)
         Styles.apply(textFieldGroup: textFieldGroup)
     }

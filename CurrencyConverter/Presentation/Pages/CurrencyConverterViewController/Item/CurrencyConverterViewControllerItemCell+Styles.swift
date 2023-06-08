@@ -11,7 +11,7 @@ import UIKit
 extension CurrencyConverterViewControllerItemCell {
     
     final class Styles {
-
+        
         // MARK: - Properties
         
         private static let titleColor = UIColor.black
@@ -19,13 +19,15 @@ extension CurrencyConverterViewControllerItemCell {
         private static let titleFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
         private static let descriptionFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
         
-        private static let separatorColor = UIColor.yellow
+        private static let separatorColor = UIColor(named: "Color.Separator")!
+        private static let backgroundColor = UIColor(named: "Color.Background")!
+        private static let textColor = UIColor(named: "Color.Text")!
         
         // MARK: - Methods
         
         static func apply(contentView: UIView) {
             
-            contentView.backgroundColor = .white
+            contentView.backgroundColor = backgroundColor
         }
         
         static func apply(flagLabel: UILabel) {
@@ -41,6 +43,7 @@ extension CurrencyConverterViewControllerItemCell {
             titleLabel.font = titleFont
             titleLabel.textColor = titleColor
             titleLabel.textAlignment = .left
+            titleLabel.textColor = textColor
         }
         
         static func apply(amountLabel: UILabel) {
@@ -48,7 +51,8 @@ extension CurrencyConverterViewControllerItemCell {
             amountLabel.numberOfLines = 1
             amountLabel.font = titleFont
             amountLabel.textColor = titleColor
-            amountLabel.textAlignment = .left
+            amountLabel.textAlignment = .right
+            amountLabel.textColor = textColor
         }
         
         static func apply(descriptionLabel: UILabel) {
@@ -57,6 +61,7 @@ extension CurrencyConverterViewControllerItemCell {
             descriptionLabel.font = descriptionFont
             descriptionLabel.textColor = descriptionColor
             descriptionLabel.textAlignment = .left
+            descriptionLabel.textColor = textColor
         }
         
         static func apply(bottomBorder: UIView) {

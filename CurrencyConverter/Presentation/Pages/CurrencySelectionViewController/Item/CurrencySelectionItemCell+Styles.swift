@@ -14,8 +14,10 @@ extension CurrencySelectionItemCell {
 
         // MARK: - Properties
         
-        private static let titleColor = UIColor.black
-        private static let descriptionColor = UIColor.black
+        private static let textColor = UIColor(named: "Color.Text")!
+        private static let titleColor = textColor
+        private static let descriptionColor = textColor
+        
         private static let titleFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
         private static let descriptionFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
         
@@ -39,8 +41,9 @@ extension CurrencySelectionItemCell {
             
             titleLabel.numberOfLines = 1
             titleLabel.font = titleFont
-            titleLabel.textColor = titleColor
             titleLabel.textAlignment = .left
+            titleLabel.textColor = titleColor
+            
         }
         
         static func apply(descriptionLabel: UILabel) {
