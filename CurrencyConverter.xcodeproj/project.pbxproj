@@ -24,6 +24,9 @@
 		AA0E59902A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */; };
 		AA0E59922A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59912A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift */; };
 		AA0E59942A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59932A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift */; };
+		AA0E59972A32154600C5D082 /* SelectCurrencyFlowPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59962A32154600C5D082 /* SelectCurrencyFlowPresenter.swift */; };
+		AA0E59992A3215DA00C5D082 /* SelectCurrencyFlowPresenterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59982A3215DA00C5D082 /* SelectCurrencyFlowPresenterFactory.swift */; };
+		AA0E599B2A3216B100C5D082 /* SelectCurrencyFlowPresenterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E599A2A3216B100C5D082 /* SelectCurrencyFlowPresenterImpl.swift */; };
 		AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */; };
 		AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */; };
 		AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */; };
@@ -135,6 +138,9 @@
 		AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowModelImplTests.swift; sourceTree = "<group>"; };
 		AA0E59912A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModelFactory.swift; sourceTree = "<group>"; };
 		AA0E59932A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModelImplFactory.swift; sourceTree = "<group>"; };
+		AA0E59962A32154600C5D082 /* SelectCurrencyFlowPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowPresenter.swift; sourceTree = "<group>"; };
+		AA0E59982A3215DA00C5D082 /* SelectCurrencyFlowPresenterFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowPresenterFactory.swift; sourceTree = "<group>"; };
+		AA0E599A2A3216B100C5D082 /* SelectCurrencyFlowPresenterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowPresenterImpl.swift; sourceTree = "<group>"; };
 		AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesEmojies.swift; sourceTree = "<group>"; };
 		AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorage.swift; sourceTree = "<group>"; };
 		AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorageImpl.swift; sourceTree = "<group>"; };
@@ -278,6 +284,7 @@
 		AA0E59842A3204E900C5D082 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				AA0E599C2A32191000C5D082 /* MainFlow */,
 				AA0E59852A3204F100C5D082 /* SelectCurrencyFlow */,
 			);
 			path = Flows;
@@ -286,6 +293,7 @@
 		AA0E59852A3204F100C5D082 /* SelectCurrencyFlow */ = {
 			isa = PBXGroup;
 			children = (
+				AA0E59952A32153400C5D082 /* SelectCurrencyFlowPresenter */,
 				AA0E59862A32050000C5D082 /* SelectCurrencyFlowModel */,
 			);
 			path = SelectCurrencyFlow;
@@ -315,6 +323,23 @@
 				AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */,
 			);
 			path = Flows;
+			sourceTree = "<group>";
+		};
+		AA0E59952A32153400C5D082 /* SelectCurrencyFlowPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E59962A32154600C5D082 /* SelectCurrencyFlowPresenter.swift */,
+				AA0E599A2A3216B100C5D082 /* SelectCurrencyFlowPresenterImpl.swift */,
+				AA0E59982A3215DA00C5D082 /* SelectCurrencyFlowPresenterFactory.swift */,
+			);
+			path = SelectCurrencyFlowPresenter;
+			sourceTree = "<group>";
+		};
+		AA0E599C2A32191000C5D082 /* MainFlow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MainFlow;
 			sourceTree = "<group>";
 		};
 		AA1439862A2FCCB300D8F604 /* Storage */ = {
@@ -1028,7 +1053,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0E59992A3215DA00C5D082 /* SelectCurrencyFlowPresenterFactory.swift in Sources */,
 				AA0E596F2A31BCF800C5D082 /* CurrencyConverterViewController.swift in Sources */,
+				AA0E59972A32154600C5D082 /* SelectCurrencyFlowPresenter.swift in Sources */,
+				AA0E599B2A3216B100C5D082 /* SelectCurrencyFlowPresenterImpl.swift in Sources */,
 				AA4034382A2F6BCF00F4E5DD /* CurrencySelectionViewController+Layout.swift in Sources */,
 				AA5D83A52A2EFD72002EB67B /* GetCurrenciesUseCaseImpl.swift in Sources */,
 				AA4034302A2F626000F4E5DD /* CurrencySelectionItemCell.swift in Sources */,
