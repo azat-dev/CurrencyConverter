@@ -35,21 +35,69 @@ extension CurrencyConverterViewController {
         }
         
         static func apply(
+            currentCurrencyGroup: UIView,
+            currentCurrencyArrow: UIImageView,
+            currentCurrencyFlag: UILabel,
+            currentCurrencyLabel: UILabel
+        ) {
+            
+            currentCurrencyArrow.translatesAutoresizingMaskIntoConstraints = false
+            currentCurrencyFlag.translatesAutoresizingMaskIntoConstraints = false
+            currentCurrencyLabel.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+
+                currentCurrencyFlag.centerYAnchor.constraint(equalTo: currentCurrencyGroup.centerYAnchor),
+                currentCurrencyLabel.centerYAnchor.constraint(equalTo: currentCurrencyGroup.centerYAnchor),
+                currentCurrencyArrow.centerYAnchor.constraint(equalTo: currentCurrencyGroup.centerYAnchor),
+
+//                currentCurrencyFlag.heightAnchor.constraint(equalToConstant: 50),
+//                currentCurrencyFlag.widthAnchor.constraint(equalTo: currentCurrencyFlag.heightAnchor),
+                
+                currentCurrencyFlag.leadingAnchor.constraint(equalTo: currentCurrencyGroup.leadingAnchor),
+                currentCurrencyFlag.trailingAnchor.constraint(equalTo: currentCurrencyLabel.leadingAnchor),
+
+                currentCurrencyLabel.trailingAnchor.constraint(equalTo: currentCurrencyGroup.trailingAnchor),
+                
+                currentCurrencyArrow.heightAnchor.constraint(equalToConstant: 80),
+                currentCurrencyArrow.widthAnchor.constraint(equalToConstant: 80),
+                currentCurrencyArrow.trailingAnchor.constraint(equalTo: currentCurrencyGroup.trailingAnchor),
+            ])
+        }
+        
+        static func apply(
             textFieldGroup: UIView,
-            textField: TextFieldWithInsets
+            textField: TextFieldWithInsets,
+            currentCurrencyGroup: UIView
         ) {
             
             textField.translatesAutoresizingMaskIntoConstraints = false
+            currentCurrencyGroup.translatesAutoresizingMaskIntoConstraints = false
             
-            let insets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+            let insets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 0)
             textField.insets = insets
+            
+            currentCurrencyGroup.backgroundColor = .red
+            
+            textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            
+            currentCurrencyGroup.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             
             NSLayoutConstraint.activate([
                 
                 textField.topAnchor.constraint(equalTo: textFieldGroup.topAnchor),
                 textField.bottomAnchor.constraint(equalTo: textFieldGroup.bottomAnchor),
+                
                 textField.leadingAnchor.constraint(equalTo: textFieldGroup.leadingAnchor),
-                textField.trailingAnchor.constraint(equalTo: textFieldGroup.trailingAnchor)
+                
+                currentCurrencyGroup.leadingAnchor.constraint(equalTo: textField.trailingAnchor),
+                currentCurrencyGroup.trailingAnchor.constraint(equalTo: textFieldGroup.trailingAnchor),
+                
+                currentCurrencyGroup.topAnchor.constraint(equalTo: textField.topAnchor),
+                currentCurrencyGroup.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
+                
+                currentCurrencyGroup.widthAnchor.constraint(equalToConstant: 100)
             ])
         }
     }

@@ -37,5 +37,23 @@ extension CurrencyConverterViewController {
             textFieldGroup.layer.borderWidth = 2
             textFieldGroup.layer.borderColor = accentColor.cgColor
         }
+        
+        static func apply(currentCurrencyFlag: UILabel) {
+            
+            currentCurrencyFlag.font = .preferredFont(forTextStyle: .title1)
+            currentCurrencyFlag.textColor = textColor
+        }
+        
+        static func apply(currentCurrencyLabel: UILabel) {
+            
+            currentCurrencyLabel.font = .preferredFont(forTextStyle: .title1)
+            currentCurrencyLabel.textColor = textColor
+        }
+        
+        static func apply(currentCurrencyArrow: UIImageView) {
+            
+            currentCurrencyArrow.contentMode = .scaleAspectFit
+            currentCurrencyArrow.tintColor = textColor
+        }
     }
 }

@@ -24,6 +24,14 @@ final class CurrencyConverterViewController: UIViewController {
     
     private var activityIndicatorView = UIActivityIndicatorView()
     
+    private var currentCurrencyLabel = UILabel()
+    
+    private var currentCurrencyFlag = UILabel()
+    
+    private var currentCurrencyGroup = UIView()
+    
+    private var currentCurrencyArrow = UIImageView()
+    
     private var textFieldGroup = UIView()
     
     private var textField = TextFieldWithInsets()
@@ -191,6 +199,19 @@ final class CurrencyConverterViewController: UIViewController {
         textField.text = amount
     }
     
+    private func update(sourceCurrency: Currency?) {
+        
+        guard let sourceCurrency = sourceCurrency else {
+            
+            currentCurrencyGroup.isHidden = true
+            return
+        }
+        
+        currentCurrencyGroup.isHidden = false
+        currentCurrencyLabel.text = sourceCurrency.code.uppercased()
+        currentCurrencyFlag.text = sourceCurrency.emoji
+    }
+    
     private func bind(to viewModel: ViewModel?) {
         
         guard let viewModel = viewModel else {
@@ -225,6 +246,13 @@ final class CurrencyConverterViewController: UIViewController {
                 
                 self?.update(changedItems: changedItems)
             }.store(in: &observers)
+        
+        viewModel.sourceCurrency
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] sourceCurrency in
+                
+                self?.update(sourceCurrency: sourceCurrency)
+            }.store(in: &observers)
     }
 }
 
@@ -238,12 +266,22 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         view.addSubview(activityIndicatorView)
     }
     
+    func setupCurrentCurrencyGroup() {
+        
+        currentCurrencyArrow.image = UIImage(named: "chevron.down")
+        
+        currentCurrencyGroup.addSubview(currentCurrencyFlag)
+        currentCurrencyGroup.addSubview(currentCurrencyLabel)
+        currentCurrencyGroup.addSubview(currentCurrencyArrow)
+        
+        textFieldGroup.addSubview(currentCurrencyGroup)
+    }
+    
     func setupTextField() {
         
         textField.keyboardType = .decimalPad
         textField.delegate = self
         textFieldGroup.addSubview(textField)
-        
         
         textField.addTarget(
             self,
@@ -325,6 +363,7 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         setupActivityIndicator()
         setupTextField()
         setupTableView()
+        setupCurrentCurrencyGroup()
     }
 }
 
@@ -335,8 +374,16 @@ extension CurrencyConverterViewController {
     private func layout() {
         
         Layout.apply(
+            currentCurrencyGroup: currentCurrencyGroup,
+            currentCurrencyArrow: currentCurrencyArrow,
+            currentCurrencyFlag: currentCurrencyFlag,
+            currentCurrencyLabel: currentCurrencyLabel
+        )
+        
+        Layout.apply(
             textFieldGroup: textFieldGroup,
-            textField: textField
+            textField: textField,
+            currentCurrencyGroup: currentCurrencyGroup
         )
         
         Layout.apply(
@@ -356,5 +403,9 @@ extension CurrencyConverterViewController {
         Styles.apply(view: view)
         Styles.apply(textField: textField)
         Styles.apply(textFieldGroup: textFieldGroup)
+        
+        Styles.apply(currentCurrencyArrow: currentCurrencyArrow)
+        Styles.apply(currentCurrencyFlag: currentCurrencyFlag)
+        Styles.apply(currentCurrencyLabel: currentCurrencyLabel)
     }
 }
