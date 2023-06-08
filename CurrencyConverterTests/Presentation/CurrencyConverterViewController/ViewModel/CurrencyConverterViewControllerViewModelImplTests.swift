@@ -25,6 +25,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         
         capturedIsLoadingSequence: ValueStore<[Bool]>,
         capturedItemsIdsSequence: ValueStore<[[CurrencyCode]]>,
+        capturedChangedItemsSequence: ValueStore<[[CurrencyCode]]>,
         capturedSourceCurrencySequence: ValueStore<[CurrencyCode?]>
     )
     
@@ -91,6 +92,18 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             
         }.store(in: &observers)
         
+        
+        let capturedChangedItemsSequence = ValueStore<[[CurrencyCode]]>([])
+        
+        viewModel.changedItems.sink { changedItems in
+            
+            var newValues = capturedChangedItemsSequence.value
+            newValues.append(changedItems)
+            
+            capturedChangedItemsSequence.value = newValues
+            
+        }.store(in: &observers)
+        
         let capturedSourceCurrencySequence = ValueStore<[CurrencyCode?]>([])
         
         viewModel.sourceCurrency.sink { currency in
@@ -113,6 +126,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             
             capturedIsLoadingSequence,
             capturedItemsIdsSequence,
+            capturedChangedItemsSequence,
             capturedSourceCurrencySequence
         )
     }
@@ -141,6 +155,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
         XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true])
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[]])
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [[]])
         XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil])
     }
     
@@ -183,6 +198,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [[]])
+        
         verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
     
@@ -222,6 +239,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
         XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
         
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[], ["EUR", "GBP"]])
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [])
         verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
     
@@ -281,6 +300,10 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["USD", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+        
+        let expectedChangedItemsSequence = expectedIdsSequence
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, expectedChangedItemsSequence)
+        
         verifyAmounts(sut: sut, expectedAmounts: ["3.33", "4.44"])
     }
     
@@ -329,6 +352,9 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+        
+        let expectedChangedItemsSequence = expectedIdsSequence
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, expectedChangedItemsSequence)
     }
     
     // MARK: - Helpers

@@ -33,6 +33,8 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     
     public let sourceCurrency: CurrentValueSubject<Currency?, Never>
     
+    public let changedItems = PassthroughSubject<[CurrencyCode], Never>()
+    
     public let itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
     
     

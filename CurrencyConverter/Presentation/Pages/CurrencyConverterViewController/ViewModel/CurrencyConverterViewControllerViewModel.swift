@@ -20,6 +20,8 @@ public protocol CurrencyConverterViewControllerViewModelOutput {
     
     var itemsIds: CurrentValueSubject<[CurrencyCode], Never> { get }
     
+    var changedItems: PassthroughSubject<[CurrencyCode], Never> { get }
+    
     // MARK: - Methods
     
     func getItem(for id: CurrencyCode) -> CurrencyConverterViewControllerItemViewModel?
