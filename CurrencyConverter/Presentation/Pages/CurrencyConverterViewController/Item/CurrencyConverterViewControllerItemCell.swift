@@ -20,6 +20,7 @@ public final class CurrencyConverterViewControllerItemCell: UITableViewCell {
 
     private let textGroup = UIStackView()
     private let titleLabel = UILabel()
+    private let amountLabel = UILabel()
     private let descritionLabel = UILabel()
     private let flagLabel = UILabel()
     private let bottomBorder = UIView()
@@ -56,6 +57,7 @@ extension CurrencyConverterViewControllerItemCell {
         titleLabel.text = viewModel.title
         descritionLabel.text = viewModel.description
         flagLabel.text = viewModel.emoji
+        amountLabel.text = viewModel.amount
     }
 }
 
@@ -73,6 +75,7 @@ extension CurrencyConverterViewControllerItemCell {
         contentView.addSubview(textGroup)
         contentView.addSubview(flagLabel)
         contentView.addSubview(bottomBorder)
+        contentView.addSubview(amountLabel)
     }
 }
 
@@ -88,6 +91,7 @@ extension CurrencyConverterViewControllerItemCell {
         Styles.apply(contentView: contentView)
         Styles.apply(flagLabel: flagLabel)
         Styles.apply(titleLabel: titleLabel)
+        Styles.apply(amountLabel: amountLabel)
         Styles.apply(descriptionLabel: descritionLabel)
         Styles.apply(bottomBorder: bottomBorder)
     }
@@ -105,6 +109,7 @@ extension CurrencyConverterViewControllerItemCell {
             textGroup: textGroup,
             titleLabel: titleLabel,
             descriptionLabel: descritionLabel,
+            amountLabel: amountLabel,
             bottomBorder: bottomBorder
         )
     }

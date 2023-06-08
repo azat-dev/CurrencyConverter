@@ -47,6 +47,17 @@ final class CurrencyConverterViewController: UIViewController {
         view.endEditing(true)
     }
     
+    private static func getApplicationDirectory() throws -> URL {
+        
+        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        
+        guard let url = urls.first else {
+            throw NSError(domain: "Can't find application directory", code: 0)
+        }
+        
+        return url
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -59,16 +70,40 @@ final class CurrencyConverterViewController: UIViewController {
         
         let latestRatesService = LatestRatesServiceImpl(
             baseURL: URL(string: "https://openexchangerates.org")!,
-            appId: "",
+            appId: "e35c68874ce748278683128f76d62a74",
             httpClient: httpClient,
             dataMapper: LatestRatesEndpointDataMapperImpl()
+        )
+        
+        let applicationDirectory = try! Self.getApplicationDirectory()
+        
+        let dateProvider = DateProviderImpl()
+        
+        let jsonDataCoder = DataCoderJSON()
+        
+        let cacheDirectoryName = "cached"
+        
+        let cacheDirectory = applicationDirectory.appendingPathComponent(cacheDirectoryName)
+        
+        let cacheBinaryLocalStorage = BinaryLocalStorageImpl(directory: cacheDirectory)
+        
+        let cacheLocalStorage = LocalStorageFiles(
+            binaryLocalStorage: cacheBinaryLocalStorage,
+            coder: jsonDataCoder
+        )
+        
+        let latestRatesServiceCached = LatestRatesServiceCached(
+            latestRatesService: latestRatesService,
+            timeout: 100000,
+            localStorage: cacheLocalStorage,
+            dateProvider: dateProvider
         )
         
         let baseCurrency = "USD"
         
         let currencyConverterService = CurrencyConverterServiceImpl(
             baseCurrency: baseCurrency,
-            latestRatesService: latestRatesService
+            latestRatesService: latestRatesServiceCached
         )
         
         let convertCurrencyUseCase = ConvertCurrencyUseCaseImpl(
@@ -200,8 +235,8 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         tableView = UITableView(frame: view.frame, style: .plain)
         
         self.tableView.register(
-            CurrencySelectionItemCell.self,
-            forCellReuseIdentifier: CurrencySelectionItemCell.reuseIdentifier
+            CurrencyConverterViewControllerItemCell.self,
+            forCellReuseIdentifier: CurrencyConverterViewControllerItemCell.reuseIdentifier
         )
         
         let dataSource = UITableViewDiffableDataSource<Int, CurrencyCode>(

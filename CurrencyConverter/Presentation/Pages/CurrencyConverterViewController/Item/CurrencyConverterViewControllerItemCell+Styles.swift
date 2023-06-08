@@ -43,6 +43,14 @@ extension CurrencyConverterViewControllerItemCell {
             titleLabel.textAlignment = .left
         }
         
+        static func apply(amountLabel: UILabel) {
+            
+            amountLabel.numberOfLines = 1
+            amountLabel.font = titleFont
+            amountLabel.textColor = titleColor
+            amountLabel.textAlignment = .left
+        }
+        
         static func apply(descriptionLabel: UILabel) {
             
             descriptionLabel.numberOfLines = 1

@@ -28,6 +28,7 @@ extension CurrencyConverterViewControllerItemCell {
             textGroup: UIStackView,
             titleLabel: UILabel,
             descriptionLabel: UILabel,
+            amountLabel: UILabel,
             bottomBorder: UIView
         ) {
             
@@ -36,6 +37,11 @@ extension CurrencyConverterViewControllerItemCell {
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             textGroup.translatesAutoresizingMaskIntoConstraints = false
             bottomBorder.translatesAutoresizingMaskIntoConstraints = false
+            amountLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            amountLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            
+            textGroup.setContentHuggingPriority(.defaultLow, for: .horizontal)
             
             NSLayoutConstraint.activate([
                 
@@ -49,9 +55,13 @@ extension CurrencyConverterViewControllerItemCell {
 
                 textGroup.centerYAnchor.constraint(equalTo: flagLabel.centerYAnchor),
                 textGroup.leftAnchor.constraint(equalTo: flagLabel.rightAnchor, constant: 10),
-                textGroup.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
                 textGroup.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
                 textGroup.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
+                
+                amountLabel.leftAnchor.constraint(equalTo: textGroup.rightAnchor, constant: 5),
+                amountLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+                
+                amountLabel.centerYAnchor.constraint(equalTo: textGroup.centerYAnchor)
             ])
             
             NSLayoutConstraint.activate([
