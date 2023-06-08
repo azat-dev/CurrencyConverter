@@ -30,6 +30,8 @@ public protocol CurrencySelectionViewControllerViewModelInput {
     func filterItems(by text: String) async
     
     func removeFilter() async
+    
+    func cancel()
 }
 
 public protocol CurrencySelectionViewControllerViewModel:

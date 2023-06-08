@@ -76,6 +76,12 @@ extension CurrencySelectionViewControllerViewModelImpl {
         newActiveItem?.activate()
         
         activeItemId = newActiveItem?.id
+        
+        guard let activeItemId = activeItemId else {
+            return
+        }
+        
+        onSelect(activeItemId)
     }
     
     private func load(with searchText: String?, isSilent: Bool) async {
@@ -127,5 +133,10 @@ extension CurrencySelectionViewControllerViewModelImpl {
     public func removeFilter() async {
         
         await load(with: nil, isSilent: false)
+    }
+    
+    public func cancel() {
+        
+        onCancel()
     }
 }

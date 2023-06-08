@@ -18,6 +18,12 @@
 		AA0E597F2A31D1E400C5D082 /* LatestRatesServiceCachedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E597E2A31D1E400C5D082 /* LatestRatesServiceCachedTests.swift */; };
 		AA0E59812A31D37900C5D082 /* LatestRatesServiceCached.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59802A31D37900C5D082 /* LatestRatesServiceCached.swift */; };
 		AA0E59832A31D4DB00C5D082 /* DateProviderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59822A31D4DB00C5D082 /* DateProviderImpl.swift */; };
+		AA0E59882A32051700C5D082 /* SelectCurrencyFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59872A32051700C5D082 /* SelectCurrencyFlowModel.swift */; };
+		AA0E598A2A32072700C5D082 /* SelectCurrencyFlowModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59892A32072700C5D082 /* SelectCurrencyFlowModelFactory.swift */; };
+		AA0E598C2A32077600C5D082 /* SelectCurrencyFlowModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E598B2A32077600C5D082 /* SelectCurrencyFlowModelImpl.swift */; };
+		AA0E59902A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */; };
+		AA0E59922A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59912A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift */; };
+		AA0E59942A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E59932A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift */; };
 		AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */; };
 		AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */; };
 		AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */; };
@@ -123,6 +129,12 @@
 		AA0E597E2A31D1E400C5D082 /* LatestRatesServiceCachedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRatesServiceCachedTests.swift; sourceTree = "<group>"; };
 		AA0E59802A31D37900C5D082 /* LatestRatesServiceCached.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRatesServiceCached.swift; sourceTree = "<group>"; };
 		AA0E59822A31D4DB00C5D082 /* DateProviderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProviderImpl.swift; sourceTree = "<group>"; };
+		AA0E59872A32051700C5D082 /* SelectCurrencyFlowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowModel.swift; sourceTree = "<group>"; };
+		AA0E59892A32072700C5D082 /* SelectCurrencyFlowModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowModelFactory.swift; sourceTree = "<group>"; };
+		AA0E598B2A32077600C5D082 /* SelectCurrencyFlowModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowModelImpl.swift; sourceTree = "<group>"; };
+		AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyFlowModelImplTests.swift; sourceTree = "<group>"; };
+		AA0E59912A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModelFactory.swift; sourceTree = "<group>"; };
+		AA0E59932A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewControllerViewModelImplFactory.swift; sourceTree = "<group>"; };
 		AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesEmojies.swift; sourceTree = "<group>"; };
 		AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorage.swift; sourceTree = "<group>"; };
 		AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorageImpl.swift; sourceTree = "<group>"; };
@@ -263,6 +275,48 @@
 			path = TextFieldWIthInsets;
 			sourceTree = "<group>";
 		};
+		AA0E59842A3204E900C5D082 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E59852A3204F100C5D082 /* SelectCurrencyFlow */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		AA0E59852A3204F100C5D082 /* SelectCurrencyFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E59862A32050000C5D082 /* SelectCurrencyFlowModel */,
+			);
+			path = SelectCurrencyFlow;
+			sourceTree = "<group>";
+		};
+		AA0E59862A32050000C5D082 /* SelectCurrencyFlowModel */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E59872A32051700C5D082 /* SelectCurrencyFlowModel.swift */,
+				AA0E59892A32072700C5D082 /* SelectCurrencyFlowModelFactory.swift */,
+				AA0E598B2A32077600C5D082 /* SelectCurrencyFlowModelImpl.swift */,
+			);
+			path = SelectCurrencyFlowModel;
+			sourceTree = "<group>";
+		};
+		AA0E598D2A3207F000C5D082 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E598E2A3207F700C5D082 /* Flows */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		AA0E598E2A3207F700C5D082 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E598F2A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
 		AA1439862A2FCCB300D8F604 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,7 +405,9 @@
 			isa = PBXGroup;
 			children = (
 				AA40341E2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift */,
+				AA0E59912A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift */,
 				AA40342B2A2F3F9100F4E5DD /* CurrencySelectionViewControllerViewModelImpl.swift */,
+				AA0E59932A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -725,6 +781,7 @@
 		AAC875AA2A2BD16A00317B74 /* CurrencyConverterTests */ = {
 			isa = PBXGroup;
 			children = (
+				AA0E598D2A3207F000C5D082 /* Application */,
 				AAC875AB2A2BD16A00317B74 /* CurrencyConverterTests.swift */,
 				AAC875CC2A2BD23600317B74 /* Data */,
 				AAC875CB2A2BD23000317B74 /* Domain */,
@@ -775,6 +832,7 @@
 		AAC875C72A2BD19500317B74 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				AA0E59842A3204E900C5D082 /* Flows */,
 				AAC875942A2BD16800317B74 /* AppDelegate.swift */,
 				AAC875962A2BD16800317B74 /* SceneDelegate.swift */,
 				AAC875C82A2BD1AD00317B74 /* SupportFiles */,
@@ -982,6 +1040,8 @@
 				AA0E59792A31C14C00C5D082 /* CurrencyConverterViewControllerItemCell+Layout.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA1439982A2FD48900D8F604 /* DataCoder.swift in Sources */,
+				AA0E59882A32051700C5D082 /* SelectCurrencyFlowModel.swift in Sources */,
+				AA0E59922A32089D00C5D082 /* CurrencySelectionViewControllerViewModelFactory.swift in Sources */,
 				AA0E596D2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift in Sources */,
 				AAA5F98B2A3150FC0062AD3F /* CurrencyConverterViewControllerViewModelImpl.swift in Sources */,
 				AAA5F9942A3153C60062AD3F /* ConvertCurrencyUseCaseImpl.swift in Sources */,
@@ -994,6 +1054,7 @@
 				AAA5F9822A3141120062AD3F /* CurrencyConverterServiceImpl.swift in Sources */,
 				AA0E59812A31D37900C5D082 /* LatestRatesServiceCached.swift in Sources */,
 				AA4034342A2F660600F4E5DD /* CurrencySelectionItemCell+Layout.swift in Sources */,
+				AA0E59942A3208E300C5D082 /* CurrencySelectionViewControllerViewModelImplFactory.swift in Sources */,
 				AA4A06F52A2D315600E215BD /* CurrenciesService.swift in Sources */,
 				AA0E59752A31C11900C5D082 /* CurrencyConverterViewControllerItemCell.swift in Sources */,
 				AAC875952A2BD16800317B74 /* AppDelegate.swift in Sources */,
@@ -1005,6 +1066,7 @@
 				AA1439A02A2FDDA100D8F604 /* CurrenciesServiceCached.swift in Sources */,
 				AA1439922A2FD3BD00D8F604 /* LocalStorage.swift in Sources */,
 				AA40341F2A2F30FF00F4E5DD /* CurrencySelectionViewControllerViewModel.swift in Sources */,
+				AA0E598C2A32077600C5D082 /* SelectCurrencyFlowModelImpl.swift in Sources */,
 				AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */,
 				AA14399A2A2FD48E00D8F604 /* DataCoderJSON.swift in Sources */,
 				AAA5F9632A3129470062AD3F /* DateProvider.swift in Sources */,
@@ -1012,6 +1074,7 @@
 				AA5D83A02A2EFCBA002EB67B /* GetCurrenciesUseCase.swift in Sources */,
 				AA5D83A32A2EFCDB002EB67B /* Currency.swift in Sources */,
 				AA5D83AD2A2F06F3002EB67B /* ListSortedCurrenciesUseCaseImpl.swift in Sources */,
+				AA0E598A2A32072700C5D082 /* SelectCurrencyFlowModelFactory.swift in Sources */,
 				AA4A06E82A2D285D00E215BD /* CurrenciesEndpoint.swift in Sources */,
 				AA4034222A2F359C00F4E5DD /* CurrencySelectionItemViewModel.swift in Sources */,
 				AA0E597D2A31C72F00C5D082 /* TextFieldWithInsets.swift in Sources */,
@@ -1036,6 +1099,7 @@
 				AA4A06DE2A2D183A00E215BD /* HTTPClientTaskTests.swift in Sources */,
 				AA5D83A82A2EFDF6002EB67B /* GetCurrenciesUseCaseImplTests.swift in Sources */,
 				AA4A06F02A2D2C0300E215BD /* CurrenciesEndpointDataMapperTests.swift in Sources */,
+				AA0E59902A32082400C5D082 /* SelectCurrencyFlowModelImplTests.swift in Sources */,
 				AA4A067F2A2C54D700E215BD /* HTTPClientTests.swift in Sources */,
 				AA0E597F2A31D1E400C5D082 /* LatestRatesServiceCachedTests.swift in Sources */,
 				AAA5F98F2A3152190062AD3F /* CurrencyConverterViewControllerViewModelImplTests.swift in Sources */,
