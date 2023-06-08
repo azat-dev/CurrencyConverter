@@ -12,7 +12,7 @@ final class CurrencyConverterViewController: UIViewController {
     
     // MARK: - Types
     
-    public typealias ViewModel = CurrencyConverterViewControllerViewModelImpl
+    public typealias ViewModel = CurrencyConverterViewControllerViewModel
     
     private typealias SectionId = Int
     

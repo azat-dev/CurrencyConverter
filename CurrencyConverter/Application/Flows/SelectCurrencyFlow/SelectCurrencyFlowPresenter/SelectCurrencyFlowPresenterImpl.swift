@@ -19,8 +19,9 @@ public final class SelectCurrencyFlowPresenterImpl: SelectCurrencyFlowPresenter 
     
     // MARK: - Initializers
     
-    public init() {
-        fatalError()
+    public init(flowModel: FlowModel) {
+        
+        self.flowModel = flowModel
     }
     
     // MARK: - Methods

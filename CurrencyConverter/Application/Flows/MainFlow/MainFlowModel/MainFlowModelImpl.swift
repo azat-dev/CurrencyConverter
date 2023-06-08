@@ -86,5 +86,4 @@ public final class MainFlowModelImpl: MainFlowModel {
             didFailToLoad: handleFailToLoad
         )
     }
-    
 }
