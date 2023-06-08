@@ -14,11 +14,15 @@ public protocol CurrencyConverterViewControllerViewModelOutput {
     
     var isLoading: CurrentValueSubject<Bool, Never> { get }
     
-    var amount: CurrentValueSubject<Double, Never> { get }
+    var amount: CurrentValueSubject<String, Never> { get }
     
     var sourceCurrency: CurrentValueSubject<Currency?, Never> { get }
     
     var itemsIds: CurrentValueSubject<[CurrencyCode], Never> { get }
+    
+    // MARK: - Methods
+    
+    func getItem(for id: CurrencyCode) -> CurrencyConverterViewControllerItemViewModel?
 }
 
 public protocol CurrencyConverterViewControllerViewModelInput {

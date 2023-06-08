@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA0E596D2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E596C2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift */; };
 		AA1439842A2FC58E00D8F604 /* CurrenciesEmojies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */; };
 		AA1439882A2FCCBB00D8F604 /* BinaryLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */; };
 		AA14398B2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */; };
@@ -101,6 +102,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA0E596C2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewControllerItemViewModel.swift; sourceTree = "<group>"; };
 		AA1439832A2FC58E00D8F604 /* CurrenciesEmojies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesEmojies.swift; sourceTree = "<group>"; };
 		AA1439872A2FCCBB00D8F604 /* BinaryLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorage.swift; sourceTree = "<group>"; };
 		AA14398A2A2FCCDC00D8F604 /* BinaryLocalStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryLocalStorageImpl.swift; sourceTree = "<group>"; };
@@ -206,6 +208,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA0E596A2A31B0F000C5D082 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E596B2A31B0F600C5D082 /* ViewModel */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		AA0E596B2A31B0F600C5D082 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AA0E596C2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		AA1439862A2FCCB300D8F604 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,6 +592,7 @@
 		AAA5F9852A314F5D0062AD3F /* CurrencyConverterViewController */ = {
 			isa = PBXGroup;
 			children = (
+				AA0E596A2A31B0F000C5D082 /* Item */,
 				AAA5F9872A314F830062AD3F /* ViewModel */,
 			);
 			path = CurrencyConverterViewController;
@@ -915,6 +934,7 @@
 				AAC875992A2BD16800317B74 /* CurrencySelectionViewController.swift in Sources */,
 				AA4A06862A2C5CC600E215BD /* HTTPClient.swift in Sources */,
 				AA1439982A2FD48900D8F604 /* DataCoder.swift in Sources */,
+				AA0E596D2A31B10A00C5D082 /* CurrencyConverterViewControllerItemViewModel.swift in Sources */,
 				AAA5F98B2A3150FC0062AD3F /* CurrencyConverterViewControllerViewModelImpl.swift in Sources */,
 				AAA5F9942A3153C60062AD3F /* ConvertCurrencyUseCaseImpl.swift in Sources */,
 				AA4A06842A2C5CB300E215BD /* HTTPClientTask.swift in Sources */,

@@ -68,7 +68,6 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
         )
         
-        
         let capturedIsLoadingSequence = ValueStore<[Bool]>([])
         
         viewModel.isLoading.sink { isLoading in
@@ -165,8 +164,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
             
             return .success([
-                "EUR": 1,
-                "GBP": 2
+                "EUR": 1.111,
+                "GBP": 2.222
             ])
         }
         
@@ -184,6 +183,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+        verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
     
     func test_changeSourceCurrency() async throws {
@@ -206,8 +206,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
             
             return .success([
-                "EUR": 1,
-                "GBP": 2
+                "EUR": 1.11,
+                "GBP": 2.22
             ])
         }
         
@@ -221,6 +221,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
         XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
         XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+        
+        verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
     
     func test_updateSelectedCurrency() async throws {
@@ -245,8 +247,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
             
             return .success([
-                "EUR": 1,
-                "GBP": 2
+                "EUR": 1.11,
+                "GBP": 2.22
             ])
         }
         
@@ -272,58 +274,84 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["USD", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+        verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
     
-//    func test_changeAmount() async throws {
-//
-//        // Given
-//        let baseCurrency = "USD"
-//        let sut = createSUT(baseCurrency: baseCurrency)
-//
-//        let newAmount = 555
-//
-//        let newRates = [
-//            "EUR": 1,
-//            "GBP": 2
-//        ]
-//
-//        let currencies: [Currency] = [
-//
-//            .init(code: "USD", title: "", emoji: ""),
-//            .init(code: "EUR", title: "", emoji: ""),
-//            .init(code: "GBP", title: "", emoji: ""),
-//        ]
-//
-//        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
-//            return .success(currencies)
-//        }
-//
-//        sut.convertCurrencyUseCase.convertWillReturn = { amount, fromCurrency in
-//
-//            return .success([
-//                "EUR": 1,
-//                "GBP": 2
-//            ])
-//        }
-//
-//        // When
-//        sut.viewModel.update(selectedCurrency: newSelectedCurrency)
-//
-//        // Then
-//        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
-//        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
-//        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
-//
-//
-//        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
-//
-//        let expectedIdsSequence = [
-//            [],
-//            currencies.map { $0.code },
-//            ["USD", "GBP"]
-//        ]
-//        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
-//    }
+    func test_changeAmount() async throws {
+
+        // Given
+        let baseCurrency = "USD"
+        let sut = createSUT(baseCurrency: baseCurrency)
+
+        let newAmount = 3.333333
+
+        let newRates = [
+            "EUR": 1,
+            "GBP": 2
+        ]
+
+        let currencies: [Currency] = [
+
+            .init(code: "USD", title: "", emoji: ""),
+            .init(code: "EUR", title: "", emoji: ""),
+            .init(code: "GBP", title: "", emoji: ""),
+        ]
+
+        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
+            return .success(currencies)
+        }
+
+        sut.convertCurrencyUseCase.convertWillReturn = { amount, fromCurrency in
+
+            return .success([
+                "EUR": 1,
+                "GBP": 2
+            ])
+        }
+
+        await sut.viewModel.load()
+        
+        // When
+        await sut.viewModel.change(amount: newAmount)
+
+        // Then
+        XCTAssertEqual(sut.viewModel.amount.value, "3.33")
+        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
+
+
+        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+
+        let expectedIdsSequence = [
+            [],
+            currencies.map { $0.code },
+            ["USD", "GBP"]
+        ]
+        XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
+    }
+    
+    // MARK: - Helpers
+    
+    func verifyAmounts(
+        sut: SUT,
+        expectedAmounts: [String],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        
+        let capturedAmounts = sut.viewModel.itemsIds.value.compactMap { id in
+            
+            let item = sut.viewModel.getItem(for: id)
+            return item?.amount
+        }
+        
+        XCTAssertEqual(
+            capturedAmounts,
+            expectedAmounts,
+            file: file,
+            line: line
+        )
+    }
 }
 
 // MARK: - Helpers
