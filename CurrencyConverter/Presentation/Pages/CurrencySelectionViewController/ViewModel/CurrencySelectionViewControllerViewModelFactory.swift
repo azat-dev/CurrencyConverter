@@ -15,7 +15,8 @@ public protocol CurrencySelectionViewControllerViewModelFactory {
         initialSelectedCurrency: CurrencyCode?,
         onSelect: @escaping (CurrencyCode) -> Void,
         onCancel: @escaping () -> Void,
-        onFailLoad: @escaping () -> Void
+        onFailLoad: @escaping () -> Void,
+        onDispose: @escaping () -> Void
     ) -> ViewModel
 }
 

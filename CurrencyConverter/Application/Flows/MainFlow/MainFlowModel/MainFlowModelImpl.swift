@@ -79,11 +79,17 @@ public final class MainFlowModelImpl: MainFlowModel {
             print("IMPLEMENT ME")
         }
         
+        let handleDispose = { [weak self] () -> Void in
+
+            self?.selectCurrencyFlowModel.value = nil
+        }
+        
         selectCurrencyFlowModel.value = factories.selectCurrencyFlowModel.make(
             initialCurrency: initialCurrency,
             didSelect: handleSelectCurrency,
             didCancel: handleCancel,
-            didFailToLoad: handleFailToLoad
+            didFailToLoad: handleFailToLoad,
+            didDispose: handleDispose
         )
     }
 }

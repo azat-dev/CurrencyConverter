@@ -32,6 +32,8 @@ public protocol CurrencySelectionViewControllerViewModelInput {
     func removeFilter() async
     
     func cancel()
+    
+    func dispose()
 }
 
 public protocol CurrencySelectionViewControllerViewModel:

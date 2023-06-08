@@ -26,7 +26,8 @@ public final class SelectCurrencyFlowModelImplFactory: SelectCurrencyFlowModelFa
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
         didCancel: @escaping () -> Void,
-        didFailToLoad: @escaping () -> Void
+        didFailToLoad: @escaping () -> Void,
+        didDispose: @escaping () -> Void
     ) -> FlowModel {
         
         return SelectCurrencyFlowModelImpl(
@@ -34,6 +35,7 @@ public final class SelectCurrencyFlowModelImplFactory: SelectCurrencyFlowModelFa
             didSelect: didSelect,
             didCancel: didCancel,
             didFailToLoad: didFailToLoad,
+            didDispose: didDispose,
             currencySelectionViewControllerViewModelFactory: currencySelectionViewControllerViewModelFactory
         )
     }

@@ -28,6 +28,8 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     private let onFailLoad: () -> Void
     
+    private let onDispose: () -> Void
+    
     private var currentSearchText: String?
     
     // MARK: - Initializers
@@ -37,6 +39,7 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         onSelect: @escaping (CurrencyCode) -> Void,
         onCancel: @escaping () -> Void,
         onFailLoad: @escaping () -> Void,
+        onDispose: @escaping () -> Void,
         listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     ) {
        
@@ -44,6 +47,7 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
         self.onSelect = onSelect
         self.onCancel = onCancel
         self.onFailLoad = onFailLoad
+        self.onDispose = onDispose
         self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
     }
 }
@@ -138,5 +142,10 @@ extension CurrencySelectionViewControllerViewModelImpl {
     public func cancel() {
         
         onCancel()
+    }
+    
+    public func dispose() {
+        
+        onDispose()
     }
 }

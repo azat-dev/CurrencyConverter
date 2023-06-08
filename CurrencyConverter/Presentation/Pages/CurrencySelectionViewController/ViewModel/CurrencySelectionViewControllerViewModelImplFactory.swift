@@ -26,7 +26,8 @@ public final class CurrencySelectionViewControllerViewModelImplFactory: Currency
         initialSelectedCurrency: CurrencyCode?,
         onSelect: @escaping (CurrencyCode) -> Void,
         onCancel: @escaping () -> Void,
-        onFailLoad: @escaping () -> Void
+        onFailLoad: @escaping () -> Void,
+        onDispose: @escaping () -> Void
     ) -> ViewModel {
         
         return CurrencySelectionViewControllerViewModelImpl(
@@ -34,6 +35,7 @@ public final class CurrencySelectionViewControllerViewModelImplFactory: Currency
             onSelect: onSelect,
             onCancel: onCancel,
             onFailLoad: onFailLoad,
+            onDispose: onDispose,
             listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
         )
     }

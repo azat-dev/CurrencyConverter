@@ -15,7 +15,8 @@ public protocol SelectCurrencyFlowModelFactory {
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
         didCancel: @escaping () -> Void,
-        didFailToLoad: @escaping () -> Void
+        didFailToLoad: @escaping () -> Void,
+        didDispose: @escaping () -> Void
     ) -> FlowModel
 }
 

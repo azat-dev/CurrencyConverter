@@ -54,6 +54,12 @@ final class CurrencySelectionViewController: UIViewController {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        viewModel?.dispose()
+    }
+    
     
     // MARK: - Methods
     
@@ -109,6 +115,14 @@ final class CurrencySelectionViewController: UIViewController {
 
 // MARK: - Setup Views
 
+extension CurrencySelectionViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        viewModel?.toggleSelection(at: indexPath.row)
+    }
+}
+
 extension CurrencySelectionViewController {
     
     func setupActivityIndicator() {
@@ -159,6 +173,8 @@ extension CurrencySelectionViewController {
         
         tableDataSource = dataSource
         tableView.dataSource = dataSource
+        
+        tableView.delegate = self
         view.addSubview(tableView)
     }
     

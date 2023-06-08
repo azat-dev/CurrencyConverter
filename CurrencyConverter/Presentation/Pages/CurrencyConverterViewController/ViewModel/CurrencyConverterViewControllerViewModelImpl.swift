@@ -25,9 +25,11 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     
     public let isLoading = CurrentValueSubject<Bool, Never>(true)
     
-    public var currentAmount: Double = 1
+    public var currentAmount: Double {
+        return Double(amount.value) ?? 0
+    }
     
-    public let amount = CurrentValueSubject<String, Never>("1")
+    public let amount = CurrentValueSubject<String, Never>("")
     
     private var currentCurrency: CurrencyCode?
     
@@ -143,12 +145,7 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     
     public func change(amount newAmountText: String) async {
         
-        guard let newAmount = Double(newAmountText) else {
-            return
-        }
-        
-        currentAmount = newAmount
-        amount.value = String(currentAmount)
+        amount.value = newAmountText
         
         await update(silent: true)
     }
