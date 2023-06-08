@@ -160,6 +160,12 @@ final class CurrencyConverterViewController: UIViewController {
         }
     }
     
+    @objc
+    func didTapCurrencySelection() {
+        
+        viewModel?.changeSourceCurrency()
+    }
+    
     private func update(isLoading: Bool) {
         
         if isLoading {
@@ -267,6 +273,15 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
     }
     
     func setupCurrentCurrencyGroup() {
+        
+        currentCurrencyGroup.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(Self.didTapCurrencySelection)
+        )
+        
+        currentCurrencyGroup.addGestureRecognizer(tapGestureRecognizer)
         
         currentCurrencyGroup.addSubview(currentCurrencyFlag)
         currentCurrencyGroup.addSubview(currentCurrencyLabel)
