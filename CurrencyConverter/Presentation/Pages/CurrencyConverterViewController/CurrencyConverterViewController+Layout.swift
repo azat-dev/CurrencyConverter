@@ -44,6 +44,10 @@ extension CurrencyConverterViewController {
             currentCurrencyArrow.translatesAutoresizingMaskIntoConstraints = false
             currentCurrencyFlag.translatesAutoresizingMaskIntoConstraints = false
             currentCurrencyLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            currentCurrencyLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            currentCurrencyLabel.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+            currentCurrencyArrow.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
 
             NSLayoutConstraint.activate([
 
@@ -51,17 +55,12 @@ extension CurrencyConverterViewController {
                 currentCurrencyLabel.centerYAnchor.constraint(equalTo: currentCurrencyGroup.centerYAnchor),
                 currentCurrencyArrow.centerYAnchor.constraint(equalTo: currentCurrencyGroup.centerYAnchor),
 
-//                currentCurrencyFlag.heightAnchor.constraint(equalToConstant: 50),
-//                currentCurrencyFlag.widthAnchor.constraint(equalTo: currentCurrencyFlag.heightAnchor),
-                
                 currentCurrencyFlag.leadingAnchor.constraint(equalTo: currentCurrencyGroup.leadingAnchor),
-                currentCurrencyFlag.trailingAnchor.constraint(equalTo: currentCurrencyLabel.leadingAnchor),
+                currentCurrencyFlag.trailingAnchor.constraint(equalTo: currentCurrencyLabel.leadingAnchor, constant: -5),
 
-                currentCurrencyLabel.trailingAnchor.constraint(equalTo: currentCurrencyGroup.trailingAnchor),
+                currentCurrencyLabel.trailingAnchor.constraint(equalTo: currentCurrencyArrow.leadingAnchor, constant: -5),
                 
-                currentCurrencyArrow.heightAnchor.constraint(equalToConstant: 80),
-                currentCurrencyArrow.widthAnchor.constraint(equalToConstant: 80),
-                currentCurrencyArrow.trailingAnchor.constraint(equalTo: currentCurrencyGroup.trailingAnchor),
+                currentCurrencyArrow.trailingAnchor.constraint(equalTo: currentCurrencyGroup.trailingAnchor, constant: -10),
             ])
         }
         
@@ -77,12 +76,6 @@ extension CurrencyConverterViewController {
             let insets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 0)
             textField.insets = insets
             
-            currentCurrencyGroup.backgroundColor = .red
-            
-            textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
-            textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-            
-            currentCurrencyGroup.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             
             NSLayoutConstraint.activate([
                 
@@ -95,10 +88,15 @@ extension CurrencyConverterViewController {
                 currentCurrencyGroup.trailingAnchor.constraint(equalTo: textFieldGroup.trailingAnchor),
                 
                 currentCurrencyGroup.topAnchor.constraint(equalTo: textField.topAnchor),
-                currentCurrencyGroup.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
-                
-                currentCurrencyGroup.widthAnchor.constraint(equalToConstant: 100)
+                currentCurrencyGroup.bottomAnchor.constraint(equalTo: textField.bottomAnchor)
             ])
+            
+            
+            textField.setContentHuggingPriority(.init(100), for: .horizontal)
+            textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            
+            currentCurrencyGroup.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            currentCurrencyGroup.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         }
     }
 }

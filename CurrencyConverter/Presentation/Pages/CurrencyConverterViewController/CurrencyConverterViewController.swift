@@ -268,8 +268,6 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
     
     func setupCurrentCurrencyGroup() {
         
-        currentCurrencyArrow.image = UIImage(named: "chevron.down")
-        
         currentCurrencyGroup.addSubview(currentCurrencyFlag)
         currentCurrencyGroup.addSubview(currentCurrencyLabel)
         currentCurrencyGroup.addSubview(currentCurrencyArrow)
