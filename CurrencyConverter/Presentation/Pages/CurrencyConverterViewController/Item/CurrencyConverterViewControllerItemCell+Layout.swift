@@ -59,7 +59,7 @@ extension CurrencyConverterViewControllerItemCell {
                 textGroup.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
                 
                 amountLabel.leftAnchor.constraint(equalTo: textGroup.rightAnchor, constant: 5),
-                amountLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+                amountLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
                 
                 amountLabel.centerYAnchor.constraint(equalTo: textGroup.centerYAnchor)
             ])
