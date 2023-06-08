@@ -9,6 +9,6 @@ import Foundation
 
 extension CurrencySelectionViewController {
     
-    final class Styles {        
+    final class Styles {
     }
 }
