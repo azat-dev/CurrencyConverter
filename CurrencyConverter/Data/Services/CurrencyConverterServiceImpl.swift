@@ -39,7 +39,12 @@ public final class CurrencyConverterServiceImpl: CurrencyConverterService {
         }
 
         if sourceCurrency == baseCurrency {
-            return .success(rates)
+            
+            let values = rates.mapValues { rate in
+                return amount * rate
+            }
+            
+            return .success(values)
         }
         
         guard let sourceCurrencyRate = rates[sourceCurrency] else {
