@@ -97,6 +97,8 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
             sourceCurrency.value = newSourceCurrency
         }
         
+        let isLoadingFirstTime = (itemsById == nil)
+        
         itemsById = sortedCurrencies.reduce(
             into: [CurrencyCode: CurrencyConverterViewControllerItemViewModel]()
         ) { partialResult, currency in
@@ -127,6 +129,10 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
             itemsIds.value = newIds
         }
         
+        if !isLoadingFirstTime {
+            changedItems.send(newIds)
+        }
+        
         isLoading.value = false
     }
     
@@ -135,7 +141,11 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
         await update(silent: false)
     }
     
-    public func change(amount newAmount: Double) async {
+    public func change(amount newAmountText: String) async {
+        
+        guard let newAmount = Double(newAmountText) else {
+            return
+        }
         
         currentAmount = newAmount
         amount.value = String(currentAmount)

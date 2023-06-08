@@ -98,7 +98,7 @@ final class CurrencyConverterServiceImplTests: XCTestCase {
             return
         }
         
-        let expectedResult = [targetCurrency: targetCurrencyRate]
+        let expectedResult = [targetCurrency: targetCurrencyRate * amount]
         XCTAssertEqual(convertedRates, expectedResult)
     }
     

@@ -29,7 +29,7 @@ public protocol CurrencyConverterViewControllerViewModelOutput {
 
 public protocol CurrencyConverterViewControllerViewModelInput {
     
-    func change(amount: Double) async
+    func change(amount: String) async
     
     func changeSourceCurrency()
     

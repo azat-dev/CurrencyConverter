@@ -141,6 +141,17 @@ final class CurrencyConverterViewController: UIViewController {
     
     // MARK: - Methods
     
+    @objc
+    func textFieldDidChange(_ textField: UITextField) {
+        
+        let text = textField.text ?? ""
+        
+        Task(priority: .userInitiated) {
+            
+            await viewModel?.change(amount: text)
+        }
+    }
+    
     private func update(isLoading: Bool) {
         
         if isLoading {
@@ -148,6 +159,21 @@ final class CurrencyConverterViewController: UIViewController {
         } else {
             activityIndicatorView.stopAnimating()
         }
+    }
+    
+    private func update(changedItems: [CurrencyCode]) {
+
+        var snapshot = tableDataSource.snapshot()
+        
+        if #available(iOS 15.0, *) {
+            
+            snapshot.reconfigureItems(changedItems)
+        } else {
+            
+            snapshot.reloadItems(changedItems)
+        }
+        
+        tableDataSource.apply(snapshot, animatingDifferences: false)
     }
     
     private func update(itemsIds: [CurrencyCode]) {
@@ -192,6 +218,13 @@ final class CurrencyConverterViewController: UIViewController {
                 
                 self?.update(amount: amount)
             }.store(in: &observers)
+        
+        viewModel.changedItems
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] changedItems in
+                
+                self?.update(changedItems: changedItems)
+            }.store(in: &observers)
     }
 }
 
@@ -211,6 +244,13 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         textField.delegate = self
         textFieldGroup.addSubview(textField)
         
+        
+        textField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+        
         view.addSubview(textFieldGroup)
     }
     
@@ -224,10 +264,10 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         let characterSet = CharacterSet(charactersIn: replacementString)
         
         return allowedCharacters.isSuperset(of: characterSet) &&
-            (
-                replacementString.range(of: ".", options: .literal) == nil ||
-                textField.text?.range(of: ".", options: .literal) == nil
-            )
+        (
+            replacementString.range(of: ".", options: .literal) == nil ||
+            textField.text?.range(of: ".", options: .literal) == nil
+        )
     }
     
     func setupTableView() {

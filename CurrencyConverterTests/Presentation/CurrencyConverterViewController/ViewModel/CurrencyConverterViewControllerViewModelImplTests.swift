@@ -155,7 +155,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
         XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true])
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, [[]])
-        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [[]])
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [])
         XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil])
     }
     
@@ -198,7 +198,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
-        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [[]])
+        XCTAssertEqual(sut.capturedChangedItemsSequence.value, [])
         
         verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
     }
@@ -301,7 +301,10 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
         
-        let expectedChangedItemsSequence = expectedIdsSequence
+        let expectedChangedItemsSequence = [
+            ["USD", "GBP"]
+        ]
+        
         XCTAssertEqual(sut.capturedChangedItemsSequence.value, expectedChangedItemsSequence)
         
         verifyAmounts(sut: sut, expectedAmounts: ["3.33", "4.44"])
@@ -337,7 +340,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         await sut.viewModel.load()
         
         // When
-        await sut.viewModel.change(amount: newAmount)
+        await sut.viewModel.change(amount: "\(newAmount)")
 
         // Then
         XCTAssertEqual(sut.viewModel.amount.value, "\(newAmount)")
@@ -353,7 +356,12 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
         
-        let expectedChangedItemsSequence = expectedIdsSequence
+        verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
+        
+        let expectedChangedItemsSequence = [
+            ["EUR", "GBP"]
+        ]
+        
         XCTAssertEqual(sut.capturedChangedItemsSequence.value, expectedChangedItemsSequence)
     }
     
