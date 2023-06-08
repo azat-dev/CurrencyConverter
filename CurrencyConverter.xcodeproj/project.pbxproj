@@ -862,8 +862,6 @@
 				AAC875C62A2BD18B00317B74 /* Presentation */,
 				AAC875C52A2BD18500317B74 /* Data */,
 				AAC875C42A2BD17D00317B74 /* Domain */,
-				AAC8759F2A2BD16900317B74 /* LaunchScreen.storyboard */,
-				AAC875A22A2BD16900317B74 /* Info.plist */,
 			);
 			path = CurrencyConverter;
 			sourceTree = "<group>";
@@ -935,6 +933,8 @@
 		AAC875C82A2BD1AD00317B74 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AAC8759F2A2BD16900317B74 /* LaunchScreen.storyboard */,
+				AAC875A22A2BD16900317B74 /* Info.plist */,
 				AAC8759D2A2BD16900317B74 /* Assets.xcassets */,
 			);
 			path = SupportFiles;
@@ -1318,6 +1318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -1373,6 +1374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1392,7 +1394,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CurrencyConverter/Info.plist;
+				INFOPLIST_FILE = CurrencyConverter/Application/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1424,7 +1426,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CurrencyConverter/Info.plist;
+				INFOPLIST_FILE = CurrencyConverter/Application/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
