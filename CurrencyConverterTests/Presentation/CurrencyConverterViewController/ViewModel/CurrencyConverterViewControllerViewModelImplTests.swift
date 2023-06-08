@@ -244,11 +244,18 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             return .success(currencies)
         }
         
-        sut.convertCurrencyUseCase.convertWillReturn = { _, _ in
+        sut.convertCurrencyUseCase.convertWillReturn = { _, sourceCurrency in
+            
+            if sourceCurrency == newSelectedCurrency {
+                return .success([
+                    "USD": 3.333,
+                    "GBP": 4.444
+                ])
+            }
             
             return .success([
-                "EUR": 1.11,
-                "GBP": 2.22
+                "EUR": 1.111,
+                "GBP": 2.222
             ])
         }
         
@@ -274,7 +281,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ["USD", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
-        verifyAmounts(sut: sut, expectedAmounts: ["1.11", "2.22"])
+        verifyAmounts(sut: sut, expectedAmounts: ["3.33", "4.44"])
     }
     
     func test_changeAmount() async throws {
@@ -284,11 +291,6 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         let sut = createSUT(baseCurrency: baseCurrency)
 
         let newAmount = 3.333333
-
-        let newRates = [
-            "EUR": 1,
-            "GBP": 2
-        ]
 
         let currencies: [Currency] = [
 
@@ -304,8 +306,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         sut.convertCurrencyUseCase.convertWillReturn = { amount, fromCurrency in
 
             return .success([
-                "EUR": 1,
-                "GBP": 2
+                "EUR": 1.111,
+                "GBP": 2.222
             ])
         }
 
@@ -315,17 +317,16 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         await sut.viewModel.change(amount: newAmount)
 
         // Then
-        XCTAssertEqual(sut.viewModel.amount.value, "3.33")
+        XCTAssertEqual(sut.viewModel.amount.value, "\(newAmount)")
         XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
-        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
 
 
         XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
 
         let expectedIdsSequence = [
             [],
-            currencies.map { $0.code },
-            ["USD", "GBP"]
+            ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
     }

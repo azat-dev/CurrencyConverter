@@ -36,6 +36,8 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     public let itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
     
     
+    private var itemsById: [CurrencyCode: CurrencyConverterViewControllerItemViewModel]?
+    
     // MARK: - Properties
     
     // MARK: - Initializers
@@ -74,26 +76,54 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
         
         async let currenciesResult = await listSortedCurrenciesUseCase.list(searchText: nil)
         
-        async let ratesResult = await convertCurrencyUseCase.convert(
+        async let conversionResult = await convertCurrencyUseCase.convert(
             amount: currentAmount,
             from: currentCurrency
         )
         
-        guard case .success(let sortedCurrencies) = await currenciesResult else {
+        guard
+            case .success(let sortedCurrencies) = await currenciesResult,
+            case .success(let convertedValues) = await conversionResult
+        else {
             didFailToLoad()
             return
         }
         
-        itemsIds.value = sortedCurrencies.compactMap { currency in
+        let newSourceCurrency = sortedCurrencies.first { $0.code == currentCurrency }
+        
+        if sourceCurrency.value != newSourceCurrency {
+            sourceCurrency.value = newSourceCurrency
+        }
+        
+        itemsById = sortedCurrencies.reduce(
+            into: [CurrencyCode: CurrencyConverterViewControllerItemViewModel]()
+        ) { partialResult, currency in
             
-            if currency.code == currentCurrency {
+            guard let convertedAmount = convertedValues[currency.code] else {
+                return
+            }
+            
+            partialResult[currency.code] = .init(
+                id: currency.code,
+                title: currency.code,
+                description: currency.title,
+                amount: String(format: "%.2f", convertedAmount)
+            )
+        }
+        
+        let newIds = sortedCurrencies.compactMap { currency -> String? in
+            
+            if itemsById?[currency.code] == nil {
                 return nil
             }
             
             return currency.code
         }
         
-        sourceCurrency.value = sortedCurrencies.first { $0.code == currentCurrency }
+        if itemsIds.value != newIds {
+            itemsIds.value = newIds
+        }
+        
         isLoading.value = false
     }
     
@@ -126,6 +156,7 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     }
     
     public func getItem(for id: CurrencyCode) -> CurrencyConverterViewControllerItemViewModel? {
-        fatalError()
+        
+        return itemsById?[id]
     }
 }
