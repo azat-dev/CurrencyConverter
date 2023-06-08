@@ -20,7 +20,7 @@ public final class SelectCurrencyFlowPresenterImpl: SelectCurrencyFlowPresenter 
     // MARK: - Initializers
     
     public init() {
-        
+        fatalError()
     }
     
     // MARK: - Methods
