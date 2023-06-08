@@ -19,6 +19,7 @@ extension CurrencySelectionViewController {
             tableView: UITableView
         ) {
             
+            activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
             searchBar.translatesAutoresizingMaskIntoConstraints = false
             tableView.translatesAutoresizingMaskIntoConstraints = false
             

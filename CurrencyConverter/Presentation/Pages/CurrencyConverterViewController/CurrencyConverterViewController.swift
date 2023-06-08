@@ -333,6 +333,7 @@ extension CurrencyConverterViewController {
         Layout.apply(
             view: view,
             textFieldGroup: textFieldGroup,
+            activityIndicatorView: activityIndicatorView,
             tableView: tableView
         )
     }

@@ -15,13 +15,18 @@ extension CurrencyConverterViewController {
         static func apply(
             view: UIView,
             textFieldGroup: UIView,
+            activityIndicatorView: UIActivityIndicatorView,
             tableView: UITableView
         ) {
             
+            activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
             textFieldGroup.translatesAutoresizingMaskIntoConstraints = false
             tableView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
+                
+                activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
                 
                 textFieldGroup.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 textFieldGroup.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
