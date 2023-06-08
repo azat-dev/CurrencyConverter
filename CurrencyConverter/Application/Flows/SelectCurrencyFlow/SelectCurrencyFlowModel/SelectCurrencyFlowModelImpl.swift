@@ -44,11 +44,7 @@ public final class SelectCurrencyFlowModelImpl: SelectCurrencyFlowModel {
     
     // MARK: - Methods
     
-    public func run() async {
-        fatalError()
-    }
-    
     public func cancel() {
-        fatalError()
+        didCancel()
     }
 }

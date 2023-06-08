@@ -127,6 +127,29 @@ final class SelectCurrencyFlowModelImplTests: XCTestCase {
         )
     }
     
+    func test_cancel_flow() async throws {
+        
+        // Given
+        let initialCurrency = "USD"
+        let sut = createSUT(initialCurrency: initialCurrency)
+        
+        sut.currencySelectionViewControllerViewModelFactory.willUseCurrencies = [
+            .init(code: "USD", title: "", emoji: "")
+        ]
+        
+        await sut.flowModel.currencySelectionViewControllerViewModel.load()
+        
+        // When
+        sut.flowModel.cancel()
+        
+        
+        // Then
+        XCTAssertEqual(
+            sut.didCancelTimes.value,
+            1
+        )
+    }
+    
 }
 
 // MARK: - Helpers

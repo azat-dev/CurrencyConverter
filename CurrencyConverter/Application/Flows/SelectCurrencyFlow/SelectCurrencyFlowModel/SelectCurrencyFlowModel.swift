@@ -15,8 +15,6 @@ public protocol SelectCurrencyFlowModelOutput {
 
 public protocol SelectCurrencyFlowModelInput {
 
-    func run() async
-    
     func cancel()
 }
 
