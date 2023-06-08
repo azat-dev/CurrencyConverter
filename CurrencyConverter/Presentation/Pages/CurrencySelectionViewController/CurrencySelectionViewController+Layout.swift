@@ -14,6 +14,7 @@ extension CurrencySelectionViewController {
         
         static func apply(
             view: UIView,
+            activityIndicatorView: UIActivityIndicatorView,
             searchBar: UISearchBar,
             tableView: UITableView
         ) {
@@ -22,6 +23,9 @@ extension CurrencySelectionViewController {
             tableView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
+                
+                activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
                 
                 searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),

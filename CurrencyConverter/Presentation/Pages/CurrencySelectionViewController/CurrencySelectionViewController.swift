@@ -73,7 +73,7 @@ final class CurrencySelectionViewController: UIViewController {
         snapshot.appendSections([Self.mainSectionId])
         snapshot.appendItems(itemsIds)
         
-        tableDataSource.apply(snapshot, animatingDifferences: false)
+        tableDataSource.apply(snapshot, animatingDifferences: !isFirstLoad)
     }
     
     func bind(to viewModel: ViewModel?) {
@@ -184,6 +184,7 @@ extension CurrencySelectionViewController {
         
         Layout.apply(
             view: view,
+            activityIndicatorView: activityIndicatorView,
             searchBar: searchBar,
             tableView: tableView
         )
@@ -197,6 +198,8 @@ extension CurrencySelectionViewController {
     private func style() {
         
         Styles.apply(view: view)
+        Styles.apply(tableView: tableView)
+        Styles.apply(searchBar: searchBar)
     }
 }
 
