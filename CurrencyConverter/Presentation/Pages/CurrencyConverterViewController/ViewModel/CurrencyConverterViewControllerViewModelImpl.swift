@@ -23,13 +23,15 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
     
     
-    public var isLoading = CurrentValueSubject<Bool, Never>(true)
+    public let isLoading = CurrentValueSubject<Bool, Never>(true)
     
-    public var amount = CurrentValueSubject<Double, Never>(1)
+    public let amount = CurrentValueSubject<Double, Never>(1)
     
-    public var sourceCurrency: CurrentValueSubject<Currency?, Never>
+    private var currentCurrency: CurrencyCode?
     
-    public var itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
+    public let sourceCurrency: CurrentValueSubject<Currency?, Never>
+    
+    public let itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
     
     
     // MARK: - Properties
@@ -50,24 +52,73 @@ public final class CurrencyConverterViewControllerViewModelImpl: CurrencyConvert
         self.convertCurrencyUseCase = convertCurrencyUseCase
         self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
         
+        currentCurrency = baseCurrency
         sourceCurrency = .init(nil)
     }
     
     // MARK: - Methods
     
-    public func load() async {
-        fatalError()
+    private func update(silent: Bool) async {
+        
+        let currentAmount = amount.value
+        currentCurrency = currentCurrency ?? baseCurrency
+        
+        guard let currentCurrency = currentCurrency else {
+            return
+        }
+        
+        if !silent && !isLoading.value {
+            isLoading.value = true
+        }
+        
+        async let currenciesResult = await listSortedCurrenciesUseCase.list(searchText: nil)
+        
+        async let ratesResult = await convertCurrencyUseCase.convert(
+            amount: currentAmount,
+            from: currentCurrency
+        )
+        
+        guard case .success(let sortedCurrencies) = await currenciesResult else {
+            didFailToLoad()
+            return
+        }
+        
+        itemsIds.value = sortedCurrencies.compactMap { currency in
+            
+            if currency.code == currentCurrency {
+                return nil
+            }
+            
+            return currency.code
+        }
+        
+        sourceCurrency.value = sortedCurrencies.first { $0.code == currentCurrency }
+        isLoading.value = false
     }
     
-    public func change(amount: Double) {
-        fatalError()
+    public func load() async {
+        
+        await update(silent: false)
+    }
+    
+    public func change(amount newAmount: Double) async {
+        
+        amount.value = newAmount
+        await update(silent: true)
     }
     
     public func changeSourceCurrency() {
-        fatalError()
+        
+        guard let currentCurrency = currentCurrency else {
+            return
+        }
+        
+        didOpenCurrencySelector(currentCurrency)
     }
     
-    public func update(selectedCurrency: CurrencyCode) {
-        fatalError()
+    public func update(selectedCurrency: CurrencyCode) async {
+        
+        currentCurrency = selectedCurrency
+        await update(silent: true)
     }
 }

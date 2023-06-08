@@ -23,7 +23,7 @@ public protocol CurrencyConverterViewControllerViewModelOutput {
 
 public protocol CurrencyConverterViewControllerViewModelInput {
     
-    func change(amount: Double)
+    func change(amount: Double) async
     
     func changeSourceCurrency()
     
@@ -32,7 +32,7 @@ public protocol CurrencyConverterViewControllerViewModelInput {
 
 public protocol CurrencyConverterViewControllerViewModelUpdateProperties {
     
-    func update(selectedCurrency: CurrencyCode)
+    func update(selectedCurrency: CurrencyCode) async
 }
 
 public protocol CurrencyConverterViewControllerViewModel:

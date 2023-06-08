@@ -181,7 +181,7 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
         
         let expectedIdsSequence = [
             [],
-            currencies.map { $0.code }
+            ["EUR", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
     }
@@ -210,6 +210,8 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
                 "GBP": 2
             ])
         }
+        
+        await sut.viewModel.load()
         
         // When
         sut.viewModel.changeSourceCurrency()
@@ -248,68 +250,73 @@ final class CurrencyConverterViewControllerViewModelImplTests: XCTestCase {
             ])
         }
         
+        await sut.viewModel.load()
+        
         // When
-        sut.viewModel.update(selectedCurrency: newSelectedCurrency)
+        await sut.viewModel.update(selectedCurrency: newSelectedCurrency)
         
         // Then
         XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
-        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
-        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
+        XCTAssertEqual(sut.didOpenCurrencySelector.value, [])
+        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false, false])
         
         
-        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
+        XCTAssertEqual(
+            sut.capturedSourceCurrencySequence.value,
+            [nil, baseCurrency, newSelectedCurrency]
+        )
         
         let expectedIdsSequence = [
             [],
-            currencies.map { $0.code },
+            ["EUR", "GBP"],
             ["USD", "GBP"]
         ]
         XCTAssertEqual(sut.capturedItemsIdsSequence.value, expectedIdsSequence)
     }
     
 //    func test_changeAmount() async throws {
-//        
+//
 //        // Given
 //        let baseCurrency = "USD"
 //        let sut = createSUT(baseCurrency: baseCurrency)
-//        
+//
 //        let newAmount = 555
-//        
+//
 //        let newRates = [
 //            "EUR": 1,
 //            "GBP": 2
 //        ]
-//        
+//
 //        let currencies: [Currency] = [
-//        
+//
 //            .init(code: "USD", title: "", emoji: ""),
 //            .init(code: "EUR", title: "", emoji: ""),
 //            .init(code: "GBP", title: "", emoji: ""),
 //        ]
-//        
+//
 //        sut.listSortedCurrenciesUseCase.listWillReturn = { _ in
 //            return .success(currencies)
 //        }
-//        
+//
 //        sut.convertCurrencyUseCase.convertWillReturn = { amount, fromCurrency in
-//            
+//
 //            return .success([
 //                "EUR": 1,
 //                "GBP": 2
 //            ])
 //        }
-//        
+//
 //        // When
 //        sut.viewModel.update(selectedCurrency: newSelectedCurrency)
-//        
+//
 //        // Then
 //        XCTAssertEqual(sut.didFailToLoadTimes.value, 0)
 //        XCTAssertEqual(sut.didOpenCurrencySelector.value, [baseCurrency])
 //        XCTAssertEqual(sut.capturedIsLoadingSequence.value, [true, false])
-//        
-//        
+//
+//
 //        XCTAssertEqual(sut.capturedSourceCurrencySequence.value, [nil, baseCurrency])
-//        
+//
 //        let expectedIdsSequence = [
 //            [],
 //            currencies.map { $0.code },
