@@ -60,11 +60,15 @@ final class SelectCurrencyFlowModelImplTests: XCTestCase {
             capturedDidSelectSequence.value = newCapturedDidSelectSequence
         }
         
+        let didDisposeHandler = {
+        }
+        
         let flowModel = SelectCurrencyFlowModelImpl(
             initialCurrency: initialCurrency,
             didSelect: didSelectHandler,
             didCancel: didCancelHandler,
             didFailToLoad: didFailToLoadHandler,
+            didDispose: didDisposeHandler,
             currencySelectionViewControllerViewModelFactory: currencySelectionViewControllerViewModelFactory
         )
         
@@ -170,7 +174,8 @@ class CurrencySelectionViewControllerViewModelFactoryMock: CurrencySelectionView
         initialSelectedCurrency: CurrencyCode?,
         onSelect: @escaping (CurrencyCode) -> Void,
         onCancel: @escaping () -> Void,
-        onFailLoad: @escaping () -> Void
+        onFailLoad: @escaping () -> Void,
+        onDispose: @escaping () -> Void
     ) -> ViewModel {
         
         let listSortedCurrenciesUseCase = ListSortedCurrenciesUseCaseMock()
@@ -189,6 +194,7 @@ class CurrencySelectionViewControllerViewModelFactoryMock: CurrencySelectionView
             onSelect: onSelect,
             onCancel: onCancel,
             onFailLoad: onFailLoad,
+            onDispose: onDispose,
             listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
         )
     }

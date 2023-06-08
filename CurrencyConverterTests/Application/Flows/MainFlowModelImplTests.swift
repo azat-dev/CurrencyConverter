@@ -138,7 +138,8 @@ class SelectCurrencyFlowModelFactoryMock: SelectCurrencyFlowModelFactory {
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
         didCancel: @escaping () -> Void,
-        didFailToLoad: @escaping () -> Void
+        didFailToLoad: @escaping () -> Void,
+        didDispose: @escaping () -> Void
     ) -> FlowModel {
         
         return SelectCurrencyFlowModelImpl(
@@ -146,6 +147,7 @@ class SelectCurrencyFlowModelFactoryMock: SelectCurrencyFlowModelFactory {
             didSelect: didSelect,
             didCancel: didCancel,
             didFailToLoad: didFailToLoad,
+            didDispose: didDispose,
             currencySelectionViewControllerViewModelFactory: currencySelectionViewControllerViewModelFactory
         )
     }

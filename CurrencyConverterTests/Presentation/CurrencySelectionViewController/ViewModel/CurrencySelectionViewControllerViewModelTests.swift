@@ -65,6 +65,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
                 
                 didFailLoadTimes.value += 1
             },
+            onDispose: {},
             listSortedCurrenciesUseCase: listSortedCurrenciesUseCase
         )
         
