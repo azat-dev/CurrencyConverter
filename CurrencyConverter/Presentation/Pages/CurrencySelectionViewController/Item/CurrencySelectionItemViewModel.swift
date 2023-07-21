@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public struct CurrencySelectionItemViewModel {
+public struct CurrencySelectionItemViewModel: Hashable {
 
     // MARK: - Properties
     
@@ -52,5 +52,13 @@ public struct CurrencySelectionItemViewModel {
         }
         
         isActive.value = false
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
+    }
+    
+    public static func == (lhs: CurrencySelectionItemViewModel, rhs: CurrencySelectionItemViewModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

@@ -30,8 +30,8 @@ public final class SelectCurrencyFlowPresenterImpl: SelectCurrencyFlowPresenter 
         
         DispatchQueue.main.async {
             
-            let vc = CurrencySelectionViewController()
-            vc.viewModel = self.flowModel.currencySelectionViewControllerViewModel
+            let viewModel = self.flowModel.currencySelectionViewControllerViewModel
+            let vc = CurrencySelectionViewController(viewModel: viewModel)
             
             navigationController.pushViewController(vc, animated: true)
         }

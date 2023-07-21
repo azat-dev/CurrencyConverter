@@ -78,10 +78,10 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
             
         }.store(in: &observers)
         
-        viewModel.itemsIds.sink { itemsIds in
+        viewModel.items.sink { items in
             
             var newValues = capturedItemsIdsSequence.value
-            newValues.append(itemsIds)
+            newValues.append(items.map { $0.id })
             
             capturedItemsIdsSequence.value = newValues
             
@@ -376,7 +376,7 @@ final class CurrencySelectionViewControllerViewModelTests: XCTestCase {
         line: UInt = #line
     ) {
         let expectedIsActiveFlags = currencies.indices.map { $0 == expectedSelectedItemIndex}
-        let receivedActiveFlags = viewModel.itemsIds.value.indices.map { index in viewModel.getItem(at: index)?.isActive.value }
+        let receivedActiveFlags = viewModel.items.value.map { $0.isActive.value }
         
         XCTAssertEqual(receivedActiveFlags, expectedIsActiveFlags, file: file, line: line)
     }

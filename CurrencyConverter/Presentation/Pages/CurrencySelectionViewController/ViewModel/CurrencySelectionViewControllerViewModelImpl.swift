@@ -14,11 +14,9 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     
     public var isLoading = CurrentValueSubject<Bool, Never>(true)
     
-    public var itemsIds = CurrentValueSubject<[CurrencyCode], Never>([])
+    public var items = CurrentValueSubject<[CurrencySelectionItemViewModel], Never>([])
     
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
-    
-    private var itemsById: [CurrencyCode: CurrencySelectionItemViewModel]?
     
     private var activeItemId: CurrencyCode?
     
@@ -52,34 +50,27 @@ public final class CurrencySelectionViewControllerViewModelImpl: CurrencySelecti
     }
 }
 
-// MARK: - Output Methods
-
-extension CurrencySelectionViewControllerViewModelImpl {
-    
-    public func getItem(at index: Int) -> CurrencySelectionItemViewModel? {
-        
-        let itemId = itemsIds.value[index]
-        return itemsById?[itemId]
-    }
-}
-
 // MARK: - Input Methods
 
 extension CurrencySelectionViewControllerViewModelImpl {
     
     public func toggleSelection(at index: Int) {
 
+        let currentItems = items.value
+        
+        assert(index < currentItems.count)
+        
         if
             let activeItemId = activeItemId,
-            let prevSelectedItem = itemsById?[activeItemId]
+            let prevSelectedItem = currentItems.first(where: { $0.id == activeItemId })
         {
             prevSelectedItem.deactivate()
         }
         
-        let newActiveItem = getItem(at: index)
-        newActiveItem?.activate()
+        let newActiveItem = currentItems[index]
+        newActiveItem.activate()
         
-        activeItemId = newActiveItem?.id
+        activeItemId = newActiveItem.id
         
         guard let activeItemId = activeItemId else {
             return
@@ -102,21 +93,21 @@ extension CurrencySelectionViewControllerViewModelImpl {
             return
         }
         
-        itemsById = currencies.reduce(into: [CurrencyCode: CurrencySelectionItemViewModel]()) { partialResult, currency in
+        let newCurrencies = currencies.map { currency in
             
-            let id = currency.code
-            
-            partialResult[id] = .init(
-                id: id,
-                isActive: id == activeItemId,
+            return CurrencySelectionItemViewModel(
+                id: currency.code,
+                isActive: currency.code == activeItemId,
                 title: currency.code,
                 description: currency.title,
                 emoji: currency.emoji
             )
         }
         
-        itemsIds.value = currencies.map { $0.code }
-        isLoading.value = false
+        await MainActor.run {
+            items.value = newCurrencies
+            isLoading.value = false
+        }
     }
     
     public func load() async {

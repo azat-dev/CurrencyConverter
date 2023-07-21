@@ -14,11 +14,7 @@ public protocol CurrencySelectionViewControllerViewModelOutput {
     
     var isLoading: CurrentValueSubject<Bool, Never> { get }
     
-    var itemsIds: CurrentValueSubject<[CurrencyCode], Never> { get }
-    
-    // MARK: - Methods
-    
-    func getItem(at index: Int) -> CurrencySelectionItemViewModel?
+    var items: CurrentValueSubject<[CurrencySelectionItemViewModel], Never> { get }
 }
 
 public protocol CurrencySelectionViewControllerViewModelInput {

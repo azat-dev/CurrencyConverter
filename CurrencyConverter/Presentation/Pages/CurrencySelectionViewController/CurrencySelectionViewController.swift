@@ -28,41 +28,51 @@ final class CurrencySelectionViewController: UIViewController {
     
     private var tableView: UITableView!
     
-    private var tableDataSource: UITableViewDiffableDataSource<SectionId, ItemId>!
+    private var tableDataSource: UITableViewDiffableDataSource<SectionId, CurrencySelectionItemViewModel>!
     
     private var observers = Set<AnyCancellable>()
     
-    public var viewModel: ViewModel? {
-        
-        didSet {
-            bind(to: viewModel)
-        }
-    }
+    private var viewModel: ViewModel
     
     // MARK: - Methods
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    init(viewModel: ViewModel) {
+
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
         
         setupViews()
         layout()
         style()
+        bind(to: viewModel)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+
         
         Task(priority: .userInitiated) {
-            await viewModel?.load()
+            await viewModel.load()
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        viewModel?.dispose()
+        viewModel.dispose()
     }
     
     
     // MARK: - Methods
     
+    @MainActor
     private func update(isLoading: Bool) {
         
         if isLoading {
@@ -72,12 +82,13 @@ final class CurrencySelectionViewController: UIViewController {
         }
     }
     
-    private func update(itemsIds: [CurrencyCode], isFirstLoad: Bool) {
+    @MainActor
+    private func update(items: [CurrencySelectionItemViewModel], isFirstLoad: Bool) {
         
-        var snapshot = NSDiffableDataSourceSnapshot<SectionId, ItemId>()
+        var snapshot = NSDiffableDataSourceSnapshot<SectionId, CurrencySelectionItemViewModel>()
         
         snapshot.appendSections([Self.mainSectionId])
-        snapshot.appendItems(itemsIds)
+        snapshot.appendItems(items)
         
         tableDataSource.apply(snapshot, animatingDifferences: !isFirstLoad)
     }
@@ -92,19 +103,17 @@ final class CurrencySelectionViewController: UIViewController {
         var isFirstLoad = true
         
         viewModel.isLoading
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
                 
                 self?.update(isLoading: isLoading)
             }.store(in: &observers)
         
-        viewModel.itemsIds
-            .receive(on: DispatchQueue.main)
+        viewModel.items
             .removeDuplicates()
-            .sink { [weak self] itemsIds in
+            .sink { [weak self] items in
                 
                 self?.update(
-                    itemsIds: itemsIds,
+                    items: items,
                     isFirstLoad: isFirstLoad
                 )
                 
@@ -119,7 +128,7 @@ extension CurrencySelectionViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        viewModel?.toggleSelection(at: indexPath.row)
+        viewModel.toggleSelection(at: indexPath.row)
     }
 }
 
@@ -147,26 +156,16 @@ extension CurrencySelectionViewController {
             forCellReuseIdentifier: CurrencySelectionItemCell.reuseIdentifier
         )
         
-        let dataSource = UITableViewDiffableDataSource<Int, CurrencyCode>(
+        let dataSource = UITableViewDiffableDataSource<Int, CurrencySelectionItemViewModel>(
             tableView: tableView,
-            cellProvider: { [weak self] tableView, indexPath, itemId in
+            cellProvider: { tableView, indexPath, itemViewModel in
                 
                 let cell = tableView.dequeueReusableCell(
                     withIdentifier: CurrencySelectionItemCell.reuseIdentifier,
                     for: indexPath
                 ) as! CurrencySelectionItemCell
                 
-                guard let self = self else {
-                    return cell
-                }
-                
-                let cellViewModel = self.viewModel?.getItem(at: indexPath.row)
-                
-                guard let cellViewModel = cellViewModel else {
-                    return cell
-                }
-                
-                cell.fill(with: cellViewModel)
+                cell.fill(with: itemViewModel)
                 return cell
             }
         )
@@ -228,7 +227,7 @@ extension CurrencySelectionViewController: UISearchBarDelegate {
         if let searchText = searchBar.text {
             
             Task(priority: .userInitiated) {
-                await viewModel?.filterItems(by: searchText)
+                await viewModel.filterItems(by: searchText)
             }
         }
         
@@ -239,7 +238,7 @@ extension CurrencySelectionViewController: UISearchBarDelegate {
         searchBar.text = ""
         
         Task(priority: .userInitiated) {
-            await viewModel?.removeFilter()
+            await viewModel.removeFilter()
         }
         
         searchBar.resignFirstResponder()
@@ -248,7 +247,7 @@ extension CurrencySelectionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         Task(priority: .userInitiated) {
-            await viewModel?.filterItems(by: searchText)
+            await viewModel.filterItems(by: searchText)
         }
     }
 }

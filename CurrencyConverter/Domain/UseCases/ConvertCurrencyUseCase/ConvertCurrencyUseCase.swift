@@ -21,4 +21,3 @@ public protocol ConvertCurrencyUseCase {
         from: CurrencyCode
     ) async -> Result<[CurrencyCode: Double], ConvertCurrencyUseCaseError>
 }
-
