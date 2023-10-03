@@ -8,11 +8,11 @@
 import Foundation
 
 public enum LatestRatesServiceError: Error {
-    
+
     case internalError
 }
 
 public protocol LatestRatesService {
- 
+
     func fetch() async -> Result<[CurrencyCode: Double], LatestRatesServiceError>
 }

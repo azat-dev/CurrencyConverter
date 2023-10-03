@@ -10,11 +10,11 @@ import Foundation
 // MARK: - Interfaces
 
 public enum ListSortedCurrenciesUseCaseError: Error {
-    
+
     case internalError
 }
 
 public protocol ListSortedCurrenciesUseCase {
-    
+
     func list(searchText: String?) async -> Result<[Currency], ListSortedCurrenciesUseCaseError>
 }

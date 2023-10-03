@@ -8,12 +8,12 @@
 import Foundation
 
 public enum CurrencyConverterServiceError: Error {
-    
+
     case internalError
 }
 
 public protocol CurrencyConverterService {
-    
+
     func convert(
         amount: Double,
         from targetCurrency: CurrencyCode

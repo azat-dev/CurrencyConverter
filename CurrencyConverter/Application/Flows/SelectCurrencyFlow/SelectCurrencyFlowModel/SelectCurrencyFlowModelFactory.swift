@@ -8,9 +8,9 @@
 import Foundation
 
 public protocol SelectCurrencyFlowModelFactory {
-    
+
     typealias FlowModel = SelectCurrencyFlowModel
-    
+
     func make(
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
@@ -19,4 +19,3 @@ public protocol SelectCurrencyFlowModelFactory {
         didDispose: @escaping () -> Void
     ) -> FlowModel
 }
-

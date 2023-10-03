@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 public protocol SelectCurrencyFlowPresenter {
-    
+
     typealias FlowModel = SelectCurrencyFlowModel
-    
-    func present(at: UINavigationController)
-    
+
+    func present(inContainer: UINavigationController)
+
     func dismiss(from: UINavigationController)
 }

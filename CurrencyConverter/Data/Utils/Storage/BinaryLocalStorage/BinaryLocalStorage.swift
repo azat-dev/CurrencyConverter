@@ -8,12 +8,12 @@
 import Foundation
 
 public protocol BinaryLocalStorage {
- 
+
     func get(key: String) async -> Result<Data?, Error>
-    
+
     @discardableResult
     func put(key: String, value: Data) async -> Result<Void, Error>
-    
+
     @discardableResult
-    func delete(key: String) async -> Result<Void, Error>    
+    func delete(key: String) async -> Result<Void, Error>
 }

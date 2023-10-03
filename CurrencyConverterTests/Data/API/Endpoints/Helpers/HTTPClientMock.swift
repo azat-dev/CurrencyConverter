@@ -9,17 +9,17 @@ import Foundation
 import CurrencyConverter
 
 class HTTPClientMock: HTTPClient {
-    
+
     // MARK: - Properties
-    
+
     var getWillReturn: ((_ url: URL) -> HTTPClientTask)!
-    
+
     // MARK: - Initializers
-    
+
     init() {}
-    
+
     // MARK: - Methods
-    
+
     func get(from url: URL) -> HTTPClientTask {
         return getWillReturn(url)
     }

@@ -8,11 +8,11 @@
 import Foundation
 
 public enum GetCurrenciesUseCaseError: Error {
-    
+
     case internalError
 }
 
 public protocol GetCurrenciesUseCase {
-    
+
     func get(searchText: String?) async -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>
 }

@@ -11,15 +11,15 @@ import XCTest
 import CurrencyConverter
 
 final class CurrenciesEndpointTests: XCTestCase {
-    
+
     func test_url() async throws {
-        
+
         // Given
         let baseURL = URL(string: "https://base-url.com")!
-        
+
         // When
         let receivedURL = CurrenciesEndpoint.get.url(baseURL: baseURL)
-        
+
         // Then
         XCTAssertEqual(receivedURL.scheme, "https", "scheme")
         XCTAssertEqual(receivedURL.host, "base-url.com", "host")

@@ -10,12 +10,12 @@ import Foundation
 // MARK: - Interfaces
 
 public enum ConvertCurrencyUseCaseError: Error {
-    
+
     case internalError
 }
 
 public protocol ConvertCurrencyUseCase {
-    
+
     func convert(
         amount: Double,
         from: CurrencyCode

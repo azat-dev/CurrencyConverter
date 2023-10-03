@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 public final class CurrencyConverterViewControllerItemCell: UITableViewCell {
-    
+
     // MARK: - Types
-    
-    public typealias ViewModel = CurrencyConverterViewControllerItemViewModel
-    
+
+    public typealias ViewModel = CurrencyConverterItemViewModel
+
     // MARK: - Properties
-    
+
     public static let reuseIdentifier = "CurrencyConverterViewControllerItemCell"
 
     private let textGroup = UIStackView()
@@ -24,23 +24,23 @@ public final class CurrencyConverterViewControllerItemCell: UITableViewCell {
     private let descritionLabel = UILabel()
     private let flagLabel = UILabel()
     private let bottomBorder = UIView()
-    
+
     // MARK: - Initializers
-    
+
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
-    
+
     public required init?(coder: NSCoder) {
-        
+
         super.init(coder: coder)
         setup()
     }
-    
+
     // MARK: - Methods
-    
+
     private func setup() {
         setupViews()
         layout()
@@ -53,7 +53,7 @@ public final class CurrencyConverterViewControllerItemCell: UITableViewCell {
 extension CurrencyConverterViewControllerItemCell {
 
     func fill(with viewModel: ViewModel) {
-        
+
         titleLabel.text = viewModel.title
         descritionLabel.text = viewModel.description
         flagLabel.text = viewModel.emoji
@@ -66,12 +66,12 @@ extension CurrencyConverterViewControllerItemCell {
 extension CurrencyConverterViewControllerItemCell {
 
     private func setupViews() {
-        
+
         textGroup.axis = .vertical
-        
+
         textGroup.addArrangedSubview(titleLabel)
         textGroup.addArrangedSubview(descritionLabel)
-        
+
         contentView.addSubview(textGroup)
         contentView.addSubview(flagLabel)
         contentView.addSubview(bottomBorder)
@@ -87,7 +87,7 @@ extension CurrencyConverterViewControllerItemCell {
 
         backgroundView = nil
         backgroundColor = .clear
-        
+
         Styles.apply(contentView: contentView)
         Styles.apply(flagLabel: flagLabel)
         Styles.apply(titleLabel: titleLabel)
@@ -100,9 +100,9 @@ extension CurrencyConverterViewControllerItemCell {
 // MARK: - Layout
 
 extension CurrencyConverterViewControllerItemCell {
-    
+
     private func layout() {
-        
+
         Layout.apply(
             contentView: contentView,
             flagLabel: flagLabel,

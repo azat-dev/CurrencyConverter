@@ -8,19 +8,19 @@
 import Foundation
 
 public final class SelectCurrencyFlowPresenterImplFactory: SelectCurrencyFlowPresenterFactory {
-    
+
     // MARK: - Properties
-    
+
     // MARK: - Initializers
-    
+
     public init() {
-        
+
     }
-    
+
     // MARK: - Methods
-    
+
     public func make(for flowModel: FlowModel) -> SelectCurrencyFlowPresenter {
-        
+
         return SelectCurrencyFlowPresenterImpl(flowModel: flowModel)
     }
 }

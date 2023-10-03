@@ -10,7 +10,7 @@ import Combine
 
 public protocol SelectCurrencyFlowModelOutput {
 
-    var currencySelectionViewControllerViewModel: CurrencySelectionViewControllerViewModel { get }
+    var currencySelectionViewControllerViewModel: CurrencySelectionViewModel { get }
 }
 
 public protocol SelectCurrencyFlowModelInput {

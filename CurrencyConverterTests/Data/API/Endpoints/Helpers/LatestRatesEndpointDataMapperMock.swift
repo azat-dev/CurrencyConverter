@@ -9,19 +9,19 @@ import Foundation
 import CurrencyConverter
 
 class LatestRatesEndpointDataMapperMock: LatestRatesEndpointDataMapper {
-    
+
     // MARK: - Properties
-    
+
     var willReturn: ((_ data: Data) -> Result<[CurrencyCode: Double], LatestRatesEndpointDataMapperError>)!
-    
+
     // MARK: - Initializers
-    
+
     init() {}
-    
+
     // MARK: - Methods
-    
+
     func map(_ data: Data) -> Result<[CurrencyCode: Double], LatestRatesEndpointDataMapperError> {
-        
+
         return willReturn(data)
     }
 }

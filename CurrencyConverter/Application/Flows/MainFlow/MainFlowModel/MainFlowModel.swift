@@ -9,14 +9,14 @@ import Foundation
 import Combine
 
 public protocol MainFlowModelOutput {
-    
-    var currencyConverterViewControllerViewModel: CurrencyConverterViewControllerViewModel { get }
-    
+
+    var currencyConverterViewControllerViewModel: CurrencyConverterViewModel { get }
+
     var selectCurrencyFlowModel: CurrentValueSubject<SelectCurrencyFlowModel?, Never> { get }
 }
 
 public protocol MainFlowModelInput {
-    
+
 }
 
 public protocol MainFlowModel: MainFlowModelInput, MainFlowModelOutput {}

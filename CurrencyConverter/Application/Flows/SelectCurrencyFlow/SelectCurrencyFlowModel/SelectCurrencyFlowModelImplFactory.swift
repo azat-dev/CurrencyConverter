@@ -8,20 +8,20 @@
 import Foundation
 
 public final class SelectCurrencyFlowModelImplFactory: SelectCurrencyFlowModelFactory {
-    
+
     // MARK: - Properties
-    
-    private let currencySelectionViewControllerViewModelFactory: CurrencySelectionViewControllerViewModelFactory
-    
+
+    private let currencySelectionViewModelFactory: CurrencySelectionViewModelFactory
+
     // MARK: - Initializers
-    
-    public init(currencySelectionViewControllerViewModelFactory: CurrencySelectionViewControllerViewModelFactory) {
-        
-        self.currencySelectionViewControllerViewModelFactory = currencySelectionViewControllerViewModelFactory
+
+    public init(currencySelectionViewModelFactory: CurrencySelectionViewModelFactory) {
+
+        self.currencySelectionViewModelFactory = currencySelectionViewModelFactory
     }
-    
+
     // MARK: - Methods
-    
+
     public func make(
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
@@ -29,14 +29,14 @@ public final class SelectCurrencyFlowModelImplFactory: SelectCurrencyFlowModelFa
         didFailToLoad: @escaping () -> Void,
         didDispose: @escaping () -> Void
     ) -> FlowModel {
-        
+
         return SelectCurrencyFlowModelImpl(
             initialCurrency: initialCurrency,
             didSelect: didSelect,
             didCancel: didCancel,
             didFailToLoad: didFailToLoad,
             didDispose: didDispose,
-            currencySelectionViewControllerViewModelFactory: currencySelectionViewControllerViewModelFactory
+            currencySelectionViewModelFactory: currencySelectionViewModelFactory
         )
     }
 }

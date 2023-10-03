@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol MainFlowPresenterFactory {
-    
+
     typealias FlowModel = MainFlowModel
-    
+
     func make(for: FlowModel) -> MainFlowPresenter
 }

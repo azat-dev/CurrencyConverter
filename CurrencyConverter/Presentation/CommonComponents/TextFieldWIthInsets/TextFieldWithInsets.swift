@@ -11,14 +11,14 @@ import UIKit
 public final class TextFieldWithInsets: UITextField {
 
     // MARK: - Properties
-    
+
     public var insets = UIEdgeInsets.zero {
-        
+
         didSet {
             setNeedsLayout()
         }
     }
-    
+
     // MARK: - Methods
 
     public override func textRect(forBounds bounds: CGRect) -> CGRect {

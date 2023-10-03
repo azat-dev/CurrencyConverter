@@ -9,19 +9,19 @@ import Foundation
 import CurrencyConverter
 
 class CurrenciesEndpointDataMapperMock: CurrenciesEndpointDataMapper {
-    
+
     // MARK: - Properties
-    
-    var willReturn: ((_ data: Data) -> Result<[CurrencyCode : CurrencyTitle], CurrenciesEndpointDataMapperError>)!
-    
+
+    var willReturn: ((_ data: Data) -> Result<[CurrencyCode: CurrencyTitle], CurrenciesEndpointDataMapperError>)!
+
     // MARK: - Initializers
-    
+
     init() {}
-    
+
     // MARK: - Methods
-    
-    func map(_ data: Data) -> Result<[CurrencyCode : CurrencyTitle], CurrenciesEndpointDataMapperError> {
-        
+
+    func map(_ data: Data) -> Result<[CurrencyCode: CurrencyTitle], CurrenciesEndpointDataMapperError> {
+
         return willReturn(data)
     }
 }

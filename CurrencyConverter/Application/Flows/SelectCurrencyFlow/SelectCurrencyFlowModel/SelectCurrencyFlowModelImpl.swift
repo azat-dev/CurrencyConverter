@@ -9,33 +9,33 @@ import Foundation
 import Combine
 
 public final class SelectCurrencyFlowModelImpl: SelectCurrencyFlowModel {
-    
+
     // MARK: - Properties
-    
-    public let currencySelectionViewControllerViewModel: CurrencySelectionViewControllerViewModel
-    
+
+    public let currencySelectionViewControllerViewModel: CurrencySelectionViewModel
+
     private let initialCurrency: CurrencyCode
-    
+
     private let didSelect: (CurrencyCode) -> Void
-    
+
     private let didCancel: () -> Void
-    
+
     // MARK: - Initializers
-    
+
     public init(
         initialCurrency: CurrencyCode,
         didSelect: @escaping (CurrencyCode) -> Void,
         didCancel: @escaping () -> Void,
         didFailToLoad: @escaping () -> Void,
         didDispose: @escaping () -> Void,
-        currencySelectionViewControllerViewModelFactory: CurrencySelectionViewControllerViewModelFactory
+        currencySelectionViewModelFactory: CurrencySelectionViewModelFactory
     ) {
-        
+
         self.initialCurrency = initialCurrency
         self.didSelect = didSelect
         self.didCancel = didCancel
-        
-        currencySelectionViewControllerViewModel = currencySelectionViewControllerViewModelFactory.make(
+
+        currencySelectionViewControllerViewModel = currencySelectionViewModelFactory.make(
             initialSelectedCurrency: initialCurrency,
             onSelect: didSelect,
             onCancel: didCancel,
@@ -43,9 +43,9 @@ public final class SelectCurrencyFlowModelImpl: SelectCurrencyFlowModel {
             onDispose: didDispose
         )
     }
-    
+
     // MARK: - Methods
-    
+
     public func cancel() {
         didCancel()
     }

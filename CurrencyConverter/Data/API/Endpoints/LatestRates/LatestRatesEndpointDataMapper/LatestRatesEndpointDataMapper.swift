@@ -8,11 +8,11 @@
 import Foundation
 
 public enum LatestRatesEndpointDataMapperError: Error {
-    
+
     case invalidData
 }
 
 public protocol LatestRatesEndpointDataMapper {
-    
+
     func map(_ data: Data) -> Result<[CurrencyCode: Double], LatestRatesEndpointDataMapperError>
 }

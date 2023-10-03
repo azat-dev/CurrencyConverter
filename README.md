@@ -8,6 +8,7 @@ This demo project shows my coding style. Main features of this project:
 - SOLID principles
 - Clean Architecture Principles
 - All dependencies initialized in the composition root, so it is easy to replace any component
+- SwiftLint
 
 ## Architecture
 

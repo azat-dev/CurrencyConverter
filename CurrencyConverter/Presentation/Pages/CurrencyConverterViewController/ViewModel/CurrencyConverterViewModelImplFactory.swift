@@ -1,5 +1,5 @@
 //
-//  CurrencyConverterViewControllerViewModelImplFactory.swift
+//  CurrencyConverterViewModelImplFactory.swift
 //  CurrencyConverter
 //
 //  Created by Azat Kaiumov on 08.06.23.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-public final class CurrencyConverterViewControllerViewModelImplFactory: CurrencyConverterViewControllerViewModelFactory {
-    
+public final class CurrencyConverterViewModelImplFactory: CurrencyConverterViewModelFactory {
+
     // MARK: - Properties
-    
+
     private let convertCurrencyUseCase: ConvertCurrencyUseCase
     private let listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
-    
+
     // MARK: - Initializers
-    
+
     public init(
         convertCurrencyUseCase: ConvertCurrencyUseCase,
         listSortedCurrenciesUseCase: ListSortedCurrenciesUseCase
@@ -24,16 +24,16 @@ public final class CurrencyConverterViewControllerViewModelImplFactory: Currency
         self.convertCurrencyUseCase = convertCurrencyUseCase
         self.listSortedCurrenciesUseCase = listSortedCurrenciesUseCase
     }
-    
+
     // MARK: - Methods
-    
+
     public func make(
         baseCurrency: CurrencyCode,
         didOpenCurrencySelector: @escaping (CurrencyCode) -> Void,
         didFailToLoad: @escaping () -> Void
     ) -> ViewModel {
-        
-        return CurrencyConverterViewControllerViewModelImpl(
+
+        return CurrencyConverterViewModelImpl(
             baseCurrency: baseCurrency,
             didOpenCurrencySelector: didOpenCurrencySelector,
             didFailToLoad: didFailToLoad,

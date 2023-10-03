@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol DateProvider {
-    
+
     func getCurrentDate() -> Date
 }

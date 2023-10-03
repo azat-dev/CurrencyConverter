@@ -8,15 +8,15 @@
 import Foundation
 
 public struct ApplicationSettings {
-    
+
     // MARK: - Properties
-    
+
     public let baseURL: URL
     public let appId: String
     public let cacheDirectoryName: String
     public let cacheRefreshTimeout: TimeInterval
     public let baseCurrency: String
-    
+
     // MARK: - Initializers
 
     public init(

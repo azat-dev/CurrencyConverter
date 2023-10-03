@@ -9,33 +9,33 @@ import Foundation
 import UIKit
 
 extension CurrencySelectionViewController {
-    
+
     final class Layout {
-        
+
         static func apply(
             view: UIView,
             activityIndicatorView: UIActivityIndicatorView,
             searchBar: UISearchBar,
             tableView: UITableView
         ) {
-            
+
             activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
             searchBar.translatesAutoresizingMaskIntoConstraints = false
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            
+
             NSLayoutConstraint.activate([
-                
+
                 activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                
+
                 searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
                 searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-                
+
                 tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
                 tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                 tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
         }
     }
