@@ -1,8 +1,26 @@
-# Currency Converter
+<div align="center">
 
-## About
+  <h1 style="border-bottom: none">
+      <b>Currency Converter</b>
+  </h1>
+  
+  <p>
+    This demo project shows my coding style 😎 <br /><br />
+    The project contains a currency converter that receives exchange rates from a remote server.<br /> The application also caches requests to the server
+  </p>
+</div>
+<div align="center">
 
-This demo project shows my coding style. Main features of this project:
+![swift](https://img.shields.io/badge/SWIFT-ff3d29)
+![coverage](https://img.shields.io/badge/COVERAGE-72%25-green)
+![clean architecture](https://img.shields.io/badge/SOLID-f0207a)
+![clean architecture](https://img.shields.io/badge/CLEAN%20ARCHITECTURE-657cee)
+
+</div>
+
+## Features
+
+. Main features of this project:
 
 - Unit tests (coverage 72%)
 - SOLID principles
