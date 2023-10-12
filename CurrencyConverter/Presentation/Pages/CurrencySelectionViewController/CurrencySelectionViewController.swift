@@ -68,7 +68,6 @@ final class CurrencySelectionViewController: UIViewController {
 
     // MARK: - Methods
 
-    @MainActor
     private func update(isLoading: Bool) {
 
         if isLoading {
@@ -78,15 +77,14 @@ final class CurrencySelectionViewController: UIViewController {
         }
     }
 
-    @MainActor
-    private func update(items: [CurrencySelectionItemViewModel], isFirstLoad: Bool) {
+    private func update(items: [CurrencySelectionItemViewModel], animate: Bool) {
 
         var snapshot = NSDiffableDataSourceSnapshot<SectionId, CurrencySelectionItemViewModel>()
 
         snapshot.appendSections([Self.mainSectionId])
         snapshot.appendItems(items)
 
-        tableDataSource.apply(snapshot, animatingDifferences: !isFirstLoad)
+        tableDataSource.apply(snapshot, animatingDifferences: animate)
     }
 
     func bind(to viewModel: ViewModel?) {
@@ -96,9 +94,8 @@ final class CurrencySelectionViewController: UIViewController {
             return
         }
 
-        var isFirstLoad = true
-
         viewModel.isLoading
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
 
                 self?.update(isLoading: isLoading)
@@ -106,14 +103,14 @@ final class CurrencySelectionViewController: UIViewController {
 
         viewModel.items
             .removeDuplicates()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
 
                 self?.update(
                     items: items,
-                    isFirstLoad: isFirstLoad
+                    animate: false
                 )
 
-                isFirstLoad = false
             }.store(in: &observers)
     }
 }
