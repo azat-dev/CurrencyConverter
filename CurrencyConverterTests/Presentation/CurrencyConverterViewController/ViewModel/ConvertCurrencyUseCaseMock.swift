@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CurrencyConverter
 
 class ConvertCurrencyUseCaseMock: ConvertCurrencyUseCase {
 
     // MARK: - Properties
 
-    typealias ConvertWillReturn = Result<[CurrencyCode: Double], ConvertCurrencyUseCaseError>)
+    typealias ConvertWillReturn = Result<[CurrencyCode: Double], ConvertCurrencyUseCaseError>
 
     var convertWillReturn: ((_ amount: Double, _ sourceCurrency: CurrencyCode) -> ConvertWillReturn)!
 

@@ -5,6 +5,8 @@
 //  Created by Azat Kaiumov on 12.10.23.
 //
 
+import CurrencyConverter
+
 class ListSortedCurrenciesUseCaseMock: ListSortedCurrenciesUseCase {
 
     // MARK: - Properties
