@@ -53,7 +53,9 @@ final class LatestRatesServiceCachedTests: XCTestCase {
         sut.latestRatesService.fetchWillReturn = { .failure(.internalError) }
 
         sut.localStorage.getWillReturn = { _ in
+            // swiftlint:disable discouraged_direct_init
             Result<LatestRatesServiceCached.CachedValue?, Error>.failure(NSError()) as Any
+            // swiftlint:enable discouraged_direct_init
         }
 
         // When
@@ -82,7 +84,9 @@ final class LatestRatesServiceCachedTests: XCTestCase {
         sut.dateProvider.getCurrentDateWillReturn = currentDate
 
         sut.localStorage.getWillReturn = { _ in
+            // swiftlint:disable discouraged_direct_init
             Result<LatestRatesServiceCached.CachedValue?, Error>.failure(NSError()) as Any
+            // swiftlint:enable discouraged_direct_init
         }
 
         sut.latestRatesService.fetchWillReturn = {

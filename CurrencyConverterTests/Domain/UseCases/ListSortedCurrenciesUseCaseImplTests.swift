@@ -98,11 +98,15 @@ final class ListSortedCurrenciesUseCaseImplTests: XCTestCase {
 
 class GetCurrenciesUseCaseMock: GetCurrenciesUseCase {
 
+    // MARK: - Types
+
+    typealias ResultGetWithSearchTextWillReturn = Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>)
+
     // MARK: - Properties
 
     var getCount = 0
     var getWillReturn: (() -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>)!
-    var getWithSearchTextWillReturn: ((_ searchText: String?) -> Result<[CurrencyCode: Currency], GetCurrenciesUseCaseError>)!
+    var getWithSearchTextWillReturn: ((_ searchText: String?) -> ResultGetWithSearchTextWillReturn!
 
     // MARK: - Initializers
 

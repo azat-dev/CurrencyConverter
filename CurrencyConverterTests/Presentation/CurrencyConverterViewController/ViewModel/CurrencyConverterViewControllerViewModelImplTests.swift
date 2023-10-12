@@ -33,6 +33,7 @@ final class CurrencyConverterViewModelImplTests: XCTestCase {
 
     private var observers = Set<AnyCancellable>()
 
+    // swiftlint:disable function_body_length
     func createSUT(baseCurrency: CurrencyCode) -> SUT {
 
         let convertCurrencyUseCase = ConvertCurrencyUseCaseMock()
@@ -130,6 +131,7 @@ final class CurrencyConverterViewModelImplTests: XCTestCase {
             capturedSourceCurrencySequence
         )
     }
+    // swiftlint:enable function_body_length
 
     // MARK: - Methods
 
@@ -384,25 +386,5 @@ final class CurrencyConverterViewModelImplTests: XCTestCase {
             file: file,
             line: line
         )
-    }
-}
-
-// MARK: - Helpers
-
-class ConvertCurrencyUseCaseMock: ConvertCurrencyUseCase {
-
-    // MARK: - Properties
-
-    var convertWillReturn: ((_ amount: Double, _ sourceCurrency: CurrencyCode) -> Result<[CurrencyCode: Double], ConvertCurrencyUseCaseError>)!
-
-    // MARK: - Initializers
-
-    init() {}
-
-    // MARK: - Methods
-
-    func convert(amount: Double, from sourceCurrency: CurrencyCode) async -> Result<[CurrencyCode: Double], ConvertCurrencyUseCaseError> {
-
-        return convertWillReturn(amount, sourceCurrency)
     }
 }

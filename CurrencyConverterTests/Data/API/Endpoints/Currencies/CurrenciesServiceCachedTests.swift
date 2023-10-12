@@ -59,7 +59,9 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         sut.dependencies.currenciesService.fetchWillReturn = { .failure(.internalError) }
 
         sut.dependencies.localStorage.getWillReturn = { _ in
+            // swiftlint:disable discouraged_direct_init
             let someError = NSError()
+            // swiftlint:enable discouraged_direct_init
             return Result<CurrenciesServiceCached.CachedValue?, Error>.failure(someError) as Any
         }
 
@@ -89,7 +91,9 @@ final class CurrenciesServiceCachedTests: XCTestCase {
         sut.dependencies.dateProvider.getCurrentDateWillReturn = currentDate
 
         sut.dependencies.localStorage.getWillReturn = { _ in
+            // swiftlint:disable discouraged_direct_init
             let someError = NSError()
+            // swiftlint:enable discouraged_direct_init
             return Result<CurrenciesServiceCached.CachedValue?, Error>.failure(someError) as Any
         }
 
