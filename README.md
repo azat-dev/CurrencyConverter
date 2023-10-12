@@ -13,14 +13,20 @@
 
 ![swift](https://img.shields.io/badge/SWIFT-ff3d29)
 ![coverage](https://img.shields.io/badge/COVERAGE-72%25-green)
-![clean architecture](https://img.shields.io/badge/SOLID-f0207a)
+![SOLID](https://img.shields.io/badge/SOLID-f0207a)
 ![clean architecture](https://img.shields.io/badge/CLEAN%20ARCHITECTURE-657cee)
+![SwiftLint](https://img.shields.io/badge/SwiftLint-9400FF)
 
 </div>
 
+## Demo
+
+![currency_converter_demo](https://github.com/azat-dev/CurrencyConverter/assets/19716946/be1fd4ea-8f72-46c1-a5dd-5ade40a35f57)
+
+
 ## Features
 
-. Main features of this project:
+Main features of the project:
 
 - Unit tests (coverage 72%)
 - SOLID principles
