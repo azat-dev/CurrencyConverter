@@ -1,3 +1,4 @@
+
 <div align="center">
 
   <h1 style="border-bottom: none">
@@ -20,6 +21,7 @@
 </div>
 
 ## Demo
+
 
 ![currency_converter_demo](https://github.com/azat-dev/CurrencyConverter/assets/19716946/be1fd4ea-8f72-46c1-a5dd-5ade40a35f57)
 
